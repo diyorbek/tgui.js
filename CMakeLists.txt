@@ -22,6 +22,11 @@ add_executable(CMakeSFMLProject ${SOURCES})
 target_link_libraries(CMakeSFMLProject PRIVATE sfml-graphics TGUI::TGUI)
 target_compile_features(CMakeSFMLProject PRIVATE cxx_std_17)
 
+set(LIBRARY_SOURCES "lib.cpp") # Specify the sources used by the library
+add_library(TGUIJS SHARED ${LIBRARY_SOURCES})
+target_link_libraries(TGUIJS PRIVATE sfml-graphics TGUI::TGUI)
+target_compile_features(TGUIJS PRIVATE cxx_std_17)
+
 if(WIN32)
     add_custom_command(
         TARGET CMakeSFMLProject
