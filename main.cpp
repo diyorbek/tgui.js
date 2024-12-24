@@ -215,21 +215,22 @@ bool runExample(tgui::BackendGui& gui) {
 }
 
 int main() {
-  sf::RenderWindow window{{1000, 600}, "TGUI example - SFML_GRAPHICS backend"};
-  tgui::Gui gui{window};
+  auto win =
+      new sf::RenderWindow({1000, 600}, "TGUI example - SFML_GRAPHICS backend");
+  tgui::Gui gui{*win};
 
   runExample(gui);
 
-  while (window.isOpen()) {
+  while (win->isOpen()) {
     sf::Event event;
-    while (window.pollEvent(event)) {
+    while (win->pollEvent(event)) {
       gui.handleEvent(event);
-      if (event.type == sf::Event::Closed) window.close();
+      if (event.type == sf::Event::Closed) win->close();
     }
 
-    window.clear();
+    win->clear();
     gui.draw();
-    window.display();
+    win->display();
   }
 
   return 0;
