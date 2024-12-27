@@ -2,6 +2,61 @@
 #include <TGUI/TGUI.hpp>
 #include <iostream>
 
+extern "C" sf::RenderWindow* createWindow(ushort width, ushort height,
+                                          const char* title) {
+  return new sf::RenderWindow({width, height}, title);
+}
+
+extern "C" tgui::Gui* createGui(sf::RenderWindow* win) {
+  return new tgui::Gui{*win};
+}
+
+extern "C" sf::Event* createEvent() { return new sf::Event; }
+
+extern "C" u_short getEventType(sf::Event* event) { return event->type; }
+
+extern "C" void destroyWindow(sf::RenderWindow* win) { delete win; }
+
+extern "C" void destroyGui(tgui::Gui* gui) { delete gui; }
+
+extern "C" void destroyEvent(sf::Event* event) { delete event; }
+
+extern "C" bool isWindowOpen(sf::RenderWindow* win) { return win->isOpen(); }
+
+extern "C" bool pollEvent(sf::RenderWindow* win, sf::Event* event) {
+  return win->pollEvent(*event);
+}
+
+extern "C" bool handleEvent(tgui::Gui* gui, sf::Event* event) {
+  return gui->handleEvent(*event);
+}
+
+extern "C" void closeWindow(sf::RenderWindow* win) { win->close(); }
+
+extern "C" void clearWindow(sf::RenderWindow* win) { win->clear(); }
+
+extern "C" void drawGui(tgui::Gui* gui) { gui->draw(); }
+
+extern "C" void displayWindow(sf::RenderWindow* win) { win->display(); }
+
+extern "C" tgui::Label* createLabel() { return new tgui::Label; }
+
+extern "C" void setLabelText(tgui::Label* label, const char* text) {
+  label->setText(text);
+}
+
+extern "C" void setLabelPosition(tgui::Label* label, float x, float y) {
+  label->setPosition(x, y);
+}
+
+extern "C" void setLabelSize(tgui::Label* label, u_short size) {
+  label->setTextSize(size);
+}
+
+extern "C" void addWidget(tgui::Gui* gui, tgui::Widget* wg) {
+  gui->add(static_cast<tgui::Widget::Ptr>(wg));
+}
+
 extern "C" bool runExample(tgui::BackendGui& gui) {
   try {
     // tgui::Theme theme{"themes/Black.txt"};
@@ -212,62 +267,4 @@ extern "C" bool runExample(tgui::BackendGui& gui) {
   }
 
   return true;
-}
-
-extern "C" sf::RenderWindow* createWindow(ushort width, ushort height,
-                                          const char* title) {
-  return new sf::RenderWindow({width, height}, title);
-}
-
-extern "C" tgui::Gui* createGui(sf::RenderWindow* win) {
-  return new tgui::Gui{*win};
-}
-
-extern "C" sf::Event* createEvent() { return new sf::Event; }
-
-extern "C" u_short getEventType(sf::Event* event) { return event->type; }
-
-extern "C" void destroyWindow(sf::RenderWindow* win) { delete win; }
-
-extern "C" void destroyGui(tgui::Gui* gui) { delete gui; }
-
-extern "C" void destroyEvent(sf::Event* event) { delete event; }
-
-extern "C" bool isWindowOpen(sf::RenderWindow* win) { return win->isOpen(); }
-
-extern "C" bool pollEvent(sf::RenderWindow* win, sf::Event* event) {
-  return win->pollEvent(*event);
-}
-
-extern "C" bool handleEvent(tgui::Gui* gui, sf::Event* event) {
-  return gui->handleEvent(*event);
-}
-
-extern "C" void closeWindow(sf::RenderWindow* win) { win->close(); }
-
-extern "C" void clearWindow(sf::RenderWindow* win) { win->clear(); }
-
-extern "C" void drawGui(tgui::Gui* gui) { gui->draw(); }
-
-extern "C" void displayWindow(sf::RenderWindow* win) { win->display(); }
-
-int run(uintptr_t win_ptr, uintptr_t gui_ptr) {
-  sf::RenderWindow* win = reinterpret_cast<sf::RenderWindow*>(win_ptr);
-  tgui::Gui* gui = reinterpret_cast<tgui::Gui*>(gui_ptr);
-
-  runExample(*gui);
-
-  while (win->isOpen()) {
-    sf::Event event;
-    while (win->pollEvent(event)) {
-      gui->handleEvent(event);
-      if (event.type == sf::Event::Closed) win->close();
-    }
-
-    win->clear();
-    gui->draw();
-    win->display();
-  }
-
-  return 0;
 }

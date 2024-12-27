@@ -47,10 +47,30 @@ const lib = Deno.dlopen("build/libTGUIJS.dylib", {
     parameters: ["pointer"],
     result: "void",
   },
-  runExample: {
-    parameters: ["pointer"],
-    result: "bool",
+  createLabel: {
+    parameters: [],
+    result: "pointer",
   },
+  setLabelText: {
+    parameters: ["pointer", "buffer"],
+    result: "void",
+  },
+  setLabelPosition: {
+    parameters: ["pointer", "f32", "f32"],
+    result: "void",
+  },
+  setLabelSize: {
+    parameters: ["pointer", "u16"],
+    result: "void",
+  },
+  addWidget: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+  // runExample: {
+  //   parameters: ["pointer"],
+  //   result: "bool",
+  // },
 });
 console.log(lib);
 
@@ -60,7 +80,14 @@ const gui = lib.symbols.createGui(window);
 
 // lib.symbols.run(window, gui);
 
-lib.symbols.runExample(gui);
+// lib.symbols.runExample(gui);
+
+const label = lib.symbols.createLabel();
+const labelTitle = new TextEncoder().encode("Hello, World!\0");
+lib.symbols.setLabelText(label, labelTitle);
+lib.symbols.setLabelPosition(label, 200, 100);
+lib.symbols.setLabelSize(label, 50);
+lib.symbols.addWidget(gui, label);
 
 while (lib.symbols.isWindowOpen(window)) {
   const event = lib.symbols.createEvent();
