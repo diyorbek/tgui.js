@@ -135,7 +135,7 @@ function generateSymbols() {
   });
 
   Deno.writeFileSync(
-    "symbols.ts",
+    `${Deno.cwd()}/../symbols.ts`,
     encoder.encode(
       `export const TGUI_LIB = Deno.dlopen("build/libTGUIJS.dylib", ${JSON.stringify(
         symbols,
@@ -149,11 +149,6 @@ function generateSymbols() {
 await processAst();
 
 generateSymbols();
-
-Deno.writeFileSync(
-  "function-declarations.json",
-  encoder.encode(JSON.stringify(functionDeclarations, null, 2))
-);
 
 interface Ast {
   inner: Node[];

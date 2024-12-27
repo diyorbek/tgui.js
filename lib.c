@@ -1,3 +1,5 @@
+// This is a development test file.
+
 #include <CTGUI/Backend/CSFML-Graphics.h>
 #include <CTGUI/CTGUI.h>
 #include <stdio.h>
@@ -18,8 +20,8 @@ extern int mains(sfVideoMode mode, const char* title, unsigned short style) {
   // The tguiGui object should always be the first CTGUI object to create
   tguiGui* gui = tguiGuiCSFMLGraphics_create(window);
 
-  // tguiWidget* button = tguiButton_create();
-  // tguiGui_add(gui, button, U"MyButton");
+  tguiWidget* button = tguiButton_create();
+  tguiGui_add(gui, button, U"MyButton");
 
   // tguiButtonBase_setText(button, U"Hello");
 
@@ -49,7 +51,7 @@ extern int mains(sfVideoMode mode, const char* title, unsigned short style) {
     sfRenderWindow_display(window);
   }
 
-  // tguiWidget_destroy(button);
+  tguiWidget_destroy(button);
   tguiGuiCSFMLGraphics_destroy(gui);
 
   sfRenderWindow_destroy(window);

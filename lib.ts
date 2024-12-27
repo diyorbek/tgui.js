@@ -1,40 +1,41 @@
-const lib = Deno.dlopen("build/libTGUIJS.dylib", {
-  sfRenderWindow_create: {
-    // parameters: [{ struct: ["u8", "u8", "u8"] }, "buffer", "u8"],
-    parameters: [{ struct: ["u32", "u32", "u32"] }, "buffer", "u8"],
-    result: "pointer",
-  },
-  /** Return `long long` */
-  sfRenderWindow_isOpen: {
-    parameters: ["pointer"],
-    result: "bool",
-  },
-  sfRenderWindow_display: {
-    parameters: ["pointer"],
-    result: "void",
-  },
-  renderWindow_create: {
-    parameters: ["buffer"],
-    result: "pointer",
-  },
-  mains: {
-    parameters: [{ struct: ["u32", "u32", "u32"] }, "buffer", "u8"],
-    result: "i32",
-  },
-});
+import { CSFML_LIB } from "./csfmlLib.ts";
+import { TGUI_LIB } from "./ctguiLib.ts";
 
-console.log(lib);
+function main() {
+  const title = new TextEncoder().encode("Hello, World!\0");
+  const mode = new Uint32Array([800, 300, 32]);
+  const window = CSFML_LIB.symbols.sfRenderWindow_create(mode, title, 7);
+  const gui = TGUI_LIB.symbols.tguiGuiCSFMLGraphics_create(window);
 
-const title = new TextEncoder().encode("Hello, World!");
-const mode = new Uint32Array([800, 300, 32]);
-// const window = lib.symbols.sfRenderWindow_create(mode, title, 7);
+  const button = TGUI_LIB.symbols.tguiButton_create();
+  TGUI_LIB.symbols.tguiButtonBase_setText(
+    button,
+    new TextEncoder().encode("Hello, World!\0")
+  );
 
-lib.symbols.mains(mode, title, 7);
+  TGUI_LIB.symbols.tguiGui_add(gui, button, title);
 
-// while (lib.symbols.sfRenderWindow_isOpen(window)) {
-//   // lib.symbols.renderWindow_create();
-//   // lib.symbols.mains(mode, title, 7);
-//   lib.symbols.sfRenderWindow_display(window);
-// }
+  while (CSFML_LIB.symbols.sfRenderWindow_isOpen(window)) {
+    const event = CSFML_LIB.symbols.sfEvent_create();
 
-lib.close();
+    while (CSFML_LIB.symbols.sfRenderWindow_pollEvent(window, event)) {
+      console.log("Event");
+      TGUI_LIB.symbols.tguiGuiCSFMLGraphics_handleEvent(gui, event);
+    }
+
+    CSFML_LIB.symbols.sfRenderWindow_clear(
+      window,
+      new Uint8Array([0, 100, 20, 255])
+    );
+    TGUI_LIB.symbols.tguiGui_draw(gui);
+    CSFML_LIB.symbols.sfRenderWindow_display(window);
+    CSFML_LIB.symbols.sfEvent_destroy(event);
+  }
+
+  TGUI_LIB.symbols.tguiWidget_destroy(button);
+  TGUI_LIB.symbols.tguiGuiCSFMLGraphics_destroy(gui);
+  CSFML_LIB.symbols.sfRenderWindow_destroy(window);
+}
+
+main();
+CSFML_LIB.close();

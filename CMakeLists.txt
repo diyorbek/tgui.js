@@ -71,7 +71,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${csfml_SOURCE_DIR}/include
 )
 
-set(LIBRARY_SOURCES "lib.c") # Specify the sources used by the library
+set(LIBRARY_SOURCES "lib.c" "bindings.cpp") # Specify the sources used by the library
 add_library(TGUIJS SHARED ${LIBRARY_SOURCES})
 target_link_libraries(TGUIJS PRIVATE ctgui)
 # target_compile_features(TGUIJS PRIVATE cxx_std_17)
