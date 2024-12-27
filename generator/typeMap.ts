@@ -1,5 +1,5 @@
 type TypeMap = Record<string, Deno.NativeResultType | StructMeta[]>;
-type StructMeta = {
+export type StructMeta = {
   name: string;
   type: string;
   nativeType: Deno.NativeType | StructMeta[];

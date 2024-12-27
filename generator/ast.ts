@@ -1,4 +1,4 @@
-import { TYPE_MAP } from "./typeMap.ts";
+import { TYPE_MAP, type StructMeta } from "./typeMap.ts";
 
 const decoder = new TextDecoder();
 const encoder = new TextEncoder();
@@ -45,6 +45,20 @@ function getNativeType(resultType: string): any {
   }
 
   return resultType;
+}
+
+function createNativeType(
+  meta: StructMeta[] | Deno.NativeType
+): Deno.NativeResultType {
+  if (typeof meta === "string") {
+    return meta;
+  }
+
+  return {
+    struct: (meta as StructMeta[]).map((field) => {
+      return createNativeType(field.nativeType);
+    }),
+  };
 }
 
 async function processAst() {
@@ -108,7 +122,33 @@ async function processAst() {
   }
 }
 
+function generateSymbols() {
+  const symbols = {};
+
+  functionDeclarations.forEach((declaration) => {
+    symbols[declaration.name] = {
+      parameters: declaration.parameters.map((param) =>
+        createNativeType(param.nativeType)
+      ),
+      result: createNativeType(declaration.result),
+    };
+  });
+
+  Deno.writeFileSync(
+    "symbols.ts",
+    encoder.encode(
+      `export const TGUI_LIB = Deno.dlopen("build/libTGUIJS.dylib", ${JSON.stringify(
+        symbols,
+        null,
+        2
+      )});`
+    )
+  );
+}
+
 await processAst();
+
+generateSymbols();
 
 Deno.writeFileSync(
   "function-declarations.json",
