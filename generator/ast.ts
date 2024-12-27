@@ -1,4 +1,4 @@
-import predefinedTypeMaps from "./type-map-pre.json" with { type: "json" };
+import { TYPE_MAP } from "./typeMap.ts";
 
 const decoder = new TextDecoder();
 const encoder = new TextEncoder();
@@ -11,8 +11,12 @@ const structs: string[] = [];
 const functionDeclarations = [];
 
 function getNativeType(resultType: string): any {
-  if (predefinedTypeMaps[resultType]) {
-    return predefinedTypeMaps[resultType];
+  if (TYPE_MAP[resultType]) {
+    return TYPE_MAP[resultType];
+  }
+
+  if (resultType.match(/\(.*\)/)) {
+    return "function";
   }
 
   if (resultType.includes("*")) {
@@ -34,7 +38,7 @@ function getNativeType(resultType: string): any {
           name: inner.name,
           type: inner.type?.desugaredQualType || inner.type!.qualType,
           nativeType: getNativeType(
-            inner.type!.qualType||inner.type!.desugaredQualType 
+            inner.type!.qualType || inner.type!.desugaredQualType
           ),
         }));
     }
@@ -42,8 +46,6 @@ function getNativeType(resultType: string): any {
 
   return resultType;
 }
-
-const typeMap = new Map();
 
 async function processAst() {
   const chunks = [];
@@ -70,18 +72,13 @@ async function processAst() {
 
           const returnType = node.type.qualType.split(/\(.*\)/)[0].trim();
 
-          typeMap.set(returnType, getNativeType(returnType));
-
           const parameters = node.inner
             .filter((inner) => inner.kind === "ParmVarDecl")
             .map((inner) => {
-              const type = inner.type!.qualType.split(/\(.*\)/)[0].trim();
-              typeMap.set(type, getNativeType(type));
-
               return {
                 name: inner.name,
-                nativeType: getNativeType(type),
-                type,
+                nativeType: getNativeType(inner.type!.qualType),
+                type: inner.type!.qualType,
               };
             });
 
@@ -116,17 +113,6 @@ await processAst();
 Deno.writeFileSync(
   "function-declarations.json",
   encoder.encode(JSON.stringify(functionDeclarations, null, 2))
-);
-
-Deno.writeFileSync(
-  "type-map.json",
-  encoder.encode(
-    JSON.stringify(
-      Object.fromEntries([...typeMap.entries()].toSorted()),
-      null,
-      2
-    )
-  )
 );
 
 interface Ast {

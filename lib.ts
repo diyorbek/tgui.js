@@ -4,6 +4,7 @@ const lib = Deno.dlopen("build/libTGUIJS.dylib", {
     parameters: [{ struct: ["u32", "u32", "u32"] }, "buffer", "u8"],
     result: "pointer",
   },
+  /** Return `long long` */
   sfRenderWindow_isOpen: {
     parameters: ["pointer"],
     result: "bool",
