@@ -6,7 +6,7 @@ const functionPattern =
   /CTGUI_API\s(?<returnType>(?:\w+\**\s+)+)(?<functionName>\w+)\((?<parameters>[\w\s,*()]*)\)/i;
 const predefinedStructPattern = /CTGUI_API (\w+) (\w+)/i;
 
-const functionDeclarations = [];
+const functionDeclarations: any[] = [];
 const structDeclarations = [];
 const returnTypes = new Set();
 
@@ -34,8 +34,9 @@ async function searchFiles() {
 
         const returnType = match?.groups.returnType.trim();
 
-        if (!returnType.includes("*") && returnType.startsWith("tgui"))
+        if (!returnType.includes("*") && returnType.startsWith("tgui")) {
           returnTypes.add(returnType);
+        }
 
         return;
       }
@@ -65,5 +66,5 @@ Deno.writeFileSync(
   new TextEncoder().encode(functionNames.join("\n"))
 );
 
-console.log("EXTERN Functions: ", functionDeclarations.length);
-console.log("EXTERN Structs: ", structDeclarations.length);
+// console.log("EXTERN Functions: ", functionDeclarations.length);
+// console.log("EXTERN Structs: ", structDeclarations.length);

@@ -61,7 +61,7 @@ set(CSFML_LIBRARY_DIR ${CSFML_BINARY_DIR}/lib)
 FetchContent_MakeAvailable(CTGUI)
 
 # Add executable with main.c in root directory
-add_executable(${PROJECT_NAME} main.c)
+add_executable(${PROJECT_NAME} debug/main.c)
 
 # Link all CSFML libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE ctgui)
@@ -71,9 +71,13 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${csfml_SOURCE_DIR}/include
 )
 
-set(LIBRARY_SOURCES "lib.c" "bindings.cpp") # Specify the sources used by the library
+set(LIBRARY_SOURCES bindings/bindings.cpp)
+
+if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
+    list(APPEND LIBRARY_SOURCES debug/lib.c)
+endif()
+
 add_library(TGUIJS SHARED ${LIBRARY_SOURCES})
 target_link_libraries(TGUIJS PRIVATE ctgui)
-# target_compile_features(TGUIJS PRIVATE cxx_std_17)
 
 # TODO: Include windows configuration for copying the DLLs

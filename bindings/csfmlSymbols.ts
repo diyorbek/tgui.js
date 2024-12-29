@@ -1,4 +1,4 @@
-export const CSFML_LIB = Deno.dlopen("build/libTGUIJS.dylib", {
+export const CSFML_SYMBOLS = {
   sfRenderWindow_create: {
     parameters: [{ struct: ["u32", "u32", "u32"] }, "buffer", "u8"],
     result: "pointer",
@@ -39,4 +39,4 @@ export const CSFML_LIB = Deno.dlopen("build/libTGUIJS.dylib", {
     parameters: [{ struct: ["u32", "u32", "u32"] }, "buffer", "u8"],
     result: "i32",
   },
-});
+} as const;

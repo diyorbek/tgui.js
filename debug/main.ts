@@ -1,4 +1,4 @@
-const lib = Deno.dlopen("build/libTGUIJS.dylib", {
+const lib = Deno.dlopen("../build/libTGUIJS.dylib", {
   createWindow: {
     parameters: ["u16", "u16", "buffer"],
     result: "pointer",
