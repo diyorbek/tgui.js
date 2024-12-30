@@ -30,7 +30,7 @@ set(SFML_INCLUDE_DIR "${sfml_SOURCE_DIR}/include")
 set(SFML_LIBRARY_DIR "${sfml_BINARY_DIR}/lib")
 set(SFML_DEPENDENCIES_DIR "${sfml_SOURCE_DIR}/extlibs")
 
-# Create SFML config file that CSFML can find. This overwrites the already existing one because the original one causes conflict.
+# Create SFML config file that CSFML can find
 file(WRITE "${sfml_BINARY_DIR}/SFMLConfig.cmake" 
 "set(SFML_VERSION ${SFML_VERSION})
 set(SFML_INCLUDE_DIR \"${SFML_INCLUDE_DIR}\")
@@ -63,12 +63,21 @@ FetchContent_MakeAvailable(CTGUI)
 # Add executable with main.c in root directory
 add_executable(${PROJECT_NAME} debug/main.c)
 
-# Link all CSFML libraries
-target_link_libraries(${PROJECT_NAME} PRIVATE ctgui)
+# Link all required libraries
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    ctgui
+    sfml-system
+    sfml-window
+    sfml-graphics
+    csfml-system
+    csfml-window
+    csfml-graphics
+)
 
 # Include directories
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${csfml_SOURCE_DIR}/include
+    ${SFML_INCLUDE_DIR}
 )
 
 set(LIBRARY_SOURCES bindings/bindings.cpp)
@@ -78,6 +87,27 @@ if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 add_library(TGUIJS SHARED ${LIBRARY_SOURCES})
-target_link_libraries(TGUIJS PRIVATE ctgui)
+target_link_libraries(TGUIJS PRIVATE 
+    ctgui
+    sfml-system
+    sfml-window
+    sfml-graphics
+    csfml-system
+    csfml-window
+    csfml-graphics
+)
+
+# Set library properties
+if(UNIX AND NOT APPLE)
+    target_link_libraries(TGUIJS PRIVATE ${CMAKE_DL_LIBS})
+endif()
+
+# Add rpath for Linux
+if(UNIX AND NOT APPLE)
+    set_target_properties(TGUIJS PROPERTIES
+        INSTALL_RPATH "$ORIGIN"
+        BUILD_WITH_INSTALL_RPATH TRUE
+    )
+endif()
 
 # TODO: Include windows configuration for copying the DLLs

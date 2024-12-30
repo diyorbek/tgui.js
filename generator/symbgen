@@ -1,4 +1,4 @@
-# clang -E -DCTGUI_EXPORTS -DTGUI_DYNAMIC -DTGUI_NO_DEPRECATED_WARNINGS -I../build/_deps/csfml-src/include -I../build/_deps/ctgui-src/include -I../build/_deps/ctgui-src/src -I../build/_deps/tgui-src/include -I../build/_deps/sfml-src/include all.c -o merged.c
+#!/bin/bash 
 
 function count_lines {
   echo "$1" | wc -l | xargs
