@@ -1,5 +1,5 @@
-import { CSFML_SYMBOLS } from "./bindings/csfmlSymbols.ts";
-import { CTGUI_SYMBOLS } from "./bindings/ctguiSymbols.ts";
+import { CSFML_SYMBOLS } from "./symbols/csfmlSymbols.ts";
+import { CTGUI_SYMBOLS } from "./symbols/ctguiSymbols.ts";
 
 export * from "./utils.ts";
 
