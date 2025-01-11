@@ -5,7 +5,18 @@ export * from "./utils.ts";
 
 const libPath = import.meta.dirname + "/libctgui-d.1.5.0.dylib";
 
-export const CTGUI_LIB = Deno.dlopen(libPath, {
+const lib = Deno.readFileSync(libPath);
+const tempPath = Deno.makeTempFileSync({
+  prefix: "libctgui-d.1.5.0",
+  suffix: ".dylib",
+});
+Deno.writeFileSync(tempPath, lib);
+
+addEventListener("unload", () => {
+  Deno.removeSync(tempPath);
+});
+
+export const CTGUI_LIB = Deno.dlopen(tempPath, {
   ...CTGUI_SYMBOLS,
   ...CSFML_SYMBOLS,
 });
