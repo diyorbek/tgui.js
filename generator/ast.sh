@@ -17,7 +17,7 @@ clang -Xclang -ast-dump=json -fsyntax-only -w -x c - |
 deno --allow-read --allow-write symbolGenerator.ts |
 deno fmt - > ctguiSymbols.ts
 
-mv ctguiSymbols.ts ../bindings/ctguiSymbols.ts
+mv ctguiSymbols.ts ../symbols/ctguiSymbols.ts
 
 # Availability status of the API
 deno --allow-read --allow-write externSearch.ts

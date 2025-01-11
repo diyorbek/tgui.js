@@ -1,3 +1,6 @@
+// deno-lint-ignore-file
+// @ts-nocheck
+
 import { CTGUI_LIB, encodeUTF32 } from "../index.ts";
 
 function main() {

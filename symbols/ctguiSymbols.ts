@@ -4754,6 +4754,24 @@ export const CTGUI_SYMBOLS = {
   },
   /**
    * @original ```c
+   * sfEvent * sfEvent_create();
+   * ```
+   *
+   * @param
+   * @returns `sfEvent *`
+   */
+  sfEvent_create: { parameters: [], result: "pointer" },
+  /**
+   * @original ```c
+   * void sfEvent_destroy(sfEvent * event);
+   * ```
+   *
+   * @param event `sfEvent *`
+   * @returns `void`
+   */
+  sfEvent_destroy: { parameters: ["pointer"], result: "void" },
+  /**
+   * @original ```c
    * tguiWidget * tguiBitmapButton_create();
    * ```
    *

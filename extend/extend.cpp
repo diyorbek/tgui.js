@@ -1,4 +1,4 @@
-#include "bindings.hpp"
+#include <CTGUI/extend.h>
 
 sfEvent* sfEvent_create() { return new sfEvent; }
 
