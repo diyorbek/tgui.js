@@ -96,12 +96,16 @@ FetchContent_Declare(
 set(CSFML_INCLUDE_DIR ${CSFML_SOURCE_DIR}/include)
 FetchContent_MakeAvailable(CTGUI)
 
-# Add executable with main.c in root directory
+# Add test executable
 add_executable(${PROJECT_NAME} debug/main.c)
 
-# Link all CSFML libraries
+# Link libraries
 target_link_libraries(ctgui PUBLIC freetype)
 target_link_libraries(${PROJECT_NAME} PRIVATE ctgui)
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    BUILD_WITH_INSTALL_RPATH TRUE
+    INSTALL_RPATH "@executable_path;@executable_path/../lib"
+)
 
 # Include directories
 target_include_directories(${PROJECT_NAME} PRIVATE

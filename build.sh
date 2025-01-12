@@ -30,3 +30,11 @@ else
 
     cmake --build build --config $mode
 fi
+
+# Copy the library to the build directory
+if [[ "$OS" == *Windows* ]]; then
+    echo ""
+else
+    cp build/_deps/ctgui-build/src/CTGUI/libctgui-d.1.5.0.dylib build
+    mv build/libctgui-d.1.5.0.dylib build/libctgui.dylib
+fi

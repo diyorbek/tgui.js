@@ -6,7 +6,7 @@ import { CTGUI_LIB, encodeUTF32 } from "../index.ts";
 function main() {
   const title = new TextEncoder().encode("Hello, World!\0");
   const mode = new Uint32Array([800, 300, 32]);
-  const window = CTGUI_LIB.symbols.sfRenderWindow_create(mode, title, 7);
+  const window = CTGUI_LIB.symbols.renderWindow_create(mode, title, 7);
   const gui = CTGUI_LIB.symbols.tguiGuiCSFMLGraphics_create(window);
 
   const button = CTGUI_LIB.symbols.tguiButton_create();

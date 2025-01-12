@@ -1,0 +1,8 @@
+#!/bin/bash
+
+deno compile \
+  --include build/libctgui.dylib \
+  --allow-ffi \
+  --allow-write \
+  --allow-read \
+  debug/lib.ts

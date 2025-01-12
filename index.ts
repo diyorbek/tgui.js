@@ -3,12 +3,14 @@ import { CTGUI_SYMBOLS } from "./symbols/ctguiSymbols.ts";
 
 export * from "./utils.ts";
 
-const libPath = import.meta.dirname + "/libctgui-d.1.5.0.dylib";
+const libName = "libctgui";
+const libExt = "dylib";
+const libPath = `${import.meta.dirname}/build/${libName}.${libExt}`;
 
 const lib = Deno.readFileSync(libPath);
 const tempPath = Deno.makeTempFileSync({
-  prefix: "libctgui-d.1.5.0",
-  suffix: ".dylib",
+  prefix: libName,
+  suffix: libExt,
 });
 Deno.writeFileSync(tempPath, lib);
 
