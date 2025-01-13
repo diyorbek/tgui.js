@@ -4786,6 +4786,70 @@ export const CTGUI_SYMBOLS = {
   },
   /**
    * @original ```c
+   * sfBool renderWindow_isOpen(const sfWindow * window);
+   * ```
+   *
+   * @param window `const sfWindow *`
+   * @returns `sfBool`
+   */
+  renderWindow_isOpen: { parameters: ["pointer"], result: "sfBool" },
+  /**
+   * @original ```c
+   * sfBool renderWindow_pollEvent(sfRenderWindow * window, sfEvent * event);
+   * ```
+   *
+   * @param window `sfRenderWindow *`
+   * @param event `sfEvent *`
+   * @returns `sfBool`
+   */
+  renderWindow_pollEvent: {
+    parameters: ["pointer", "pointer"],
+    result: "sfBool",
+  },
+  /**
+   * @original ```c
+   * void renderWindow_close(sfRenderWindow * window);
+   * ```
+   *
+   * @param window `sfRenderWindow *`
+   * @returns `void`
+   */
+  renderWindow_close: { parameters: ["pointer"], result: "void" },
+  /**
+   * @original ```c
+   * void renderWindow_clear(sfRenderWindow * window, sfColor color);
+   * ```
+   *
+   * @param window `sfRenderWindow *`
+   * @param color `sfColor`
+   * @returns `void`
+   */
+  renderWindow_clear: {
+    parameters: ["pointer", {
+      struct: ["sfUint8", "sfUint8", "sfUint8", "sfUint8"],
+    }],
+    result: "void",
+  },
+  /**
+   * @original ```c
+   * void renderWindow_display(sfRenderWindow * window);
+   * ```
+   *
+   * @param window `sfRenderWindow *`
+   * @returns `void`
+   */
+  renderWindow_display: { parameters: ["pointer"], result: "void" },
+  /**
+   * @original ```c
+   * void renderWindow_destroy(sfRenderWindow * window);
+   * ```
+   *
+   * @param window `sfRenderWindow *`
+   * @returns `void`
+   */
+  renderWindow_destroy: { parameters: ["pointer"], result: "void" },
+  /**
+   * @original ```c
    * tguiWidget * tguiBitmapButton_create();
    * ```
    *
