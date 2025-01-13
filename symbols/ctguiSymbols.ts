@@ -228,7 +228,7 @@ export const CTGUI_SYMBOLS = {
    * @param textSize `unsigned int`
    * @returns `void`
    */
-  tgui_setGlobalTextSize: { parameters: ["u16"], result: "void" },
+  tgui_setGlobalTextSize: { parameters: ["u32"], result: "void" },
   /**
    * @original ```c
    * unsigned int tgui_getGlobalTextSize();
@@ -237,7 +237,7 @@ export const CTGUI_SYMBOLS = {
    * @param
    * @returns `unsigned int`
    */
-  tgui_getGlobalTextSize: { parameters: [], result: "u16" },
+  tgui_getGlobalTextSize: { parameters: [], result: "u32" },
   /**
    * @original ```c
    * void tgui_setDoubleClickTime(tguiDuration duration);
@@ -724,7 +724,7 @@ export const CTGUI_SYMBOLS = {
    * @param widget `Widget *`
    * @returns `int`
    */
-  tguiGui_getWidgetIndex: { parameters: ["pointer", "pointer"], result: "i16" },
+  tguiGui_getWidgetIndex: { parameters: ["pointer", "pointer"], result: "i32" },
   /**
    * @original ```c
    * void tguiGui_setOpacity(tguiGui * thisGui, float value);
@@ -753,7 +753,7 @@ export const CTGUI_SYMBOLS = {
    * @param value `unsigned int`
    * @returns `void`
    */
-  tguiGui_setTextSize: { parameters: ["pointer", "u16"], result: "void" },
+  tguiGui_setTextSize: { parameters: ["pointer", "u32"], result: "void" },
   /**
    * @original ```c
    * unsigned int tguiGui_getTextSize(const tguiGui * thisGui);
@@ -762,7 +762,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisGui `const Gui *`
    * @returns `unsigned int`
    */
-  tguiGui_getTextSize: { parameters: ["pointer"], result: "u16" },
+  tguiGui_getTextSize: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiGui_setDrawingUpdatesTime(tguiGui * thisGui, tguiBool drawUpdatesTime);
@@ -1332,7 +1332,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiContainer_getWidgetIndex: {
     parameters: ["pointer", "pointer"],
-    result: "i16",
+    result: "i32",
   },
   /**
    * @original ```c
@@ -1848,7 +1848,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `FontGlyph { advance: float; bounds: tguiFloatRect; textureRect: tguiUIntRect }`
    */
   tguiFont_getGlyph: {
-    parameters: ["pointer", "u32", "u16", "i16", "f32"],
+    parameters: ["pointer", "u32", "u32", "i16", "f32"],
     result: {
       struct: ["f32", { struct: ["f32", "f32", "f32", "f32"] }, {
         struct: ["u16", "u16", "u16", "u16"],
@@ -1895,7 +1895,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `float`
    */
   tguiFont_getKerning: {
-    parameters: ["pointer", "u32", "u32", "u16", "i16"],
+    parameters: ["pointer", "u32", "u32", "u32", "i16"],
     result: "f32",
   },
   /**
@@ -1907,7 +1907,7 @@ export const CTGUI_SYMBOLS = {
    * @param characterSize `unsigned int`
    * @returns `float`
    */
-  tguiFont_getLineSpacing: { parameters: ["pointer", "u16"], result: "f32" },
+  tguiFont_getLineSpacing: { parameters: ["pointer", "u32"], result: "f32" },
   /**
    * @original ```c
    * float tguiFont_getFontHeight(const tguiFont * thisFont, unsigned int characterSize);
@@ -1917,7 +1917,7 @@ export const CTGUI_SYMBOLS = {
    * @param characterSize `unsigned int`
    * @returns `float`
    */
-  tguiFont_getFontHeight: { parameters: ["pointer", "u16"], result: "f32" },
+  tguiFont_getFontHeight: { parameters: ["pointer", "u32"], result: "f32" },
   /**
    * @original ```c
    * void tguiFont_setSmooth(tguiFont * thisFont, tguiBool value);
@@ -2507,7 +2507,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `float`
    */
   tguiText_getStaticExtraHorizontalPadding: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "f32",
   },
   /**
@@ -2520,7 +2520,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `float`
    */
   tguiText_getStaticExtraHorizontalOffset: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "f32",
   },
   /**
@@ -2532,7 +2532,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `float`
    */
   tguiText_getStaticExtraVerticalPadding: {
-    parameters: ["u16"],
+    parameters: ["u32"],
     result: "f32",
   },
   /**
@@ -2545,7 +2545,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `float`
    */
   tguiText_getStaticLineHeight: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "f32",
   },
   /**
@@ -2560,7 +2560,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `float`
    */
   tguiText_getStaticLineWidth: {
-    parameters: ["buffer", "pointer", "u16", "u32"],
+    parameters: ["buffer", "pointer", "u32", "u32"],
     result: "f32",
   },
   /**
@@ -2592,8 +2592,8 @@ export const CTGUI_SYMBOLS = {
    * @returns `unsigned int`
    */
   tguiText_findBestTextSize: {
-    parameters: ["pointer", "f32", "i16"],
-    result: "u16",
+    parameters: ["pointer", "f32", "i32"],
+    result: "u32",
   },
   /**
    * @original ```c
@@ -2608,7 +2608,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `Utf32`
    */
   tguiText_wordWrap: {
-    parameters: ["f32", "buffer", "pointer", "u16", "i16"],
+    parameters: ["f32", "buffer", "pointer", "u32", "i16"],
     result: "buffer",
   },
   /**
@@ -2676,7 +2676,7 @@ export const CTGUI_SYMBOLS = {
    * @param value `unsigned int`
    * @returns `void`
    */
-  tguiText_setCharacterSize: { parameters: ["pointer", "u16"], result: "void" },
+  tguiText_setCharacterSize: { parameters: ["pointer", "u32"], result: "void" },
   /**
    * @original ```c
    * unsigned int tguiText_getCharacterSize(const tguiText * thisText);
@@ -2685,7 +2685,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisText `const Text *`
    * @returns `unsigned int`
    */
-  tguiText_getCharacterSize: { parameters: ["pointer"], result: "u16" },
+  tguiText_getCharacterSize: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiText_setColor(tguiText * thisText, tguiColor value);
@@ -3685,7 +3685,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3699,7 +3699,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalConnectEx: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3713,7 +3713,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalIntConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3727,7 +3727,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalUIntConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3741,7 +3741,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalBoolConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3755,7 +3755,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalFloatConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3769,7 +3769,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalColorConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3783,7 +3783,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalStringConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3797,7 +3797,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalVector2fConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3811,7 +3811,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalFloatRectConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3825,7 +3825,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalRangeConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3839,7 +3839,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalChildWindowConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3853,7 +3853,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalItemConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3867,7 +3867,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalPanelListBoxItemConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3881,7 +3881,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalFileDialogPathsConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3895,7 +3895,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalShowEffectConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3909,7 +3909,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalAnimationTypeConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3923,7 +3923,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiWidget_signalItemHierarchyConnect: {
     parameters: ["pointer", "buffer", "function"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -3936,7 +3936,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `Bool`
    */
   tguiWidget_signalDisconnect: {
-    parameters: ["pointer", "buffer", "u16"],
+    parameters: ["pointer", "buffer", "u32"],
     result: "i16",
   },
   /**
@@ -4547,7 +4547,7 @@ export const CTGUI_SYMBOLS = {
    * @param value `unsigned int`
    * @returns `void`
    */
-  tguiWidget_setTextSize: { parameters: ["pointer", "u16"], result: "void" },
+  tguiWidget_setTextSize: { parameters: ["pointer", "u32"], result: "void" },
   /**
    * @original ```c
    * unsigned int tguiWidget_getTextSize(const tguiWidget * thisWidget);
@@ -4556,7 +4556,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiWidget_getTextSize: { parameters: ["pointer"], result: "u16" },
+  tguiWidget_getTextSize: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiWidget_setWidgetName(tguiWidget * thisWidget, tguiUtf32 value);
@@ -4770,6 +4770,20 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   sfEvent_destroy: { parameters: ["pointer"], result: "void" },
+  /**
+   * @original ```c
+   * sfRenderWindow * renderWindow_create(sfVideoMode mode, const char * title, unsigned int style);
+   * ```
+   *
+   * @param mode `sfVideoMode`
+   * @param title `const char *`
+   * @param style `unsigned int`
+   * @returns `sfRenderWindow *`
+   */
+  renderWindow_create: {
+    parameters: [{ struct: ["u32", "u32", "u32"] }, "buffer", "u32"],
+    result: "pointer",
+  },
   /**
    * @original ```c
    * tguiWidget * tguiBitmapButton_create();
@@ -5425,7 +5439,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiChildWindow_setTitleTextSize: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -5436,7 +5450,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiChildWindow_getTitleTextSize: { parameters: ["pointer"], result: "u16" },
+  tguiChildWindow_getTitleTextSize: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiChildWindow_setTitleAlignment(tguiWidget * thisWidget, tguiHorizontalAlignment value);
@@ -5469,7 +5483,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiChildWindow_setTitleButtons: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -5480,7 +5494,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiChildWindow_getTitleButtons: { parameters: ["pointer"], result: "u16" },
+  tguiChildWindow_getTitleButtons: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiChildWindow_setCloseBehavior(tguiWidget * thisWidget, tguiChildWindowCloseBehavior value);
@@ -5708,7 +5722,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiComboBox_getIndexById: {
     parameters: ["pointer", "buffer"],
-    result: "i16",
+    result: "i32",
   },
   /**
    * @original ```c
@@ -5868,7 +5882,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `int`
    */
-  tguiComboBox_getSelectedItemIndex: { parameters: ["pointer"], result: "i16" },
+  tguiComboBox_getSelectedItemIndex: { parameters: ["pointer"], result: "i32" },
   /**
    * @original ```c
    * tguiBool tguiComboBox_changeItem(tguiWidget * thisWidget, tguiUtf32 originalValue, tguiUtf32 newValue);
@@ -6140,7 +6154,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiEditBox_setMaximumCharacters: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -6151,7 +6165,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiEditBox_getMaximumCharacters: { parameters: ["pointer"], result: "u16" },
+  tguiEditBox_getMaximumCharacters: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiEditBox_setAlignment(tguiWidget * thisWidget, tguiHorizontalAlignment value);
@@ -6447,7 +6461,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiEditBoxSlider_setDecimalPlaces: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -6460,7 +6474,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiEditBoxSlider_getDecimalPlaces: {
     parameters: ["pointer"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -7433,7 +7447,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiListBox_getIndexById: {
     parameters: ["pointer", "buffer"],
-    result: "i16",
+    result: "i32",
   },
   /**
    * @original ```c
@@ -7567,7 +7581,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `int`
    */
-  tguiListBox_getSelectedItemIndex: { parameters: ["pointer"], result: "i16" },
+  tguiListBox_getSelectedItemIndex: { parameters: ["pointer"], result: "i32" },
   /**
    * @original ```c
    * int tguiListBox_getHoveredItemIndex(const tguiWidget * thisWidget);
@@ -7576,7 +7590,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `int`
    */
-  tguiListBox_getHoveredItemIndex: { parameters: ["pointer"], result: "i16" },
+  tguiListBox_getHoveredItemIndex: { parameters: ["pointer"], result: "i32" },
   /**
    * @original ```c
    * tguiBool tguiListBox_changeItem(tguiWidget * thisWidget, tguiUtf32 originalValue, tguiUtf32 newValue);
@@ -7690,7 +7704,7 @@ export const CTGUI_SYMBOLS = {
    * @param value `unsigned int`
    * @returns `void`
    */
-  tguiListBox_setItemHeight: { parameters: ["pointer", "u16"], result: "void" },
+  tguiListBox_setItemHeight: { parameters: ["pointer", "u32"], result: "void" },
   /**
    * @original ```c
    * unsigned int tguiListBox_getItemHeight(const tguiWidget * thisWidget);
@@ -7699,7 +7713,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiListBox_getItemHeight: { parameters: ["pointer"], result: "u16" },
+  tguiListBox_getItemHeight: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiListBox_setMaximumItems(tguiWidget * thisWidget, size_t value);
@@ -8166,7 +8180,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `int`
    */
-  tguiListView_getSelectedItemIndex: { parameters: ["pointer"], result: "i16" },
+  tguiListView_getSelectedItemIndex: { parameters: ["pointer"], result: "i32" },
   /**
    * @original ```c
    * int tguiListView_getHoveredItemIndex(const tguiWidget * thisWidget);
@@ -8175,7 +8189,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `int`
    */
-  tguiListView_getHoveredItemIndex: { parameters: ["pointer"], result: "i16" },
+  tguiListView_getHoveredItemIndex: { parameters: ["pointer"], result: "i32" },
   /**
    * @original ```c
    * const size_t * tguiListView_getSelectedItemIndices(const tguiWidget * thisWidget, size_t * returnCount);
@@ -8331,7 +8345,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiListView_setItemHeight: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -8342,7 +8356,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiListView_getItemHeight: { parameters: ["pointer"], result: "u16" },
+  tguiListView_getItemHeight: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiListView_setHeaderTextSize(tguiWidget * thisWidget, unsigned int value);
@@ -8353,7 +8367,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiListView_setHeaderTextSize: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -8364,7 +8378,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiListView_getHeaderTextSize: { parameters: ["pointer"], result: "u16" },
+  tguiListView_getHeaderTextSize: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiListView_setSeparatorWidth(tguiWidget * thisWidget, unsigned int value);
@@ -8375,7 +8389,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiListView_setSeparatorWidth: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -8386,7 +8400,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiListView_getSeparatorWidth: { parameters: ["pointer"], result: "u16" },
+  tguiListView_getSeparatorWidth: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiListView_setHeaderSeparatorHeight(tguiWidget * thisWidget, unsigned int value);
@@ -8397,7 +8411,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiListView_setHeaderSeparatorHeight: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -8410,7 +8424,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiListView_getHeaderSeparatorHeight: {
     parameters: ["pointer"],
-    result: "u16",
+    result: "u32",
   },
   /**
    * @original ```c
@@ -8422,7 +8436,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiListView_setGridLinesWidth: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -8433,7 +8447,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiListView_getGridLinesWidth: { parameters: ["pointer"], result: "u16" },
+  tguiListView_getGridLinesWidth: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiListView_setAutoScroll(tguiWidget * thisWidget, tguiBool value);
@@ -9020,7 +9034,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiProgressBar_setMinimum: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -9031,7 +9045,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiProgressBar_getMinimum: { parameters: ["pointer"], result: "u16" },
+  tguiProgressBar_getMinimum: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiProgressBar_setMaximum(tguiWidget * thisWidget, unsigned int value);
@@ -9042,7 +9056,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiProgressBar_setMaximum: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -9053,7 +9067,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiProgressBar_getMaximum: { parameters: ["pointer"], result: "u16" },
+  tguiProgressBar_getMaximum: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiProgressBar_setValue(tguiWidget * thisWidget, unsigned int value);
@@ -9063,7 +9077,7 @@ export const CTGUI_SYMBOLS = {
    * @param value `unsigned int`
    * @returns `void`
    */
-  tguiProgressBar_setValue: { parameters: ["pointer", "u16"], result: "void" },
+  tguiProgressBar_setValue: { parameters: ["pointer", "u32"], result: "void" },
   /**
    * @original ```c
    * unsigned int tguiProgressBar_getValue(const tguiWidget * thisWidget);
@@ -9072,7 +9086,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiProgressBar_getValue: { parameters: ["pointer"], result: "u16" },
+  tguiProgressBar_getValue: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * unsigned int tguiProgressBar_incrementValue(tguiWidget * thisWidget);
@@ -9081,7 +9095,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `Widget *`
    * @returns `unsigned int`
    */
-  tguiProgressBar_incrementValue: { parameters: ["pointer"], result: "u16" },
+  tguiProgressBar_incrementValue: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiProgressBar_setText(tguiWidget * thisWidget, tguiUtf32 value);
@@ -9412,7 +9426,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiScrollbar_setViewportSize: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -9423,7 +9437,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiScrollbar_getViewportSize: { parameters: ["pointer"], result: "u16" },
+  tguiScrollbar_getViewportSize: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiScrollbar_setMaximum(tguiWidget * thisWidget, unsigned int value);
@@ -9433,7 +9447,7 @@ export const CTGUI_SYMBOLS = {
    * @param value `unsigned int`
    * @returns `void`
    */
-  tguiScrollbar_setMaximum: { parameters: ["pointer", "u16"], result: "void" },
+  tguiScrollbar_setMaximum: { parameters: ["pointer", "u32"], result: "void" },
   /**
    * @original ```c
    * unsigned int tguiScrollbar_getMaximum(const tguiWidget * thisWidget);
@@ -9442,7 +9456,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiScrollbar_getMaximum: { parameters: ["pointer"], result: "u16" },
+  tguiScrollbar_getMaximum: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiScrollbar_setValue(tguiWidget * thisWidget, unsigned int value);
@@ -9452,7 +9466,7 @@ export const CTGUI_SYMBOLS = {
    * @param value `unsigned int`
    * @returns `void`
    */
-  tguiScrollbar_setValue: { parameters: ["pointer", "u16"], result: "void" },
+  tguiScrollbar_setValue: { parameters: ["pointer", "u32"], result: "void" },
   /**
    * @original ```c
    * unsigned int tguiScrollbar_getValue(const tguiWidget * thisWidget);
@@ -9461,7 +9475,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiScrollbar_getValue: { parameters: ["pointer"], result: "u16" },
+  tguiScrollbar_getValue: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiScrollbar_setScrollAmount(tguiWidget * thisWidget, unsigned int value);
@@ -9472,7 +9486,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiScrollbar_setScrollAmount: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -9483,7 +9497,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiScrollbar_getScrollAmount: { parameters: ["pointer"], result: "u16" },
+  tguiScrollbar_getScrollAmount: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiScrollbar_setPolicy(tguiWidget * thisWidget, tguiScrollbarPolicy value);
@@ -9542,7 +9556,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiScrollbar_getMaxValue: { parameters: ["pointer"], result: "u16" },
+  tguiScrollbar_getMaxValue: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * float tguiScrollbar_getDefaultWidth(const tguiWidget * thisWidget);
@@ -9956,7 +9970,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiSpinControl_setDecimalPlaces: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -9967,7 +9981,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiSpinControl_getDecimalPlaces: { parameters: ["pointer"], result: "u16" },
+  tguiSpinControl_getDecimalPlaces: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiSpinControl_setSpinButtonWidth(tguiWidget * thisWidget, float value);
@@ -10106,7 +10120,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `int`
    */
-  tguiTabs_getSelectedIndex: { parameters: ["pointer"], result: "i16" },
+  tguiTabs_getSelectedIndex: { parameters: ["pointer"], result: "i32" },
   /**
    * @original ```c
    * int tguiTabs_getHoveredIndex(const tguiWidget * thisWidget);
@@ -10115,7 +10129,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `int`
    */
-  tguiTabs_getHoveredIndex: { parameters: ["pointer"], result: "i16" },
+  tguiTabs_getHoveredIndex: { parameters: ["pointer"], result: "i32" },
   /**
    * @original ```c
    * size_t tguiTabs_getTabsCount(const tguiWidget * thisWidget);
@@ -10317,7 +10331,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `int`
    */
-  tguiTabContainer_getSelectedIndex: { parameters: ["pointer"], result: "i16" },
+  tguiTabContainer_getSelectedIndex: { parameters: ["pointer"], result: "i32" },
   /**
    * @original ```c
    * tguiUtf32 tguiTabContainer_getTabText(const tguiWidget * thisWidget, size_t index);
@@ -10481,7 +10495,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiTabContainer_getIndex: {
     parameters: ["pointer", "pointer"],
-    result: "i16",
+    result: "i32",
   },
   /**
    * @original ```c
@@ -10502,7 +10516,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `Widget *`
    */
   tguiTabContainer_getPanel: {
-    parameters: ["pointer", "i16"],
+    parameters: ["pointer", "i32"],
     result: "pointer",
   },
   /**
@@ -10790,7 +10804,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiTreeView_setItemHeight: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -10801,7 +10815,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisWidget `const Widget *`
    * @returns `unsigned int`
    */
-  tguiTreeView_getItemHeight: { parameters: ["pointer"], result: "u16" },
+  tguiTreeView_getItemHeight: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * tguiBool tguiTreeView_addItem(tguiWidget * thisWidget, const tguiUtf32 * hierarchy, size_t hierarchyLength, tguiBool createParents);
@@ -10949,7 +10963,7 @@ export const CTGUI_SYMBOLS = {
    */
   tguiTreeView_getItemIndexInParent: {
     parameters: ["pointer", "pointer", "usize"],
-    result: "i16",
+    result: "i32",
   },
   /**
    * @original ```c
@@ -11000,7 +11014,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `const TreeViewConstNode *`
    */
   tguiTreeView_getNode: {
-    parameters: ["pointer", "pointer", "u16"],
+    parameters: ["pointer", "pointer", "u32"],
     result: "pointer",
   },
   /**
@@ -20188,7 +20202,7 @@ export const CTGUI_SYMBOLS = {
    * @returns `void`
    */
   tguiWidgetRenderer_setTextSize: {
-    parameters: ["pointer", "u16"],
+    parameters: ["pointer", "u32"],
     result: "void",
   },
   /**
@@ -20199,7 +20213,7 @@ export const CTGUI_SYMBOLS = {
    * @param thisRenderer `const Renderer *`
    * @returns `unsigned int`
    */
-  tguiWidgetRenderer_getTextSize: { parameters: ["pointer"], result: "u16" },
+  tguiWidgetRenderer_getTextSize: { parameters: ["pointer"], result: "u32" },
   /**
    * @original ```c
    * void tguiWidgetRenderer_setTransparentTexture(tguiRenderer * thisRenderer, tguiBool value);

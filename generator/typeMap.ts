@@ -7,6 +7,7 @@ export type StructMeta = {
 
 // prettier-ignore
 export const TYPE_MAP: TypeMap = {
+  "char": "i8",
   "const char *": "buffer",
   "const sfEvent *": "pointer",
   "const size_t *": "pointer",
@@ -34,9 +35,14 @@ export const TYPE_MAP: TypeMap = {
   "const tguiWidget *": "pointer",
   "const uint8_t *": "buffer",
   "const unsigned int *": "pointer",
+  "double": "f64",
   "float": "f32",
-  "int": "i16",
+  "int": "i32",
+  "long long int": "i64",
   "sfRenderWindow *": "pointer",
+  "short int": "i16",
+  "signed char": "i8",
+  "signed int": "i32",
   "size_t *": "pointer",
   "size_t": "usize",
   "tguiAutoLayout": "i16",
@@ -314,6 +320,9 @@ export const TYPE_MAP: TypeMap = {
   "tguiVerticalAlignment": "i16",
   "tguiWidget **": "pointer",
   "tguiWidget *": "pointer",
-  "unsigned int": "u16",
+  "unsigned char": "u8",
+  "unsigned int": "u32",
+  "unsigned long long int": "u64",
+  "unsigned short int": "u16",
   "void": "void",
-};
+} as const;
