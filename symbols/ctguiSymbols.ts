@@ -4818,13 +4818,11 @@ export const CTGUI_SYMBOLS = {
    * ```
    *
    * @param window `sfRenderWindow *`
-   * @param color `sfColor`
+   * @param color `sfColor { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char }`
    * @returns `void`
    */
   renderWindow_clear: {
-    parameters: ["pointer", {
-      struct: ["sfUint8", "sfUint8", "sfUint8", "sfUint8"],
-    }],
+    parameters: ["pointer", { struct: ["u8", "u8", "u8", "u8"] }],
     result: "void",
   },
   /**
