@@ -39,6 +39,7 @@ export const TYPE_MAP: TypeMap = {
   "float": "f32",
   "int": "i32",
   "long long int": "i64",
+  "sfBool": "i32",
   "sfRenderWindow *": "pointer",
   "short int": "i16",
   "signed char": "i8",

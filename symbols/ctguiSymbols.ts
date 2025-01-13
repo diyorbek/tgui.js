@@ -4792,7 +4792,7 @@ export const CTGUI_SYMBOLS = {
    * @param window `const sfWindow *`
    * @returns `sfBool`
    */
-  renderWindow_isOpen: { parameters: ["pointer"], result: "sfBool" },
+  renderWindow_isOpen: { parameters: ["pointer"], result: "i32" },
   /**
    * @original ```c
    * sfBool renderWindow_pollEvent(sfRenderWindow * window, sfEvent * event);
@@ -4802,10 +4802,7 @@ export const CTGUI_SYMBOLS = {
    * @param event `sfEvent *`
    * @returns `sfBool`
    */
-  renderWindow_pollEvent: {
-    parameters: ["pointer", "pointer"],
-    result: "sfBool",
-  },
+  renderWindow_pollEvent: { parameters: ["pointer", "pointer"], result: "i32" },
   /**
    * @original ```c
    * void renderWindow_close(sfRenderWindow * window);
