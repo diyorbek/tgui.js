@@ -3,9 +3,22 @@ import { CTGUI_SYMBOLS } from "./symbols/ctguiSymbols.ts";
 
 export * from "./utils.ts";
 
-const libPath = import.meta.dirname + "/build/libTGUIJS.dylib";
+const libName = "libctgui";
+const libExt = "dylib";
+const libPath = `${import.meta.dirname}/build/${libName}.${libExt}`;
 
-export const CTGUI_LIB = Deno.dlopen(libPath, {
+const lib = Deno.readFileSync(libPath);
+const tempPath = Deno.makeTempFileSync({
+  prefix: libName,
+  suffix: libExt,
+});
+Deno.writeFileSync(tempPath, lib);
+
+addEventListener("unload", () => {
+  Deno.removeSync(tempPath);
+});
+
+export const CTGUI_LIB = Deno.dlopen(tempPath, {
   ...CTGUI_SYMBOLS,
   ...CSFML_SYMBOLS,
 });

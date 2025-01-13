@@ -1,8 +1,4 @@
 export const CSFML_SYMBOLS = {
-  sfRenderWindow_create: {
-    parameters: [{ struct: ["u32", "u32", "u32"] }, "buffer", "u8"],
-    result: "pointer",
-  },
   sfRenderWindow_isOpen: {
     parameters: ["pointer"],
     result: "bool",
@@ -35,8 +31,4 @@ export const CSFML_SYMBOLS = {
     parameters: ["pointer"],
     result: "void",
   },
-  // mains: {
-  //   parameters: [{ struct: ["u32", "u32", "u32"] }, "buffer", "u8"],
-  //   result: "i32",
-  // },
 } as const;

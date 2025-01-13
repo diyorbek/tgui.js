@@ -1,4 +1,11 @@
 {
   "C_Cpp.default.compilerPath": "/usr/bin/clang++",
-  "deno.enable": true
+  "cmake.configureOnEdit": false,
+  "cmake.configureOnOpen": false,
+  "deno.enable": true,
+  "files.associations": {
+    "*.css": "tailwindcss",
+    "locale": "cpp",
+    "csfml-graphics.h": "c"
+  }
 }

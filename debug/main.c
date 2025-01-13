@@ -31,7 +31,7 @@ int main() {
                                         tguiColor_fromRGB(128, 220, 128));
   tguiWidgetRenderer_destroy(buttonRenderer);
 
-  tguiWidget_signalConnect(button, U"Pressed", func);
+  tguiWidget_signalConnect(button, "Pressed", func);
 
   while (sfRenderWindow_isOpen(window)) {
     sfEvent event;

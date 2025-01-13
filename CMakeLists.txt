@@ -1,26 +1,56 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.24)
 project(ctgui_project)
 
 include(FetchContent)
 
 set(SFML_VERSION "2.6.2")
+set(SFML_BUILD_AUDIO FALSE)
+set(SFML_BUILD_NETWORK FALSE)
+set(CSFML_BUILD_AUDIO FALSE)
+set(CSFML_BUILD_NETWORK FALSE)
+
+set(SFML_USE_STATIC_STD_LIBS TRUE)
+set(BUILD_SHARED_LIBS FALSE)
+
+set(FT_DISABLE_BROTLI TRUE) # Disable brotli as it's non-system dependency
+
+set(TGUI_BUILD_GUI_BUILDER FALSE) # Exclude GUI builder because it causes freetype static linking issues
+set(CTGUI_LINK_TGUI_STATICALLY TRUE)
+set(CSFML_LINK_SFML_STATICALLY TRUE)
 set(TGUI_BACKEND SFML_GRAPHICS)
 set(TGUI_BUILD_FRAMEWORK FALSE)
+set(CTGUI_USE_CSFML_VERSION 2)
 set(CTGUI_HAS_BACKEND_CSFML_GRAPHICS 1)
-option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 
 # Remove C++ stdlib flag for C compilation
 if(APPLE)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-command-line-argument")
 endif()
 
+# Add necessary preprocessor definitions for static linking
+add_definitions(-DSFML_STATIC -DTGUI_STATIC)
+
+# Fetch FreeType source
+FetchContent_Declare(
+  freetype
+  GIT_REPOSITORY https://gitlab.freedesktop.org/freetype/freetype.git
+  GIT_TAG        VER-2-13-2 # Change this to the desired FreeType version
+  GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(freetype)
+
+set(FREETYPE_INCLUDE_DIRS ${freetype_SOURCE_DIR}/include)
+set(FREETYPE_LIBRARY ${freetype_BINARY_DIR}/libfreetyped.a)
+
 # Fetch SFML
 FetchContent_Declare(
     SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
     GIT_TAG "${SFML_VERSION}"
+    GIT_SHALLOW TRUE
 )
 FetchContent_MakeAvailable(SFML)
+# add_dependencies(sfml-graphics freetype)
 
 # Configure paths before fetching CSFML
 set(SFML_ROOT "${sfml_SOURCE_DIR}")
@@ -43,41 +73,41 @@ set(SFML_FOUND TRUE)
 FetchContent_Declare(
     CSFML
     GIT_REPOSITORY https://github.com/SFML/CSFML.git
-    GIT_TAG 2.6.1
+    GIT_TAG 2.6.x
+    GIT_SHALLOW TRUE
 )
 FetchContent_MakeAvailable(CSFML)
 
-FetchContent_Declare(TGUI
+FetchContent_Declare(
+    TGUI
     GIT_REPOSITORY https://github.com/texus/TGUI.git
-    GIT_TAG v1.6.0)
+    GIT_TAG v1.6.0
+    GIT_SHALLOW TRUE
+)
 FetchContent_MakeAvailable(TGUI)
 
-FetchContent_Declare(CTGUI
+FetchContent_Declare(
+    CTGUI
     GIT_REPOSITORY https://github.com/texus/CTGUI.git
-    GIT_TAG v1.6)
+    GIT_TAG v1.6
+    GIT_SHALLOW TRUE
+)
 
 set(CSFML_INCLUDE_DIR ${CSFML_SOURCE_DIR}/include)
-set(CSFML_LIBRARY_DIR ${CSFML_BINARY_DIR}/lib)
 FetchContent_MakeAvailable(CTGUI)
 
-# Add executable with main.c in root directory
+# Add test executable
 add_executable(${PROJECT_NAME} debug/main.c)
 
-# Link all CSFML libraries
+# Link libraries
+target_link_libraries(ctgui PUBLIC freetype)
 target_link_libraries(${PROJECT_NAME} PRIVATE ctgui)
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    BUILD_WITH_INSTALL_RPATH TRUE
+    INSTALL_RPATH "@executable_path;@executable_path/../lib"
+)
 
 # Include directories
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${csfml_SOURCE_DIR}/include
 )
-
-set(LIBRARY_SOURCES bindings/bindings.cpp)
-
-if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
-    list(APPEND LIBRARY_SOURCES debug/lib.c)
-endif()
-
-add_library(TGUIJS SHARED ${LIBRARY_SOURCES})
-target_link_libraries(TGUIJS PRIVATE ctgui)
-
-# TODO: Include windows configuration for copying the DLLs
