@@ -1,6 +1,12 @@
-mode=Debug # Release
+mode=$1 # Debug | Release
 
 if [[ "$OS" == *Windows* ]]; then
+    if [[ "$mode" == "Debug" ]]; then
+        libname="ctgui-d-1.dll"
+    else
+        libname="ctgui-1.dll"
+    fi
+
     cmake -S . -B build -DCMAKE_BUILD_TYPE=$mode -G "MinGW Makefiles"
     
     # Build CSFML static library by modifying below files
@@ -22,9 +28,14 @@ if [[ "$OS" == *Windows* ]]; then
 
     cmake --build build --config $mode
 
-    find build/_deps/*-build -name '*.dll' | xargs cp -t build
-    find build/lib -name '*.dll' | xargs cp -t build
+    cp build/_deps/ctgui-build/src/CTGUI/$libname build/ctgui-ext.dll
 else
+    if [[ "$mode" == "Debug" ]]; then
+        libname="libctgui-d.1.5.0.dylib"
+    else
+        libname="libctgui.1.5.0.dylib"
+    fi
+
     cmake -S . -B build -DCMAKE_BUILD_TYPE=$mode
 
     # Extend CTGUI with custom functions
@@ -41,12 +52,6 @@ else
     ' build/_deps/ctgui-src/src/CTGUI/CMakeLists.txt
 
     cmake --build build --config $mode
-fi
 
-# Copy the library to the build directory
-if [[ "$OS" == *Windows* ]]; then
-    echo ""
-else
-    cp build/_deps/ctgui-build/src/CTGUI/libctgui-d.1.5.0.dylib build
-    mv build/libctgui-d.1.5.0.dylib build/libctgui.dylib
+    cp build/_deps/ctgui-build/src/CTGUI/$libname build/libctgui-ext.dylib
 fi
