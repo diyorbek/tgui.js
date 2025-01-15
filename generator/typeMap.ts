@@ -39,6 +39,29 @@ export const TYPE_MAP: TypeMap = {
   "float": "f32",
   "int": "i32",
   "long long int": "i64",
+  "sfBool": "i32",
+  "sfColor": [
+    {
+      name: "r",
+      type: "unsigned char",
+      nativeType: "u8",
+    },
+    {
+      name: "g",
+      type: "unsigned char",
+      nativeType: "u8",
+    },
+    {
+      name: "b",
+      type: "unsigned char",
+      nativeType: "u8",
+    },
+    {
+      name: "a",
+      type: "unsigned char",
+      nativeType: "u8",
+    }
+  ],
   "sfRenderWindow *": "pointer",
   "short int": "i16",
   "signed char": "i8",

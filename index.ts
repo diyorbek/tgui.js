@@ -1,11 +1,10 @@
-import { CSFML_SYMBOLS } from "./symbols/csfmlSymbols.ts";
 import { CTGUI_SYMBOLS } from "./symbols/ctguiSymbols.ts";
 
 export * from "./utils.ts";
 
 const libName = "libctgui";
-const libExt = "dylib";
-const libPath = `${import.meta.dirname}/build/${libName}.${libExt}`;
+const libExt = ".dylib";
+const libPath = `${import.meta.dirname}/build/${libName}${libExt}`;
 
 const lib = Deno.readFileSync(libPath);
 const tempPath = Deno.makeTempFileSync({
@@ -19,6 +18,5 @@ addEventListener("unload", () => {
 });
 
 export const CTGUI_LIB = Deno.dlopen(tempPath, {
-  ...CTGUI_SYMBOLS,
-  ...CSFML_SYMBOLS,
+  ...CTGUI_SYMBOLS
 });

@@ -1,6 +1,3 @@
-// deno-lint-ignore-file
-// @ts-nocheck
-
 import { CTGUI_LIB, encodeUTF32 } from "../index.ts";
 
 function main() {
@@ -17,26 +14,26 @@ function main() {
 
   CTGUI_LIB.symbols.tguiGui_add(gui, button, title);
 
-  while (CTGUI_LIB.symbols.sfRenderWindow_isOpen(window)) {
+  while (CTGUI_LIB.symbols.renderWindow_isOpen(window)) {
     const event = CTGUI_LIB.symbols.sfEvent_create();
 
-    while (CTGUI_LIB.symbols.sfRenderWindow_pollEvent(window, event)) {
+    while (CTGUI_LIB.symbols.renderWindow_pollEvent(window, event)) {
       console.log("Event");
       CTGUI_LIB.symbols.tguiGuiCSFMLGraphics_handleEvent(gui, event);
     }
 
-    CTGUI_LIB.symbols.sfRenderWindow_clear(
+    CTGUI_LIB.symbols.renderWindow_clear(
       window,
       new Uint8Array([0, 100, 20, 255])
     );
     CTGUI_LIB.symbols.tguiGui_draw(gui);
-    CTGUI_LIB.symbols.sfRenderWindow_display(window);
+    CTGUI_LIB.symbols.renderWindow_display(window);
     CTGUI_LIB.symbols.sfEvent_destroy(event);
   }
 
   CTGUI_LIB.symbols.tguiWidget_destroy(button);
   CTGUI_LIB.symbols.tguiGuiCSFMLGraphics_destroy(gui);
-  CTGUI_LIB.symbols.sfRenderWindow_destroy(window);
+  CTGUI_LIB.symbols.renderWindow_destroy(window);
 }
 
 main();
