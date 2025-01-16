@@ -16,23 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install CMake
-        uses: lukka/get-cmake@latest
-
-      - name: Setup MinGW
-        uses: egor-tensin/setup-mingw@v2
-        with:
-          platform: x64
-
-      - name: Configure CMake
+      - name: Configure
         run: |
-          cmake --version
-          g++ --version
-          ./configure ${{env.BUILD_TYPE}}
+          & "C:\Program Files\Git\bin\bash.exe" configure ${{env.BUILD_TYPE}}
 
       - name: Build
         run: |
-          ./cmakebuild ${{env.BUILD_TYPE}}
+          & "C:\Program Files\Git\bin\bash.exe" cmakebuild ${{env.BUILD_TYPE}}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
