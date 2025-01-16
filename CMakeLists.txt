@@ -40,7 +40,12 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(freetype)
 
 set(FREETYPE_INCLUDE_DIRS ${freetype_SOURCE_DIR}/include)
-set(FREETYPE_LIBRARY ${freetype_BINARY_DIR}/libfreetyped.a)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(FREETYPE_LIBRARY ${freetype_BINARY_DIR}/libfreetyped.a)
+else()
+    set(FREETYPE_LIBRARY ${freetype_BINARY_DIR}/libfreetype.a)
+endif()
 
 # Fetch SFML
 FetchContent_Declare(

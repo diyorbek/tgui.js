@@ -1,31 +1,10 @@
 name: Build Project
 
-on:
-  push:
-    branches: ["*"]
-  pull_request:
-    branches: ["*"]
+on: [push, pull_request]
 
 env:
   BUILD_TYPE: Release
 
 jobs:
   build:
-    runs-on: windows-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Configure
-        run: |
-          & "C:\Program Files\Git\bin\bash.exe" configure ${{env.BUILD_TYPE}}
-
-      - name: Build
-        run: |
-          & "C:\Program Files\Git\bin\bash.exe" cmakebuild ${{env.BUILD_TYPE}}
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: windows-build
-          path: ${{github.workspace}}/build/ctgui-ext.dll
+    uses: ./.github/workflows/build.yml

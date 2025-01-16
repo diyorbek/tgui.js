@@ -1,0 +1,57 @@
+name: Build
+
+on:
+  workflow_call:
+    outputs:
+      windows_artifact:
+        value: ${{ jobs.windows-build.outputs.artifact_name }}
+      macos_artifact:
+        value: ${{ jobs.macos-build.outputs.artifact_name }}
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  windows-build:
+    runs-on: windows-latest
+
+    outputs:
+      artifact_name: windows-build
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: |
+          & "C:\Program Files\Git\bin\bash.exe" configure ${{env.BUILD_TYPE}}
+
+      - name: Build
+        run: |
+          & "C:\Program Files\Git\bin\bash.exe" cmakebuild ${{env.BUILD_TYPE}}
+
+      - name: Upload Windows build
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: ${{github.workspace}}/build/ctgui-ext.dll
+
+  macos-build:
+    runs-on: macos-latest
+
+    outputs:
+      artifact_name: macos-build
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: ./configure ${{env.BUILD_TYPE}}
+
+      - name: Build
+        run: ./cmakebuild ${{env.BUILD_TYPE}}
+
+      - name: Upload macOS build
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-build
+          path: ${{github.workspace}}/build/libctgui-ext.dylib
