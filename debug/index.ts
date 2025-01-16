@@ -1,10 +1,8 @@
-import { CTGUI_SYMBOLS } from "./symbols/ctguiSymbols.ts";
-
-export * from "./utils.ts";
+import { CTGUI_SYMBOLS } from "../symbols/ctguiSymbols.ts";
 
 const libName = "libctgui";
 const libExt = ".dylib";
-const libPath = `${import.meta.dirname}/build/${libName}${libExt}`;
+const libPath = `${import.meta.dirname}/${libName}${libExt}`;
 
 const lib = Deno.readFileSync(libPath);
 const tempPath = Deno.makeTempFileSync({
@@ -18,5 +16,5 @@ addEventListener("unload", () => {
 });
 
 export const CTGUI_LIB = Deno.dlopen(tempPath, {
-  ...CTGUI_SYMBOLS
+  ...CTGUI_SYMBOLS,
 });

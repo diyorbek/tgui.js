@@ -1,8 +1,8 @@
 #!/bin/bash
 
 deno compile \
-  --include build/libctgui.dylib \
+  --include libctgui.dylib \
   --allow-ffi \
   --allow-write \
   --allow-read \
-  debug/lib.ts
+  lib.ts
