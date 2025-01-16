@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
+  create-release:
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download windows build
+        uses: actions/download-artifact@v4
+        with:
+          pattern: windows-build
+          path: artifacts
+
+      - name: Download macos build
+        uses: actions/download-artifact@v4
+        with:
+          pattern: macos-build
+          path: artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: artifacts/**/*
+          name: Release ${{ github.ref_name }}
+          body: |
+            Release ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
