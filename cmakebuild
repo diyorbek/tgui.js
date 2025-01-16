@@ -1,0 +1,25 @@
+#!/bin/bash
+
+mode=$1 # Debug | Release
+
+if [[ "$OS" == *Windows* ]]; then
+    if [[ "$mode" == "Debug" ]]; then
+        libname="ctgui-d-1.dll"
+    else
+        libname="ctgui-1.dll"
+    fi
+
+    cmake --build build --config $mode
+
+    cp build/_deps/ctgui-build/src/CTGUI/$libname build/ctgui-ext.dll
+else
+    if [[ "$mode" == "Debug" ]]; then
+        libname="libctgui-d.1.5.0.dylib"
+    else
+        libname="libctgui.1.5.0.dylib"
+    fi
+
+    cmake --build build --config $mode
+
+    cp build/_deps/ctgui-build/src/CTGUI/$libname build/libctgui-ext.dylib
+fi

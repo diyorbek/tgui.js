@@ -1,0 +1,41 @@
+name: Build Project
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Setup MinGW
+        uses: egor-tensin/setup-mingw@v2
+        with:
+          platform: x64
+
+      - name: Configure CMake
+        run: |
+          cmake --version
+          g++ --version
+          ./configure ${{env.BUILD_TYPE}}
+
+      - name: Build
+        run: |
+          ./cmakebuild ${{env.BUILD_TYPE}}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-build
+          path: ${{github.workspace}}/build/ctgui-ext.dll

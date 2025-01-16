@@ -50,7 +50,6 @@ FetchContent_Declare(
     GIT_SHALLOW TRUE
 )
 FetchContent_MakeAvailable(SFML)
-# add_dependencies(sfml-graphics freetype)
 
 # Configure paths before fetching CSFML
 set(SFML_ROOT "${sfml_SOURCE_DIR}")
