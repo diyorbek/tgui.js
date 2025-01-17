@@ -12,7 +12,10 @@ set(CSFML_BUILD_NETWORK FALSE)
 set(SFML_USE_STATIC_STD_LIBS TRUE)
 set(BUILD_SHARED_LIBS FALSE)
 
-set(FT_DISABLE_BROTLI TRUE) # Disable brotli as it's non-system dependency
+# Disable non-system dependencies of Freetype
+set(FT_DISABLE_BROTLI TRUE) 
+set(FT_DISABLE_PNG FALSE)
+set(FT_DISABLE_HARFBUZZ FALSE)
 
 set(TGUI_BUILD_GUI_BUILDER FALSE) # Exclude GUI builder because it causes freetype static linking issues
 set(CTGUI_LINK_TGUI_STATICALLY TRUE)
@@ -106,6 +109,7 @@ add_executable(${PROJECT_NAME} debug/main.c)
 # Link libraries
 target_link_libraries(ctgui PUBLIC freetype)
 target_link_libraries(${PROJECT_NAME} PRIVATE ctgui)
+
 set_target_properties(${PROJECT_NAME} PROPERTIES
     BUILD_WITH_INSTALL_RPATH TRUE
     INSTALL_RPATH "@executable_path;@executable_path/../lib"
