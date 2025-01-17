@@ -14,8 +14,8 @@ set(BUILD_SHARED_LIBS FALSE)
 
 # Disable non-system dependencies of Freetype
 set(FT_DISABLE_BROTLI TRUE) 
-set(FT_DISABLE_PNG FALSE)
-set(FT_DISABLE_HARFBUZZ FALSE)
+set(FT_DISABLE_PNG TRUE)
+set(FT_DISABLE_HARFBUZZ TRUE)
 
 set(TGUI_BUILD_GUI_BUILDER FALSE) # Exclude GUI builder because it causes freetype static linking issues
 set(CTGUI_LINK_TGUI_STATICALLY TRUE)
