@@ -1,6 +1,6 @@
-import { CTGUI_SYMBOLS } from "../symbols/ctguiSymbols.ts";
+import { loadDynamicLibrary } from "../mod.ts";
 
-const libName = "libctgui";
+const libName = "libctgui-ext";
 const libExt = ".dylib";
 const libPath = `${import.meta.dirname}/${libName}${libExt}`;
 
@@ -15,6 +15,4 @@ addEventListener("unload", () => {
   Deno.removeSync(tempPath);
 });
 
-export const CTGUI_LIB = Deno.dlopen(tempPath, {
-  ...CTGUI_SYMBOLS,
-});
+export const CTGUI_LIB = loadDynamicLibrary(libPath);

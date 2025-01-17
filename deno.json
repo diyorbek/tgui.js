@@ -1,0 +1,9 @@
+{
+  "name": "@denative/ctgui",
+  "version": "0.0.1",
+  "exports": "./mod.ts",
+  "license": "MIT",
+  "publish": {
+    "include": ["LICENSE", "README.md", "symbols/**/*.ts", "mod.ts"]
+  }
+}
