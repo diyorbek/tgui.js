@@ -9,6 +9,8 @@ const functions: string[] = [];
 const structs: string[] = [];
 
 const functionDeclarations: any[] = [];
+// const structDeclarations: Record<string, any> = {};
+const enumDeclarations: Record<string, any> = {};
 
 function getNativeType(resultType: string): any {
   if (TYPE_MAP[resultType]) {
@@ -83,9 +85,9 @@ async function processAst() {
 
         const parameters = node.inner
           .filter((inner) => inner.kind === "ParmVarDecl")
-          .map((inner) => {
+          .map((inner, i) => {
             return {
-              name: inner.name,
+              name: inner.name || `arg${i}`,
               nativeType: getNativeType(inner.type!.qualType),
               type: inner.type!.qualType,
             };
@@ -188,6 +190,11 @@ function generateSymbols() {
 await processAst();
 
 generateSymbols();
+
+Deno.writeFileSync(
+  "funcs.json",
+  encoder.encode(JSON.stringify(functionDeclarations))
+);
 
 interface Ast {
   inner: Node[];

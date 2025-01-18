@@ -38,6 +38,7 @@ export const TYPE_MAP: TypeMap = {
   "double": "f64",
   "float": "f32",
   "int": "i32",
+  "long long": "i64",
   "long long int": "i64",
   "sfBool": "i32",
   "sfColor": [
@@ -338,6 +339,28 @@ export const TYPE_MAP: TypeMap = {
           nativeType: "f32",
         },
       ],
+    },
+  ],
+  "tguiVertexColor": [
+    {
+      name: "r",
+      type: "unsigned char",
+      nativeType: "u8",
+    },
+    {
+      name: "g",
+      type: "unsigned char",
+      nativeType: "u8",
+    },
+    {
+      name: "b",
+      type: "unsigned char",
+      nativeType: "u8",
+    },
+    {
+      name: "a",
+      type: "unsigned char",
+      nativeType: "u8",
     },
   ],
   "tguiVerticalAlignment": "i16",

@@ -1,3 +1,4 @@
+import { Button, Gui, GuiCSFMLGraphics, renderWindow, sfEvent } from "../ui.ts";
 import { CTGUI_LIB } from "./index.ts";
 
 export function encodeUTF32(str: string) {
@@ -14,37 +15,33 @@ export function encodeUTF32(str: string) {
 function main() {
   const title = new TextEncoder().encode("Hello, World!\0");
   const mode = new Uint32Array([800, 300, 32]);
-  const window = CTGUI_LIB.symbols.renderWindow_create(mode, title, 7);
-  const gui = CTGUI_LIB.symbols.tguiGuiCSFMLGraphics_create(window);
+  const window = new renderWindow(mode, title, 7);
+  const sfGui = new GuiCSFMLGraphics(window.pointer);
 
-  const button = CTGUI_LIB.symbols.tguiButton_create();
-  CTGUI_LIB.symbols.tguiButtonBase_setText(
-    button,
-    encodeUTF32("Hello, World!")
-  );
+  const button = new Button();
+  button.setText(encodeUTF32("Hello, World!"));
 
-  CTGUI_LIB.symbols.tguiGui_add(gui, button, title);
+  const gui = new Gui();
+  gui.add(sfGui.pointer, button.pointer, encodeUTF32(""));
 
-  while (CTGUI_LIB.symbols.renderWindow_isOpen(window)) {
-    const event = CTGUI_LIB.symbols.sfEvent_create();
+  while (window.isOpen()) {
+    const event = new sfEvent();
 
-    while (CTGUI_LIB.symbols.renderWindow_pollEvent(window, event)) {
+    while (window.pollEvent(event.pointer)) {
       console.log("Event");
-      CTGUI_LIB.symbols.tguiGuiCSFMLGraphics_handleEvent(gui, event);
+      sfGui.handleEvent(event.pointer);
     }
 
-    CTGUI_LIB.symbols.renderWindow_clear(
-      window,
-      new Uint8Array([0, 100, 20, 255])
-    );
-    CTGUI_LIB.symbols.tguiGui_draw(gui);
-    CTGUI_LIB.symbols.renderWindow_display(window);
-    CTGUI_LIB.symbols.sfEvent_destroy(event);
+    window.clear(new Uint8Array([0, 100, 20, 255]));
+
+    gui.draw(sfGui.pointer);
+    window.display();
+    event.destroy(event.pointer);
   }
 
-  CTGUI_LIB.symbols.tguiWidget_destroy(button);
-  CTGUI_LIB.symbols.tguiGuiCSFMLGraphics_destroy(gui);
-  CTGUI_LIB.symbols.renderWindow_destroy(window);
+  button.destroy();
+  sfGui.destroy();
+  window.destroy();
 }
 
 main();
