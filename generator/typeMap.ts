@@ -1,4 +1,5 @@
-type TypeMap = Record<string, Deno.NativeResultType | StructMeta[]>;
+type CNativeTypeMap = Record<string, Deno.NativeResultType | StructMeta[]>;
+
 export type StructMeta = {
   name: string;
   type: string;
@@ -6,7 +7,7 @@ export type StructMeta = {
 };
 
 // prettier-ignore
-export const TYPE_MAP: TypeMap = {
+export const C_NATIVE_TYPE_MAP: CNativeTypeMap = {
   "char": "i8",
   "const char *": "buffer",
   "const sfEvent *": "pointer",

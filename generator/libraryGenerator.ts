@@ -1,5 +1,5 @@
 import { FUNCTION_DECLARATIONS } from "./declarations.ts";
-import { type StructMeta, TYPE_MAP } from "./typeMap.ts";
+import { type StructMeta, C_NATIVE_TYPE_MAP } from "./typeMap.ts";
 
 const encoder = new TextEncoder();
 
@@ -53,12 +53,12 @@ const names: Record<
   }
 > = {};
 
-Object.keys(TYPE_MAP).forEach((struct) => {
+Object.keys(C_NATIVE_TYPE_MAP).forEach((struct) => {
   const declName = struct !== "tgui" ? struct.replace("tgui", "") : struct;
 
-  if (typeof TYPE_MAP[struct] !== "string") {
+  if (typeof C_NATIVE_TYPE_MAP[struct] !== "string") {
     names[declName] ??= { methods: [] };
-    names[declName].fields = TYPE_MAP[struct] as StructMeta[];
+    names[declName].fields = C_NATIVE_TYPE_MAP[struct] as StructMeta[];
   }
 });
 
@@ -72,8 +72,8 @@ FUNCTION_DECLARATIONS.forEach((func) => {
   names[declName] ??= { methods: [] };
   names[declName].methods!.push(func);
 
-  if (typeof TYPE_MAP[struct] !== "string") {
-    names[declName].fields = TYPE_MAP[struct] as StructMeta[];
+  if (typeof C_NATIVE_TYPE_MAP[struct] !== "string") {
+    names[declName].fields = C_NATIVE_TYPE_MAP[struct] as StructMeta[];
   }
 });
 
@@ -93,7 +93,7 @@ const DENO_TYPE_MAP = {
   f32: "number",
   f64: "number",
   bool: "boolean",
-  void: "undefined",
+  void: "void",
   buffer: "BufferSource",
   pointer: "Deno.PointerValue<unknown>",
   function: "Deno.PointerValue<unknown>",
@@ -110,7 +110,7 @@ function getJSTypeDecl(nativeType: Deno.NativeType, cType: string) {
   return DENO_TYPE_MAP[nativeType];
 }
 
-let code = `import { accessLib } from "./ctgui.ts";\n\n`;
+let code = `import { accessLib, type ResultType } from "./ctgui.ts";\n\n`;
 const CTGUI_LIB = "accessLib()";
 
 Object.entries(names)
@@ -130,7 +130,7 @@ Object.entries(names)
       if (!body.fields) return "";
 
       const fields = body.fields.map((field) => {
-        if (!(field.type in TYPE_MAP)) {
+        if (!(field.type in C_NATIVE_TYPE_MAP)) {
           console.log(field.type);
         }
 
@@ -194,7 +194,7 @@ Object.entries(names)
       return parameters
         .filter((p) => !isLocalPointerName(p.name))
         .map((p) => {
-          if (!(p.type in TYPE_MAP)) {
+          if (!(p.type in C_NATIVE_TYPE_MAP)) {
             // console.log(p.type);
           }
 
@@ -268,7 +268,7 @@ Object.entries(names)
 
             const pointerDecl = `
               protected ptr: Deno.PointerValue<unknown>;\n
-              get pointer() { return this.ptr }
+              get pointer(): Deno.PointerValue<unknown> { return this.ptr }
             `;
 
             if (
@@ -302,7 +302,7 @@ Object.entries(names)
 
             if (isCopyConstructor) {
               const override = inheritance ? "override" : "";
-              return `${override} ${name}(${params}) { return this.ptr = ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
+              return `${override} ${name}(${params}): Deno.PointerValue<unknown> { return this.ptr = ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
             }
 
             // custom exceptional cases
@@ -378,7 +378,7 @@ Object.entries(names)
 
             // const overload = createMethodOverload(declName, name, method);
 
-            return `${name}(${params}) { return ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
+            return `${name}(${params}): ResultType<'${method.name}'> { return ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
           })
           .join("\n\n") || ""
       );
@@ -391,4 +391,4 @@ Object.entries(names)
   }\n\n`;
   });
 
-Deno.stdout.writeSync(encoder.encode(code));
+Deno.stdout.writeSync(encoder.encode(code)) as Deno.FromNativeResultType;

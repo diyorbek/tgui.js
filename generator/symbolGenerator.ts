@@ -1,4 +1,4 @@
-import { type StructMeta, TYPE_MAP } from "./typeMap.ts";
+import { type StructMeta, C_NATIVE_TYPE_MAP } from "./typeMap.ts";
 
 const decoder = new TextDecoder();
 const encoder = new TextEncoder();
@@ -13,8 +13,8 @@ const functionDeclarations: any[] = [];
 // const enumDeclarations: Record<string, any> = {};
 
 function getNativeType(resultType: string): any {
-  if (TYPE_MAP[resultType]) {
-    return TYPE_MAP[resultType];
+  if (C_NATIVE_TYPE_MAP[resultType]) {
+    return C_NATIVE_TYPE_MAP[resultType];
   }
 
   if (resultType.match(/\(.*\)/)) {
@@ -115,7 +115,7 @@ async function processAst() {
 }
 
 function getStructDefinition(structName: string) {
-  const structNode = TYPE_MAP[structName];
+  const structNode = C_NATIVE_TYPE_MAP[structName];
 
   if (!(structNode instanceof Array)) {
     return "";

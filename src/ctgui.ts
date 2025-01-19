@@ -2,6 +2,10 @@ import { CTGUI_SYMBOLS } from "./ctguiSymbols.ts";
 
 type Library = Deno.DynamicLibrary<typeof CTGUI_SYMBOLS>;
 
+export type ResultType<T extends keyof Library["symbols"]> = ReturnType<
+  Library["symbols"][T]
+>;
+
 let CTGUI_LIB: Library | null = null;
 
 export function initDynamicLibrary(path: string): void {
