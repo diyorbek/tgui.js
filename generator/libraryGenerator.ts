@@ -5,7 +5,13 @@ const encoder = new TextEncoder();
 
 function createInheritanceGraph() {
   const command = new Deno.Command("grep", {
-    args: ["-R", "inherits", "build/_deps/ctgui-src/code-generator/templates"],
+    args: [
+      "-R",
+      "inherits",
+      `${
+        import.meta.dirname
+      }/../build/_deps/ctgui-src/code-generator/templates`,
+    ],
   });
   const { stdout } = command.outputSync();
   const output = new TextDecoder().decode(stdout);
@@ -70,7 +76,6 @@ FUNCTION_DECLARATIONS.forEach((func) => {
     names[declName].fields = TYPE_MAP[struct] as StructMeta[];
   }
 });
-// console.log(Object.keys(names).toSorted().join("\n"));
 
 // Deno.writeFileSync("ui.json", encoder.encode(JSON.stringify(names)));
 
@@ -105,7 +110,8 @@ function getJSTypeDecl(nativeType: Deno.NativeType, cType: string) {
   return DENO_TYPE_MAP[nativeType];
 }
 
-let code = `import { CTGUI_LIB } from "./debug/index.ts";\n\n`;
+let code = `import { accessLib } from "./ctgui.ts";\n\n`;
+const CTGUI_LIB = "accessLib()";
 
 Object.entries(names)
   .toSorted(([declA], [declB]) => {
@@ -271,19 +277,19 @@ Object.entries(names)
             ) {
               if (isIntercessor && !params) {
                 return `constructor(ptr?: Deno.PointerValue<unknown>) {
-                  super(ptr ? ptr : CTGUI_LIB.symbols.${method.name}());
+                  super(ptr ? ptr : ${CTGUI_LIB}.symbols.${method.name}());
                 }`;
               }
 
               if (inheritance) {
-                return `constructor(${params}) { super(CTGUI_LIB.symbols.${method.name}(${args})); }`;
+                return `constructor(${params}) { super(${CTGUI_LIB}.symbols.${method.name}(${args})); }`;
               }
 
               if (hasCopyConstructor && !params) {
                 return `${pointerDecl}
                 constructor(other?: Deno.PointerValue<unknown>) { 
                   if (typeof other === 'undefined') { 
-                    this.ptr = CTGUI_LIB.symbols.${method.name}(); 
+                    this.ptr = ${CTGUI_LIB}.symbols.${method.name}(); 
                   } else {
                     this.ptr = this.copy(other); // to make TS happy about uninitialized field
                   }
@@ -291,12 +297,12 @@ Object.entries(names)
               }
 
               return `${pointerDecl}
-                  constructor(${params}) { this.ptr = CTGUI_LIB.symbols.${method.name}(${args}); }`;
+                  constructor(${params}) { this.ptr = ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
             }
 
             if (isCopyConstructor) {
               const override = inheritance ? "override" : "";
-              return `${override} ${name}(${params}) { return this.ptr = CTGUI_LIB.symbols.${method.name}(${args}); }`;
+              return `${override} ${name}(${params}) { return this.ptr = ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
             }
 
             // custom exceptional cases
@@ -316,7 +322,7 @@ Object.entries(names)
                   arg2?: any,
                 ): void {
                   if (typeof arg1 === "number") {
-                    return CTGUI_LIB.symbols.tguiBoxLayoutRatios_add(
+                    return ${CTGUI_LIB}.symbols.tguiBoxLayoutRatios_add(
                       this.pointer,
                       widget,
                       arg1, // ratio
@@ -324,7 +330,7 @@ Object.entries(names)
                     );
                   }
                 
-                  return CTGUI_LIB.symbols.tguiBoxLayoutRatios_add(
+                  return ${CTGUI_LIB}.symbols.tguiBoxLayoutRatios_add(
                     this.pointer,
                     widget,
                     1, // ratio
@@ -351,7 +357,7 @@ Object.entries(names)
                   arg2?: any
                 ) {
                   if (typeof arg1 === "number") {
-                    return CTGUI_LIB.symbols.tguiBoxLayoutRatios_insert(
+                    return ${CTGUI_LIB}.symbols.tguiBoxLayoutRatios_insert(
                     this.pointer,
                       index,
                       widget,
@@ -360,7 +366,7 @@ Object.entries(names)
                     );
                   }
                 
-                  return CTGUI_LIB.symbols.tguiBoxLayoutRatios_insert(
+                  return ${CTGUI_LIB}.symbols.tguiBoxLayoutRatios_insert(
                     this.pointer,
                     index,
                     widget,
@@ -372,7 +378,7 @@ Object.entries(names)
 
             // const overload = createMethodOverload(declName, name, method);
 
-            return `${name}(${params}) { return CTGUI_LIB.symbols.${method.name}(${args}); }`;
+            return `${name}(${params}) { return ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
           })
           .join("\n\n") || ""
       );
@@ -385,20 +391,4 @@ Object.entries(names)
   }\n\n`;
   });
 
-Deno.writeFileSync("ui.ts", encoder.encode(code));
-
-class Z {
-  constructor() {}
-}
-
-class A extends Z {
-  constructor(other?: number);
-  constructor(arg?: any) {
-    if (typeof arg === "undefined") {
-      super();
-      return;
-    }
-
-    super();
-  }
-}
+Deno.stdout.writeSync(encoder.encode(code));

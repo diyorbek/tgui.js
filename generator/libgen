@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+
+deno --allow-run --allow-write libraryGenerator.ts | deno fmt - > lib.ts
+
+mv lib.ts ../src/lib.ts

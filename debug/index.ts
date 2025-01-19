@@ -1,4 +1,4 @@
-import { loadDynamicLibrary } from "../mod.ts";
+import { accessLib, initDynamicLibrary } from "../mod.ts";
 
 const libName = "libctgui-ext";
 const libExt = ".dylib";
@@ -15,4 +15,6 @@ addEventListener("unload", () => {
   Deno.removeSync(tempPath);
 });
 
-export const CTGUI_LIB = loadDynamicLibrary(libPath);
+initDynamicLibrary(libPath);
+
+export const CTGUI_LIB = accessLib();

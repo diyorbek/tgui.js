@@ -1,4 +1,10 @@
-import { Button, Gui, GuiCSFMLGraphics, renderWindow, sfEvent } from "../ui.ts";
+import {
+  Button,
+  Gui,
+  GuiCSFMLGraphics,
+  renderWindow,
+  sfEvent,
+} from "../mod.ts";
 import { CTGUI_LIB } from "./index.ts";
 
 export function encodeUTF32(str: string) {
