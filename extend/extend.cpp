@@ -2,7 +2,19 @@
 #include <CTGUI/extend.h>
 
 SFMLEventUnion SFMLEvent_convert(sfEvent* SFMLEvent) {
-  return SFMLEventUnion{};
+  return {.type = SFMLEvent->type,
+          .size = SFMLEvent->size,
+          .key = SFMLEvent->key,
+          .text = SFMLEvent->text,
+          .mouseMove = SFMLEvent->mouseMove,
+          .mouseButton = SFMLEvent->mouseButton,
+          .mouseWheel = SFMLEvent->mouseWheel,
+          .mouseWheelScroll = SFMLEvent->mouseWheelScroll,
+          .joystickMove = SFMLEvent->joystickMove,
+          .joystickButton = SFMLEvent->joystickButton,
+          .joystickConnect = SFMLEvent->joystickConnect,
+          .touch = SFMLEvent->touch,
+          .sensor = SFMLEvent->sensor};
 }
 
 sfEvent* SFMLEvent_create() {
