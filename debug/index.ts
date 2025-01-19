@@ -2,7 +2,7 @@ import { accessLib, initDynamicLibrary } from "../mod.ts";
 
 const libName = "libctgui-ext";
 const libExt = ".dylib";
-const libPath = `${import.meta.dirname}/${libName}${libExt}`;
+const libPath = `${import.meta.dirname}/../build/${libName}${libExt}`;
 
 const lib = Deno.readFileSync(libPath);
 const tempPath = Deno.makeTempFileSync({

@@ -3,8 +3,10 @@ import {
   Gui,
   GuiCSFMLGraphics,
   renderWindow,
-  sfEvent,
+  SFMLEvent,
 } from "../mod.ts";
+import { CTGUI_SYMBOLS } from "../src/ctguiSymbols.ts";
+import { serializeStruct } from "../src/utils/structToBuffer.ts";
 import { CTGUI_LIB } from "./index.ts";
 
 export function encodeUTF32(str: string) {
@@ -20,7 +22,10 @@ export function encodeUTF32(str: string) {
 
 function main() {
   const title = new TextEncoder().encode("Hello, World!\0");
-  const mode = new Uint32Array([800, 300, 32]);
+  const mode = serializeStruct(
+    CTGUI_SYMBOLS.renderWindow_create.parameters[0].struct,
+    [800, 300, 32]
+  );
   const window = new renderWindow(mode, title, 7);
   const sfGui = new GuiCSFMLGraphics(window.pointer);
 
@@ -31,14 +36,18 @@ function main() {
   gui.add(sfGui.pointer, button.pointer, encodeUTF32(""));
 
   while (window.isOpen()) {
-    const event = new sfEvent();
+    const event = new SFMLEvent();
 
     while (window.pollEvent(event.pointer)) {
       console.log("Event");
       sfGui.handleEvent(event.pointer);
     }
 
-    window.clear(new Uint8Array([0, 100, 20, 255]));
+    const clearColor = serializeStruct(
+      CTGUI_SYMBOLS.renderWindow_clear.parameters[1].struct,
+      [0, 100, 200, 255]
+    );
+    window.clear(clearColor);
 
     gui.draw(sfGui.pointer);
     window.display();
