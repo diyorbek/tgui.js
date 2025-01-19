@@ -1,5 +1,6 @@
 import { FUNCTION_DECLARATIONS } from "./declarations.ts";
 import { type StructMeta, C_NATIVE_TYPE_MAP } from "./typeMap.ts";
+import { createComment } from "./utils.ts";
 
 const encoder = new TextEncoder();
 
@@ -262,6 +263,7 @@ Object.entries(names)
             const params = createParams(method.parameters);
             const args = createArgs(method.parameters);
             const name = getMethodName(declName, method.name);
+            const comment = createComment(method);
             const isConstructor = name === "create";
             const isCopyConstructor = name === "copy";
             let jsOverload, nativeOverload;
@@ -276,17 +278,18 @@ Object.entries(names)
               (isCopyConstructor && !hasDefaultConstructor)
             ) {
               if (isIntercessor && !params) {
-                return `constructor(ptr?: Deno.PointerValue<unknown>) {
+                return `${comment}\nconstructor(ptr?: Deno.PointerValue<unknown>) {
                   super(ptr ? ptr : ${CTGUI_LIB}.symbols.${method.name}());
                 }`;
               }
 
               if (inheritance) {
-                return `constructor(${params}) { super(${CTGUI_LIB}.symbols.${method.name}(${args})); }`;
+                return `${comment}\nconstructor(${params}) { super(${CTGUI_LIB}.symbols.${method.name}(${args})); }`;
               }
 
               if (hasCopyConstructor && !params) {
-                return `${pointerDecl}
+                return `${pointerDecl}\n
+                ${comment}
                 constructor(other?: Deno.PointerValue<unknown>) { 
                   if (typeof other === 'undefined') { 
                     this.ptr = ${CTGUI_LIB}.symbols.${method.name}(); 
@@ -296,13 +299,14 @@ Object.entries(names)
                 }`;
               }
 
-              return `${pointerDecl}
-                  constructor(${params}) { this.ptr = ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
+              return `${pointerDecl}\n
+                ${comment}
+                constructor(${params}) { this.ptr = ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
             }
 
             if (isCopyConstructor) {
               const override = inheritance ? "override" : "";
-              return `${override} ${name}(${params}): Deno.PointerValue<unknown> { return this.ptr = ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
+              return `${comment}\n${override} ${name}(${params}): Deno.PointerValue<unknown> { return this.ptr = ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
             }
 
             // custom exceptional cases
@@ -322,7 +326,7 @@ Object.entries(names)
                   arg2?: any,
                 ): void {
                   if (typeof arg1 === "number") {
-                    return ${CTGUI_LIB}.symbols.tguiBoxLayoutRatios_add(
+                    return ${CTGUI_LIB}.symbols.${method.name}(
                       this.pointer,
                       widget,
                       arg1, // ratio
@@ -330,7 +334,7 @@ Object.entries(names)
                     );
                   }
                 
-                  return ${CTGUI_LIB}.symbols.tguiBoxLayoutRatios_add(
+                  return ${CTGUI_LIB}.symbols.${method.name}(
                     this.pointer,
                     widget,
                     1, // ratio
@@ -357,8 +361,8 @@ Object.entries(names)
                   arg2?: any
                 ) {
                   if (typeof arg1 === "number") {
-                    return ${CTGUI_LIB}.symbols.tguiBoxLayoutRatios_insert(
-                    this.pointer,
+                    return ${CTGUI_LIB}.symbols.${method.name}(
+                      this.pointer,
                       index,
                       widget,
                       arg1, // ratio
@@ -366,7 +370,7 @@ Object.entries(names)
                     );
                   }
                 
-                  return ${CTGUI_LIB}.symbols.tguiBoxLayoutRatios_insert(
+                  return ${CTGUI_LIB}.symbols.${method.name}(
                     this.pointer,
                     index,
                     widget,
@@ -378,7 +382,7 @@ Object.entries(names)
 
             // const overload = createMethodOverload(declName, name, method);
 
-            return `${name}(${params}): ResultType<'${method.name}'> { return ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
+            return `${comment}\n${name}(${params}): ResultType<'${method.name}'> { return ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
           })
           .join("\n\n") || ""
       );
