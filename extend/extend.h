@@ -1,8 +1,29 @@
+#pragma once
+
 #include <CTGUI/Backend/CSFML-Graphics.h>
+#include <CTGUI/CTGUI.h>
 
-CTGUI_API sfEvent* sfEvent_create();
+typedef struct {
+  sfEventType type;
+  sfSizeEvent size;
+  sfKeyEvent key;
+  sfTextEvent text;
+  sfMouseMoveEvent mouseMove;
+  sfMouseButtonEvent mouseButton;
+  sfMouseWheelEvent mouseWheel;
+  sfMouseWheelScrollEvent mouseWheelScroll;
+  sfJoystickMoveEvent joystickMove;
+  sfJoystickButtonEvent joystickButton;
+  sfJoystickConnectEvent joystickConnect;
+  sfTouchEvent touch;
+  sfSensorEvent sensor;
+} SFMLEventUnion;
 
-CTGUI_API void sfEvent_destroy(sfEvent* event);
+CTGUI_API SFMLEventUnion SFMLEvent_convert(sfEvent* SFMLEvent);
+
+CTGUI_API sfEvent* SFMLEvent_create();
+
+CTGUI_API void SFMLEvent_destroy(sfEvent* SFMLEvent);
 
 CTGUI_API sfRenderWindow* renderWindow_create(sfVideoMode mode,
                                               const char* title,

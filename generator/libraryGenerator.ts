@@ -131,7 +131,7 @@ Object.entries(names)
 
       const fields = body.fields.map((field) => {
         if (!(field.type in C_NATIVE_TYPE_MAP)) {
-          console.log(field.type);
+          // console.log(field.type);
         }
 
         return `${field.name}: ${getNativeTypeDecl(
@@ -385,10 +385,10 @@ Object.entries(names)
     }
 
     code += `export class ${declName} ${inheritance} {
-    ${createFields()}
-    
-    ${createMethods()}
-  }\n\n`;
+      ${createFields()}
+      
+      ${createMethods()}
+    }\n\n`;
   });
 
 Deno.stdout.writeSync(encoder.encode(code)) as Deno.FromNativeResultType;

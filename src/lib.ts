@@ -1956,6 +1956,241 @@ export class sfColor {
   }
 }
 
+export class sfJoystickMoveEvent {
+  type: number;
+  joystickId: number;
+  axis: number;
+  position: number;
+
+  constructor(
+    type: number,
+    joystickId: number,
+    axis: number,
+    position: number,
+  ) {
+    this.type = type;
+    this.joystickId = joystickId;
+    this.axis = axis;
+    this.position = position;
+  }
+}
+
+export class sfJoystickButtonEvent {
+  type: number;
+  joystickId: number;
+  button: number;
+
+  constructor(type: number, joystickId: number, button: number) {
+    this.type = type;
+    this.joystickId = joystickId;
+    this.button = button;
+  }
+}
+
+export class sfJoystickConnectEvent {
+  type: number;
+  joystickId: number;
+
+  constructor(type: number, joystickId: number) {
+    this.type = type;
+    this.joystickId = joystickId;
+  }
+}
+
+export class sfKeyEvent {
+  type: number;
+  code: number;
+  scancode: number;
+  alt: number;
+  control: number;
+  shift: number;
+  system: number;
+
+  constructor(
+    type: number,
+    code: number,
+    scancode: number,
+    alt: number,
+    control: number,
+    shift: number,
+    system: number,
+  ) {
+    this.type = type;
+    this.code = code;
+    this.scancode = scancode;
+    this.alt = alt;
+    this.control = control;
+    this.shift = shift;
+    this.system = system;
+  }
+}
+
+export class sfMouseMoveEvent {
+  type: number;
+  x: number;
+  y: number;
+
+  constructor(type: number, x: number, y: number) {
+    this.type = type;
+    this.x = x;
+    this.y = y;
+  }
+}
+
+export class sfMouseButtonEvent {
+  type: number;
+  button: number;
+  x: number;
+  y: number;
+
+  constructor(type: number, button: number, x: number, y: number) {
+    this.type = type;
+    this.button = button;
+    this.x = x;
+    this.y = y;
+  }
+}
+
+export class sfMouseWheelEvent {
+  type: number;
+  delta: number;
+  x: number;
+  y: number;
+
+  constructor(type: number, delta: number, x: number, y: number) {
+    this.type = type;
+    this.delta = delta;
+    this.x = x;
+    this.y = y;
+  }
+}
+
+export class sfMouseWheelScrollEvent {
+  type: number;
+  wheel: number;
+  delta: number;
+  x: number;
+  y: number;
+
+  constructor(
+    type: number,
+    wheel: number,
+    delta: number,
+    x: number,
+    y: number,
+  ) {
+    this.type = type;
+    this.wheel = wheel;
+    this.delta = delta;
+    this.x = x;
+    this.y = y;
+  }
+}
+
+export class sfSensorEvent {
+  type: number;
+  sensorType: number;
+  x: number;
+  y: number;
+  z: number;
+
+  constructor(
+    type: number,
+    sensorType: number,
+    x: number,
+    y: number,
+    z: number,
+  ) {
+    this.type = type;
+    this.sensorType = sensorType;
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+}
+
+export class sfSizeEvent {
+  type: number;
+  width: number;
+  height: number;
+
+  constructor(type: number, width: number, height: number) {
+    this.type = type;
+    this.width = width;
+    this.height = height;
+  }
+}
+
+export class sfTextEvent {
+  type: number;
+  unicode: number;
+
+  constructor(type: number, unicode: number) {
+    this.type = type;
+    this.unicode = unicode;
+  }
+}
+
+export class sfTouchEvent {
+  type: number;
+  finger: number;
+  x: number;
+  y: number;
+
+  constructor(type: number, finger: number, x: number, y: number) {
+    this.type = type;
+    this.finger = finger;
+    this.x = x;
+    this.y = y;
+  }
+}
+
+export class SFMLEventUnion {
+  type: number;
+  size: BufferSource;
+  key: BufferSource;
+  text: BufferSource;
+  mouseMove: BufferSource;
+  mouseButton: BufferSource;
+  mouseWheel: BufferSource;
+  mouseWheelScroll: BufferSource;
+  joystickMove: BufferSource;
+  joystickButton: BufferSource;
+  joystickConnect: BufferSource;
+  touch: BufferSource;
+  sensor: BufferSource;
+
+  constructor(
+    type: number,
+    size: BufferSource,
+    key: BufferSource,
+    text: BufferSource,
+    mouseMove: BufferSource,
+    mouseButton: BufferSource,
+    mouseWheel: BufferSource,
+    mouseWheelScroll: BufferSource,
+    joystickMove: BufferSource,
+    joystickButton: BufferSource,
+    joystickConnect: BufferSource,
+    touch: BufferSource,
+    sensor: BufferSource,
+  ) {
+    this.type = type;
+    this.size = size;
+    this.key = key;
+    this.text = text;
+    this.mouseMove = mouseMove;
+    this.mouseButton = mouseButton;
+    this.mouseWheel = mouseWheel;
+    this.mouseWheelScroll = mouseWheelScroll;
+    this.joystickMove = joystickMove;
+    this.joystickButton = joystickButton;
+    this.joystickConnect = joystickConnect;
+    this.touch = touch;
+    this.sensor = sensor;
+  }
+}
+
 export class Color {
   r: number;
   g: number;
@@ -4183,7 +4418,13 @@ export class ToolTip {
   }
 }
 
-export class sfEvent {
+export class SFMLEvent {
+  convert(
+    SFMLEvent: Deno.PointerValue<unknown>,
+  ): ResultType<"SFMLEvent_convert"> {
+    return accessLib().symbols.SFMLEvent_convert(SFMLEvent);
+  }
+
   protected ptr: Deno.PointerValue<unknown>;
 
   get pointer(): Deno.PointerValue<unknown> {
@@ -4191,11 +4432,13 @@ export class sfEvent {
   }
 
   constructor() {
-    this.ptr = accessLib().symbols.sfEvent_create();
+    this.ptr = accessLib().symbols.SFMLEvent_create();
   }
 
-  destroy(event: Deno.PointerValue<unknown>): ResultType<"sfEvent_destroy"> {
-    return accessLib().symbols.sfEvent_destroy(event);
+  destroy(
+    SFMLEvent: Deno.PointerValue<unknown>,
+  ): ResultType<"SFMLEvent_destroy"> {
+    return accessLib().symbols.SFMLEvent_destroy(SFMLEvent);
   }
 }
 

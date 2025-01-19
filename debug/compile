@@ -5,4 +5,4 @@ deno compile \
   --allow-ffi \
   --allow-write \
   --allow-read \
-  lib.ts
+  main.ts

@@ -64,7 +64,206 @@ export const C_NATIVE_TYPE_MAP: CNativeTypeMap = {
       nativeType: "u8",
     }
   ],
+  "sfJoystickMoveEvent": [
+    { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+    { "name": "joystickId", "type": "unsigned int", "nativeType": "u32" },
+    { "name": "axis", "type": "sfJoystickAxis", "nativeType": "i32" },
+    { "name": "position", "type": "float", "nativeType": "f32" }
+  ],
+  "sfJoystickButtonEvent": [
+    { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+    { "name": "joystickId", "type": "unsigned int", "nativeType": "u32" },
+    { "name": "button", "type": "unsigned int", "nativeType": "u32" }
+  ],
+  "sfJoystickConnectEvent": [
+    { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+    { "name": "joystickId", "type": "unsigned int", "nativeType": "u32" }
+  ],
+  "sfKeyEvent": [
+    { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+    { "name": "code", "type": "sfKeyCode", "nativeType": "i32" },
+    { "name": "scancode", "type": "sfScancode", "nativeType": "i32" },
+    { "name": "alt", "type": "int", "nativeType": "i32" },
+    { "name": "control", "type": "int", "nativeType": "i32" },
+    { "name": "shift", "type": "int", "nativeType": "i32" },
+    { "name": "system", "type": "int", "nativeType": "i32" }
+  ],
+  "sfMouseMoveEvent": [
+    { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+    { "name": "x", "type": "int", "nativeType": "i32" },
+    { "name": "y", "type": "int", "nativeType": "i32" }
+  ],
+  "sfMouseButtonEvent": [
+    { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+    { "name": "button", "type": "sfMouseButton", "nativeType": "i32" },
+    { "name": "x", "type": "int", "nativeType": "i32" },
+    { "name": "y", "type": "int", "nativeType": "i32" }
+  ],
+  "sfMouseWheelEvent": [
+    { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+    { "name": "delta", "type": "int", "nativeType": "i32" },
+    { "name": "x", "type": "int", "nativeType": "i32" },
+    { "name": "y", "type": "int", "nativeType": "i32" }
+  ],
+  "sfMouseWheelScrollEvent": [
+    { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+    { "name": "wheel", "type": "sfMouseWheel", "nativeType": "i32" },
+    { "name": "delta", "type": "float", "nativeType": "f32" },
+    { "name": "x", "type": "int", "nativeType": "i32" },
+    { "name": "y", "type": "int", "nativeType": "i32" }
+  ],
   "sfRenderWindow *": "pointer",
+  "sfSensorEvent": [
+    { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+    { "name": "sensorType", "type": "sfSensorType", "nativeType": "i32" },
+    { "name": "x", "type": "float", "nativeType": "f32" },
+    { "name": "y", "type": "float", "nativeType": "f32" },
+    { "name": "z", "type": "float", "nativeType": "f32" }
+  ],
+  "sfSizeEvent": [
+    { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+    { "name": "width", "type": "unsigned int", "nativeType": "u32" },
+    { "name": "height", "type": "unsigned int", "nativeType": "u32" }
+  ],
+  "sfTextEvent": [
+    { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+    { "name": "unicode", "type": "unsigned int", "nativeType": "u32" }
+  ],
+  "sfTouchEvent": [
+    { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+    { "name": "finger", "type": "unsigned int", "nativeType": "u32" },
+    { "name": "x", "type": "int", "nativeType": "i32" },
+    { "name": "y", "type": "int", "nativeType": "i32" }
+  ],
+  "SFMLEventUnion": [
+    { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+    {
+      "name": "size",
+      "type": "sfSizeEvent",
+      "nativeType": [
+        { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+        { "name": "width", "type": "unsigned int", "nativeType": "u32" },
+        { "name": "height", "type": "unsigned int", "nativeType": "u32" }
+      ]
+    },
+    {
+      "name": "key",
+      "type": "sfKeyEvent",
+      "nativeType": [
+        { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+        { "name": "code", "type": "sfKeyCode", "nativeType": "i32" },
+        { "name": "scancode", "type": "sfScancode", "nativeType": "i32" },
+        { "name": "alt", "type": "int", "nativeType": "i32" },
+        { "name": "control", "type": "int", "nativeType": "i32" },
+        { "name": "shift", "type": "int", "nativeType": "i32" },
+        { "name": "system", "type": "int", "nativeType": "i32" }
+      ]
+    },
+    {
+      "name": "text",
+      "type": "sfTextEvent",
+      "nativeType": [
+        {
+          "name": "type",
+          "type": "sfEventType",
+          "nativeType": "i32"
+        },
+        { "name": "unicode", "type": "unsigned int", "nativeType": "u32" }
+      ]
+    },
+    {
+      "name": "mouseMove",
+      "type": "sfMouseMoveEvent",
+      "nativeType": [
+        { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+        { "name": "x", "type": "int", "nativeType": "i32" },
+        { "name": "y", "type": "int", "nativeType": "i32" }
+      ]
+    },
+    {
+      "name": "mouseButton",
+      "type": "sfMouseButtonEvent",
+      "nativeType": [
+        { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+        { "name": "button", "type": "sfMouseButton", "nativeType": "i32" },
+        { "name": "x", "type": "int", "nativeType": "i32" },
+        { "name": "y", "type": "int", "nativeType": "i32" }
+      ]
+    },
+    {
+      "name": "mouseWheel",
+      "type": "sfMouseWheelEvent",
+      "nativeType": [
+        { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+        { "name": "delta", "type": "int", "nativeType": "i32" },
+        { "name": "x", "type": "int", "nativeType": "i32" },
+        { "name": "y", "type": "int", "nativeType": "i32" }
+      ]
+    },
+    {
+      "name": "mouseWheelScroll",
+      "type": "sfMouseWheelScrollEvent",
+      "nativeType": [
+        { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+        { "name": "wheel", "type": "sfMouseWheel", "nativeType": "i32" },
+        { "name": "delta", "type": "float", "nativeType": "f32" },
+        { "name": "x", "type": "int", "nativeType": "i32" },
+        { "name": "y", "type": "int", "nativeType": "i32" }
+      ]
+    },
+    {
+      "name": "joystickMove",
+      "type": "sfJoystickMoveEvent",
+      "nativeType": [
+        { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+        { "name": "joystickId", "type": "unsigned int", "nativeType": "u32" },
+        { "name": "axis", "type": "sfJoystickAxis", "nativeType": "i32" },
+        { "name": "position", "type": "float", "nativeType": "f32" }
+      ]
+    },
+    {
+      "name": "joystickButton",
+      "type": "sfJoystickButtonEvent",
+      "nativeType": [
+        { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+        { "name": "joystickId", "type": "unsigned int", "nativeType": "u32" },
+        { "name": "button", "type": "unsigned int", "nativeType": "u32" }
+      ]
+    },
+    {
+      "name": "joystickConnect",
+      "type": "sfJoystickConnectEvent",
+      "nativeType": [
+        {
+          "name": "type",
+          "type": "sfEventType",
+          "nativeType": "i32"
+        },
+        { "name": "joystickId", "type": "unsigned int", "nativeType": "u32" }
+      ]
+    },
+    {
+      "name": "touch",
+      "type": "sfTouchEvent",
+      "nativeType": [
+        { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+        { "name": "finger", "type": "unsigned int", "nativeType": "u32" },
+        { "name": "x", "type": "int", "nativeType": "i32" },
+        { "name": "y", "type": "int", "nativeType": "i32" }
+      ]
+    },
+    {
+      "name": "sensor",
+      "type": "sfSensorEvent",
+      "nativeType": [
+        { "name": "type", "type": "sfEventType", "nativeType": "i32" },
+        { "name": "sensorType", "type": "sfSensorType", "nativeType": "i32" },
+        { "name": "x", "type": "float", "nativeType": "f32" },
+        { "name": "y", "type": "float", "nativeType": "f32" },
+        { "name": "z", "type": "float", "nativeType": "f32" }
+      ]
+    }
+  ],
   "short int": "i16",
   "signed char": "i8",
   "signed int": "i32",

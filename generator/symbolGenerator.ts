@@ -40,7 +40,8 @@ function getNativeType(resultType: string): any {
           name: inner.name,
           type: inner.type?.desugaredQualType || inner.type!.qualType,
           nativeType: getNativeType(
-            inner.type!.qualType || inner.type!.desugaredQualType
+            // inner.type!.qualType || inner.type!.desugaredQualType
+            inner.type!.desugaredQualType || inner.type!.qualType
           ),
         }));
     }
@@ -70,6 +71,7 @@ async function processAst() {
   }
 
   ast = JSON.parse(chunks.join(""));
+  // Deno.writeFileSync("ast.json", encoder.encode(JSON.stringify(ast)));
 
   ast.inner.forEach((node) => {
     if (

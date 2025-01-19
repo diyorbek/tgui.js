@@ -1,11 +1,16 @@
+#include <CTGUI/CTGUI.h>
 #include <CTGUI/extend.h>
 
-sfEvent* sfEvent_create() {
+SFMLEventUnion SFMLEvent_convert(sfEvent* SFMLEvent) {
+  return SFMLEventUnion{};
+}
+
+sfEvent* SFMLEvent_create() {
   return new sfEvent;
 }
 
-void sfEvent_destroy(sfEvent* event) {
-  delete event;
+void SFMLEvent_destroy(sfEvent* SFMLEvent) {
+  delete SFMLEvent;
 }
 
 sfRenderWindow* renderWindow_create(sfVideoMode mode,
@@ -19,6 +24,7 @@ sfBool renderWindow_isOpen(const sfWindow* window) {
 }
 
 sfBool renderWindow_pollEvent(sfRenderWindow* window, sfEvent* event) {
+  auto e = new tguiEvent;
   return sfRenderWindow_pollEvent(window, event);
 }
 

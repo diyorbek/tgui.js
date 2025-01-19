@@ -4754,22 +4754,50 @@ export const CTGUI_SYMBOLS = {
   },
   /**
    * @original ```c
-   * sfEvent * sfEvent_create();
+   * SFMLEventUnion SFMLEvent_convert(sfEvent * SFMLEvent);
+   * ```
+   *
+   * @param SFMLEvent `sfEvent *`
+   * @returns `SFMLEventUnion { type: sfEventType; size: sfSizeEvent; key: sfKeyEvent; text: sfTextEvent; mouseMove: sfMouseMoveEvent; mouseButton: sfMouseButtonEvent; mouseWheel: sfMouseWheelEvent; mouseWheelScroll: sfMouseWheelScrollEvent; joystickMove: sfJoystickMoveEvent; joystickButton: sfJoystickButtonEvent; joystickConnect: sfJoystickConnectEvent; touch: sfTouchEvent; sensor: sfSensorEvent }`
+   */
+  SFMLEvent_convert: {
+    parameters: ["pointer"],
+    result: {
+      struct: [
+        "i32",
+        { struct: ["i32", "u32", "u32"] },
+        { struct: ["i32", "i32", "i32", "i32", "i32", "i32", "i32"] },
+        { struct: ["i32", "u32"] },
+        { struct: ["i32", "i32", "i32"] },
+        { struct: ["i32", "i32", "i32", "i32"] },
+        { struct: ["i32", "i32", "i32", "i32"] },
+        { struct: ["i32", "i32", "f32", "i32", "i32"] },
+        { struct: ["i32", "u32", "i32", "f32"] },
+        { struct: ["i32", "u32", "u32"] },
+        { struct: ["i32", "u32"] },
+        { struct: ["i32", "u32", "i32", "i32"] },
+        { struct: ["i32", "i32", "f32", "f32", "f32"] },
+      ],
+    },
+  },
+  /**
+   * @original ```c
+   * sfEvent * SFMLEvent_create();
    * ```
    *
    * @param
    * @returns `sfEvent *`
    */
-  sfEvent_create: { parameters: [], result: "pointer" },
+  SFMLEvent_create: { parameters: [], result: "pointer" },
   /**
    * @original ```c
-   * void sfEvent_destroy(sfEvent * event);
+   * void SFMLEvent_destroy(sfEvent * SFMLEvent);
    * ```
    *
-   * @param event `sfEvent *`
+   * @param SFMLEvent `sfEvent *`
    * @returns `void`
    */
-  sfEvent_destroy: { parameters: ["pointer"], result: "void" },
+  SFMLEvent_destroy: { parameters: ["pointer"], result: "void" },
   /**
    * @original ```c
    * sfRenderWindow * renderWindow_create(sfVideoMode mode, const char * title, unsigned int style);
