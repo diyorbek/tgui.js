@@ -127,9 +127,9 @@ export function serializeStruct(
 
 export function deserializeStruct(
   structDef: StructDef,
-  buffer: ArrayBuffer
+  buffer: BufferSource
 ): number[] {
-  const view = new DataView(buffer);
+  const view = new DataView("buffer" in buffer ? buffer.buffer : buffer);
   let offset = 0;
   const values: number[] = [];
 

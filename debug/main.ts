@@ -1,6 +1,10 @@
 import { Button, Gui, GuiCSFMLGraphics, renderWindow } from "../mod.ts";
 import { CTGUI_SYMBOLS } from "../src/ctguiSymbols.ts";
-import { serializeStruct } from "../src/utils/structToBuffer.ts";
+import { SFMLEvent } from "../src/lib.ts";
+import {
+  deserializeStruct,
+  serializeStruct,
+} from "../src/utils/structToBuffer.ts";
 import { CTGUI_LIB } from "./index.ts";
 
 export function encodeUTF32(str: string) {
@@ -29,39 +33,31 @@ function main() {
   const gui = new Gui();
   gui.add(sfGui.pointer, button.pointer, encodeUTF32(""));
 
-  const clearColor = serializeStruct(
-    CTGUI_SYMBOLS.tguiGui_mainLoop.parameters[1].struct,
-    [0, 100, 200, 255, 1]
-  );
+  while (window.isOpen()) {
+    const event = new SFMLEvent();
 
-  gui.mainLoop(sfGui.pointer, clearColor);
+    while (window.pollEvent(event.pointer)) {
+      const eventUnion = deserializeStruct(
+        CTGUI_SYMBOLS.SFMLEvent_convert.result.struct,
+        event.convert(event.pointer)
+      );
 
-  // while (window.isOpen()) {
-  //   const event = new SFMLEvent();
+      if (eventUnion[0] === 0) window.close();
 
-  //   while (window.pollEvent(event.pointer)) {
-  //     const bytes = event.convert(event.pointer);
-  //     deserializeStruct;
-  //     // const eventUnion = deserializeStruct(
-  //     //   CTGUI_SYMBOLS.SFMLEvent_convert.result.struct,
-  //     //   bytes
-  //     // );
-  //     if (bytes.at(0) === 0) window.close();
+      console.log("Event", eventUnion[0]);
+      sfGui.handleEvent(event.pointer);
+    }
 
-  //     console.log("Event", bytes.at(0));
-  //     sfGui.handleEvent(event.pointer);
-  //   }
+    const clearColor = serializeStruct(
+      CTGUI_SYMBOLS.renderWindow_clear.parameters[1].struct,
+      [0, 100, 200, 255]
+    );
+    window.clear(clearColor);
 
-  //   const clearColor = serializeStruct(
-  //     CTGUI_SYMBOLS.renderWindow_clear.parameters[1].struct,
-  //     [0, 100, 200, 255]
-  //   );
-  //   window.clear(clearColor);
-
-  //   gui.draw(sfGui.pointer);
-  //   window.display();
-  //   event.destroy(event.pointer);
-  // }
+    gui.draw(sfGui.pointer);
+    window.display();
+    event.destroy(event.pointer);
+  }
 
   button.destroy();
   sfGui.destroy();
