@@ -1,5 +1,5 @@
-import { FUNCS } from "./generator/funcs.ts";
-import { StructMeta, TYPE_MAP } from "./generator/typeMap.ts";
+import { FUNCTION_DECLARATIONS } from "./declarations.ts";
+import { type StructMeta, TYPE_MAP } from "./typeMap.ts";
 
 const encoder = new TextEncoder();
 
@@ -42,7 +42,7 @@ const { inheritanceGraph, inheritanceRank } = createInheritanceGraph();
 const names: Record<
   string,
   {
-    methods?: Array<(typeof FUNCS)[number]>;
+    methods?: Array<(typeof FUNCTION_DECLARATIONS)[number]>;
     fields?: StructMeta[];
   }
 > = {};
@@ -56,7 +56,7 @@ Object.keys(TYPE_MAP).forEach((struct) => {
   }
 });
 
-FUNCS.forEach((func) => {
+FUNCTION_DECLARATIONS.forEach((func) => {
   const [struct, method] = func.name.split("_");
 
   if (!method) return;
@@ -181,7 +181,9 @@ Object.entries(names)
     }
 
     function createParams(
-      parameters: Array<(typeof FUNCS)[number]>[number]["parameters"]
+      parameters: Array<
+        (typeof FUNCTION_DECLARATIONS)[number]
+      >[number]["parameters"]
     ) {
       return parameters
         .filter((p) => !isLocalPointerName(p.name))
@@ -200,7 +202,9 @@ Object.entries(names)
     }
 
     function createArgs(
-      parameters: Array<(typeof FUNCS)[number]>[number]["parameters"]
+      parameters: Array<
+        (typeof FUNCTION_DECLARATIONS)[number]
+      >[number]["parameters"]
     ) {
       return parameters.map((m) => correctNaming(m.name)).join(",");
     }
@@ -223,7 +227,7 @@ Object.entries(names)
     function createMethodOverload(
       declName: string,
       methodName: string,
-      method: Array<(typeof FUNCS)[number]>[number]
+      method: Array<(typeof FUNCTION_DECLARATIONS)[number]>[number]
     ) {
       const overload = checkOverride(declName, methodName);
 

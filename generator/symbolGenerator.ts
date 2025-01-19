@@ -10,7 +10,7 @@ const structs: string[] = [];
 
 const functionDeclarations: any[] = [];
 // const structDeclarations: Record<string, any> = {};
-const enumDeclarations: Record<string, any> = {};
+// const enumDeclarations: Record<string, any> = {};
 
 function getNativeType(resultType: string): any {
   if (TYPE_MAP[resultType]) {
@@ -180,20 +180,15 @@ function generateSymbols() {
   Deno.stdout.writeSync(encoder.encode(fileContents));
 }
 
-// var a = {
-//   /**
-//    * This is b
-//    */
-//   b: 5,
-// };
-
 await processAst();
 
 generateSymbols();
 
 Deno.writeFileSync(
-  "funcs.json",
-  encoder.encode(JSON.stringify(functionDeclarations))
+  "declarations.ts",
+  encoder.encode(
+    `export const FUNCTION_DECLARATIONS=${JSON.stringify(functionDeclarations)}`
+  )
 );
 
 interface Ast {

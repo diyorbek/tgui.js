@@ -314,10 +314,10 @@ export const CTGUI_SYMBOLS = {
   tgui_writeFile: { parameters: ["buffer", "buffer"], result: "i16" },
   /**
    * @original ```c
-   * void tgui_readFileToMemory_free(tguiUint8 * arg1);
+   * void tgui_readFileToMemory_free(tguiUint8 * arg0);
    * ```
    *
-   * @param arg1 `Uint8 *`
+   * @param arg0 `Uint8 *`
    * @returns `void`
    */
   tgui_readFileToMemory_free: { parameters: ["buffer"], result: "void" },

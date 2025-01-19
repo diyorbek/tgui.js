@@ -1937,8 +1937,8 @@ export class tgui {
     return CTGUI_LIB.symbols.tgui_writeFile(filename, textToWrite);
   }
 
-  readFileToMemory_free(arg1: BufferSource) {
-    return CTGUI_LIB.symbols.tgui_readFileToMemory_free(arg1);
+  readFileToMemory_free(arg0: BufferSource) {
+    return CTGUI_LIB.symbols.tgui_readFileToMemory_free(arg0);
   }
 
   getLastError() {
