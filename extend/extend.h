@@ -19,9 +19,9 @@ typedef struct {
   sfSensorEvent sensor;
 } SFMLEventUnion;
 
-CTGUI_API SFMLEventUnion SFMLEvent_convert(sfEvent* SFMLEvent);
-
 CTGUI_API sfEvent* SFMLEvent_create();
+
+CTGUI_API SFMLEventUnion SFMLEvent_convert(sfEvent* SFMLEvent);
 
 CTGUI_API void SFMLEvent_destroy(sfEvent* SFMLEvent);
 

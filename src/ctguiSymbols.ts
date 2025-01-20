@@ -5161,6 +5161,16 @@ export const CTGUI_SYMBOLS = {
 
   /**
    * @original ```c
+   * sfEvent * SFMLEvent_create();
+   * ```
+   *
+   * @param
+   * @returns `sfEvent *`
+   */
+  SFMLEvent_create: { parameters: [], result: "pointer" },
+
+  /**
+   * @original ```c
    * SFMLEventUnion SFMLEvent_convert(sfEvent * SFMLEvent);
    * ```
    *
@@ -5190,16 +5200,6 @@ export const CTGUI_SYMBOLS = {
 
   /**
    * @original ```c
-   * sfEvent * SFMLEvent_create();
-   * ```
-   *
-   * @param
-   * @returns `sfEvent *`
-   */
-  SFMLEvent_create: { parameters: [], result: "pointer" },
-
-  /**
-   * @original ```c
    * void SFMLEvent_destroy(sfEvent * SFMLEvent);
    * ```
    *
@@ -5213,7 +5213,7 @@ export const CTGUI_SYMBOLS = {
    * sfRenderWindow * renderWindow_create(sfVideoMode mode, const char * title, unsigned int style);
    * ```
    *
-   * @param mode `sfVideoMode`
+   * @param mode `sfVideoMode { width: unsigned int; height: unsigned int; bitsPerPixel: unsigned int }`
    * @param title `const char *`
    * @param style `unsigned int`
    * @returns `sfRenderWindow *`

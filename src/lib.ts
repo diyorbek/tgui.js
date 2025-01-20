@@ -1,4 +1,9 @@
 import { accessLib, type ResultType } from "./ctgui.ts";
+import {
+  type NumberLikeType,
+  serializeStruct,
+  type StructDef,
+} from "./utils/structToBuffer.ts";
 
 export class Widget {
   protected ptr: Deno.PointerValue<unknown>;
@@ -563,12 +568,12 @@ export class Widget {
    */
   showWithEffect(
     type: number,
-    duration: BufferSource,
+    duration: Duration,
   ): ResultType<"tguiWidget_showWithEffect"> {
     return accessLib().symbols.tguiWidget_showWithEffect(
       this.pointer,
       type,
-      duration,
+      duration.buffer,
     );
   }
 
@@ -584,12 +589,12 @@ export class Widget {
    */
   hideWithEffect(
     type: number,
-    duration: BufferSource,
+    duration: Duration,
   ): ResultType<"tguiWidget_hideWithEffect"> {
     return accessLib().symbols.tguiWidget_hideWithEffect(
       this.pointer,
       type,
-      duration,
+      duration.buffer,
     );
   }
 
@@ -604,13 +609,13 @@ export class Widget {
    * @returns `void`
    */
   moveWithAnimation(
-    position: BufferSource,
-    duration: BufferSource,
+    position: Vector2f,
+    duration: Duration,
   ): ResultType<"tguiWidget_moveWithAnimation"> {
     return accessLib().symbols.tguiWidget_moveWithAnimation(
       this.pointer,
-      position,
-      duration,
+      position.buffer,
+      duration.buffer,
     );
   }
 
@@ -625,13 +630,13 @@ export class Widget {
    * @returns `void`
    */
   resizeWithAnimation(
-    size: BufferSource,
-    duration: BufferSource,
+    size: Vector2f,
+    duration: Duration,
   ): ResultType<"tguiWidget_resizeWithAnimation"> {
     return accessLib().symbols.tguiWidget_resizeWithAnimation(
       this.pointer,
-      size,
-      duration,
+      size.buffer,
+      duration.buffer,
     );
   }
 
@@ -683,8 +688,11 @@ export class Widget {
    * @param duration `Duration { nanoseconds: long long }`
    * @returns `void`
    */
-  updateTime(duration: BufferSource): ResultType<"tguiWidget_updateTime"> {
-    return accessLib().symbols.tguiWidget_updateTime(this.pointer, duration);
+  updateTime(duration: Duration): ResultType<"tguiWidget_updateTime"> {
+    return accessLib().symbols.tguiWidget_updateTime(
+      this.pointer,
+      duration.buffer,
+    );
   }
 
   /**
@@ -696,8 +704,11 @@ export class Widget {
    * @param position `Vector2f { x: float; y: float }`
    * @returns `void`
    */
-  setPosition(position: BufferSource): ResultType<"tguiWidget_setPosition"> {
-    return accessLib().symbols.tguiWidget_setPosition(this.pointer, position);
+  setPosition(position: Vector2f): ResultType<"tguiWidget_setPosition"> {
+    return accessLib().symbols.tguiWidget_setPosition(
+      this.pointer,
+      position.buffer,
+    );
   }
 
   /**
@@ -752,11 +763,11 @@ export class Widget {
    * @returns `Vector2f { x: float; y: float }`
    */
   getAbsolutePositionWithOffset(
-    offset: BufferSource,
+    offset: Vector2f,
   ): ResultType<"tguiWidget_getAbsolutePositionWithOffset"> {
     return accessLib().symbols.tguiWidget_getAbsolutePositionWithOffset(
       this.pointer,
-      offset,
+      offset.buffer,
     );
   }
 
@@ -843,8 +854,8 @@ export class Widget {
    * @param size `Vector2f { x: float; y: float }`
    * @returns `void`
    */
-  setSize(size: BufferSource): ResultType<"tguiWidget_setSize"> {
-    return accessLib().symbols.tguiWidget_setSize(this.pointer, size);
+  setSize(size: Vector2f): ResultType<"tguiWidget_setSize"> {
+    return accessLib().symbols.tguiWidget_setSize(this.pointer, size.buffer);
   }
 
   /**
@@ -898,8 +909,8 @@ export class Widget {
    * @param value `Vector2f { x: float; y: float }`
    * @returns `void`
    */
-  setOrigin(value: BufferSource): ResultType<"tguiWidget_setOrigin"> {
-    return accessLib().symbols.tguiWidget_setOrigin(this.pointer, value);
+  setOrigin(value: Vector2f): ResultType<"tguiWidget_setOrigin"> {
+    return accessLib().symbols.tguiWidget_setOrigin(this.pointer, value.buffer);
   }
 
   /**
@@ -923,8 +934,8 @@ export class Widget {
    * @param origin `Vector2f { x: float; y: float }`
    * @returns `void`
    */
-  setScale(origin: BufferSource): ResultType<"tguiWidget_setScale"> {
-    return accessLib().symbols.tguiWidget_setScale(this.pointer, origin);
+  setScale(origin: Vector2f): ResultType<"tguiWidget_setScale"> {
+    return accessLib().symbols.tguiWidget_setScale(this.pointer, origin.buffer);
   }
 
   /**
@@ -938,13 +949,13 @@ export class Widget {
    * @returns `void`
    */
   setScaleWithOrigin(
-    scale: BufferSource,
-    origin: BufferSource,
+    scale: Vector2f,
+    origin: Vector2f,
   ): ResultType<"tguiWidget_setScaleWithOrigin"> {
     return accessLib().symbols.tguiWidget_setScaleWithOrigin(
       this.pointer,
-      scale,
-      origin,
+      scale.buffer,
+      origin.buffer,
     );
   }
 
@@ -997,12 +1008,12 @@ export class Widget {
    */
   setRotationWithOrigin(
     angle: number,
-    origin: BufferSource,
+    origin: Vector2f,
   ): ResultType<"tguiWidget_setRotationWithOrigin"> {
     return accessLib().symbols.tguiWidget_setRotationWithOrigin(
       this.pointer,
       angle,
-      origin,
+      origin.buffer,
     );
   }
 
@@ -1488,8 +1499,11 @@ export class Widget {
    * @param pos `Vector2f { x: float; y: float }`
    * @returns `Bool`
    */
-  isMouseOnWidget(pos: BufferSource): ResultType<"tguiWidget_isMouseOnWidget"> {
-    return accessLib().symbols.tguiWidget_isMouseOnWidget(this.pointer, pos);
+  isMouseOnWidget(pos: Vector2f): ResultType<"tguiWidget_isMouseOnWidget"> {
+    return accessLib().symbols.tguiWidget_isMouseOnWidget(
+      this.pointer,
+      pos.buffer,
+    );
   }
 }
 
@@ -1774,12 +1788,12 @@ export class Container extends Widget {
    * @returns `Widget *`
    */
   getWidgetAtPos(
-    pos: BufferSource,
+    pos: Vector2f,
     recursive: number,
   ): ResultType<"tguiContainer_getWidgetAtPos"> {
     return accessLib().symbols.tguiContainer_getWidgetAtPos(
       this.pointer,
-      pos,
+      pos.buffer,
       recursive,
     );
   }
@@ -1869,12 +1883,10 @@ export class ChildWindow extends Container {
    * @param size `Vector2f { x: float; y: float }`
    * @returns `void`
    */
-  setClientSize(
-    size: BufferSource,
-  ): ResultType<"tguiChildWindow_setClientSize"> {
+  setClientSize(size: Vector2f): ResultType<"tguiChildWindow_setClientSize"> {
     return accessLib().symbols.tguiChildWindow_setClientSize(
       this.pointer,
-      size,
+      size.buffer,
     );
   }
 
@@ -1918,11 +1930,11 @@ export class ChildWindow extends Container {
    * @returns `void`
    */
   setMaximumSize(
-    value: BufferSource,
+    value: Vector2f,
   ): ResultType<"tguiChildWindow_setMaximumSize"> {
     return accessLib().symbols.tguiChildWindow_setMaximumSize(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -1948,11 +1960,11 @@ export class ChildWindow extends Container {
    * @returns `void`
    */
   setMinimumSize(
-    value: BufferSource,
+    value: Vector2f,
   ): ResultType<"tguiChildWindow_setMinimumSize"> {
     return accessLib().symbols.tguiChildWindow_setMinimumSize(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -2291,11 +2303,11 @@ export class ChildWindowRenderer {
    * @returns `void`
    */
   setTitleBarColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiChildWindowRenderer_setTitleBarColor"> {
     return accessLib().symbols.tguiChildWindowRenderer_setTitleBarColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -2323,11 +2335,11 @@ export class ChildWindowRenderer {
    * @returns `void`
    */
   setTitleColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiChildWindowRenderer_setTitleColor"> {
     return accessLib().symbols.tguiChildWindowRenderer_setTitleColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -2355,11 +2367,11 @@ export class ChildWindowRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiChildWindowRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiChildWindowRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -2389,11 +2401,11 @@ export class ChildWindowRenderer {
    * @returns `void`
    */
   setBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiChildWindowRenderer_setBorderColor"> {
     return accessLib().symbols.tguiChildWindowRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -2421,11 +2433,11 @@ export class ChildWindowRenderer {
    * @returns `void`
    */
   setBorderColorFocused(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiChildWindowRenderer_setBorderColorFocused"> {
     return accessLib().symbols.tguiChildWindowRenderer_setBorderColorFocused(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -3177,13 +3189,13 @@ export class ButtonBase extends ClickableWidget {
    */
   setTextPositionAbs(
     widget: Deno.PointerValue<unknown>,
-    position: BufferSource,
-    origin: BufferSource,
+    position: Vector2f,
+    origin: Vector2f,
   ): ResultType<"tguiButtonBase_setTextPositionAbs"> {
     return accessLib().symbols.tguiButtonBase_setTextPositionAbs(
       widget,
-      position,
-      origin,
+      position.buffer,
+      origin.buffer,
     );
   }
 
@@ -3199,13 +3211,13 @@ export class ButtonBase extends ClickableWidget {
    */
   setTextPositionRel(
     widget: Deno.PointerValue<unknown>,
-    position: BufferSource,
-    origin: BufferSource,
+    position: Vector2f,
+    origin: Vector2f,
   ): ResultType<"tguiButtonBase_setTextPositionRel"> {
     return accessLib().symbols.tguiButtonBase_setTextPositionRel(
       widget,
-      position,
-      origin,
+      position.buffer,
+      origin.buffer,
     );
   }
 }
@@ -3535,11 +3547,11 @@ export class ScrollablePanel extends Panel {
    * @returns `void`
    */
   setContentSize(
-    value: BufferSource,
+    value: Vector2f,
   ): ResultType<"tguiScrollablePanel_setContentSize"> {
     return accessLib().symbols.tguiScrollablePanel_setContentSize(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -3635,11 +3647,11 @@ export class PanelRenderer extends GroupRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiPanelRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiPanelRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -3666,12 +3678,10 @@ export class PanelRenderer extends GroupRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setBorderColor(
-    value: BufferSource,
-  ): ResultType<"tguiPanelRenderer_setBorderColor"> {
+  setBorderColor(value: Color): ResultType<"tguiPanelRenderer_setBorderColor"> {
     return accessLib().symbols.tguiPanelRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -3922,12 +3932,10 @@ export class SliderRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setTrackColor(
-    value: BufferSource,
-  ): ResultType<"tguiSliderRenderer_setTrackColor"> {
+  setTrackColor(value: Color): ResultType<"tguiSliderRenderer_setTrackColor"> {
     return accessLib().symbols.tguiSliderRenderer_setTrackColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -3953,11 +3961,11 @@ export class SliderRenderer {
    * @returns `void`
    */
   setTrackColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiSliderRenderer_setTrackColorHover"> {
     return accessLib().symbols.tguiSliderRenderer_setTrackColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -3984,12 +3992,10 @@ export class SliderRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setThumbColor(
-    value: BufferSource,
-  ): ResultType<"tguiSliderRenderer_setThumbColor"> {
+  setThumbColor(value: Color): ResultType<"tguiSliderRenderer_setThumbColor"> {
     return accessLib().symbols.tguiSliderRenderer_setThumbColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -4015,11 +4021,11 @@ export class SliderRenderer {
    * @returns `void`
    */
   setThumbColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiSliderRenderer_setThumbColorHover"> {
     return accessLib().symbols.tguiSliderRenderer_setThumbColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -4047,11 +4053,11 @@ export class SliderRenderer {
    * @returns `void`
    */
   setBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiSliderRenderer_setBorderColor"> {
     return accessLib().symbols.tguiSliderRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -4077,11 +4083,11 @@ export class SliderRenderer {
    * @returns `void`
    */
   setBorderColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiSliderRenderer_setBorderColorHover"> {
     return accessLib().symbols.tguiSliderRenderer_setBorderColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -4261,6 +4267,17 @@ export class SliderRenderer {
 }
 
 export class sfColor {
+  static STRUCT_DEF: StructDef = ["u8", "u8", "u8", "u8"];
+
+  static deserialize(flatValues: NumberLikeType[]): sfColor {
+    return new sfColor(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   r: number;
   g: number;
   b: number;
@@ -4272,9 +4289,24 @@ export class sfColor {
     this.b = b;
     this.a = a;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfColor.STRUCT_DEF, this);
+  }
 }
 
 export class sfJoystickMoveEvent {
+  static STRUCT_DEF: StructDef = ["i32", "u32", "i32", "f32"];
+
+  static deserialize(flatValues: NumberLikeType[]): sfJoystickMoveEvent {
+    return new sfJoystickMoveEvent(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   type: number;
   joystickId: number;
   axis: number;
@@ -4291,9 +4323,23 @@ export class sfJoystickMoveEvent {
     this.axis = axis;
     this.position = position;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfJoystickMoveEvent.STRUCT_DEF, this);
+  }
 }
 
 export class sfJoystickButtonEvent {
+  static STRUCT_DEF: StructDef = ["i32", "u32", "u32"];
+
+  static deserialize(flatValues: NumberLikeType[]): sfJoystickButtonEvent {
+    return new sfJoystickButtonEvent(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   type: number;
   joystickId: number;
   button: number;
@@ -4303,9 +4349,22 @@ export class sfJoystickButtonEvent {
     this.joystickId = joystickId;
     this.button = button;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfJoystickButtonEvent.STRUCT_DEF, this);
+  }
 }
 
 export class sfJoystickConnectEvent {
+  static STRUCT_DEF: StructDef = ["i32", "u32"];
+
+  static deserialize(flatValues: NumberLikeType[]): sfJoystickConnectEvent {
+    return new sfJoystickConnectEvent(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   type: number;
   joystickId: number;
 
@@ -4313,9 +4372,35 @@ export class sfJoystickConnectEvent {
     this.type = type;
     this.joystickId = joystickId;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfJoystickConnectEvent.STRUCT_DEF, this);
+  }
 }
 
 export class sfKeyEvent {
+  static STRUCT_DEF: StructDef = [
+    "i32",
+    "i32",
+    "i32",
+    "i32",
+    "i32",
+    "i32",
+    "i32",
+  ];
+
+  static deserialize(flatValues: NumberLikeType[]): sfKeyEvent {
+    return new sfKeyEvent(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   type: number;
   code: number;
   scancode: number;
@@ -4341,9 +4426,23 @@ export class sfKeyEvent {
     this.shift = shift;
     this.system = system;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfKeyEvent.STRUCT_DEF, this);
+  }
 }
 
 export class sfMouseMoveEvent {
+  static STRUCT_DEF: StructDef = ["i32", "i32", "i32"];
+
+  static deserialize(flatValues: NumberLikeType[]): sfMouseMoveEvent {
+    return new sfMouseMoveEvent(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   type: number;
   x: number;
   y: number;
@@ -4353,9 +4452,24 @@ export class sfMouseMoveEvent {
     this.x = x;
     this.y = y;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfMouseMoveEvent.STRUCT_DEF, this);
+  }
 }
 
 export class sfMouseButtonEvent {
+  static STRUCT_DEF: StructDef = ["i32", "i32", "i32", "i32"];
+
+  static deserialize(flatValues: NumberLikeType[]): sfMouseButtonEvent {
+    return new sfMouseButtonEvent(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   type: number;
   button: number;
   x: number;
@@ -4367,9 +4481,24 @@ export class sfMouseButtonEvent {
     this.x = x;
     this.y = y;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfMouseButtonEvent.STRUCT_DEF, this);
+  }
 }
 
 export class sfMouseWheelEvent {
+  static STRUCT_DEF: StructDef = ["i32", "i32", "i32", "i32"];
+
+  static deserialize(flatValues: NumberLikeType[]): sfMouseWheelEvent {
+    return new sfMouseWheelEvent(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   type: number;
   delta: number;
   x: number;
@@ -4381,9 +4510,25 @@ export class sfMouseWheelEvent {
     this.x = x;
     this.y = y;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfMouseWheelEvent.STRUCT_DEF, this);
+  }
 }
 
 export class sfMouseWheelScrollEvent {
+  static STRUCT_DEF: StructDef = ["i32", "i32", "f32", "i32", "i32"];
+
+  static deserialize(flatValues: NumberLikeType[]): sfMouseWheelScrollEvent {
+    return new sfMouseWheelScrollEvent(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   type: number;
   wheel: number;
   delta: number;
@@ -4403,9 +4548,25 @@ export class sfMouseWheelScrollEvent {
     this.x = x;
     this.y = y;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfMouseWheelScrollEvent.STRUCT_DEF, this);
+  }
 }
 
 export class sfSensorEvent {
+  static STRUCT_DEF: StructDef = ["i32", "i32", "f32", "f32", "f32"];
+
+  static deserialize(flatValues: NumberLikeType[]): sfSensorEvent {
+    return new sfSensorEvent(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   type: number;
   sensorType: number;
   x: number;
@@ -4425,9 +4586,23 @@ export class sfSensorEvent {
     this.y = y;
     this.z = z;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfSensorEvent.STRUCT_DEF, this);
+  }
 }
 
 export class sfSizeEvent {
+  static STRUCT_DEF: StructDef = ["i32", "u32", "u32"];
+
+  static deserialize(flatValues: NumberLikeType[]): sfSizeEvent {
+    return new sfSizeEvent(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   type: number;
   width: number;
   height: number;
@@ -4437,9 +4612,22 @@ export class sfSizeEvent {
     this.width = width;
     this.height = height;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfSizeEvent.STRUCT_DEF, this);
+  }
 }
 
 export class sfTextEvent {
+  static STRUCT_DEF: StructDef = ["i32", "u32"];
+
+  static deserialize(flatValues: NumberLikeType[]): sfTextEvent {
+    return new sfTextEvent(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   type: number;
   unicode: number;
 
@@ -4447,9 +4635,24 @@ export class sfTextEvent {
     this.type = type;
     this.unicode = unicode;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfTextEvent.STRUCT_DEF, this);
+  }
 }
 
 export class sfTouchEvent {
+  static STRUCT_DEF: StructDef = ["i32", "u32", "i32", "i32"];
+
+  static deserialize(flatValues: NumberLikeType[]): sfTouchEvent {
+    return new sfTouchEvent(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   type: number;
   finger: number;
   x: number;
@@ -4461,37 +4664,101 @@ export class sfTouchEvent {
     this.x = x;
     this.y = y;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfTouchEvent.STRUCT_DEF, this);
+  }
+}
+
+export class sfVideoMode {
+  static STRUCT_DEF: StructDef = ["u32", "u32", "u32"];
+
+  static deserialize(flatValues: NumberLikeType[]): sfVideoMode {
+    return new sfVideoMode(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
+  width: number;
+  height: number;
+  bitsPerPixel: number;
+
+  constructor(width: number, height: number, bitsPerPixel: number) {
+    this.width = width;
+    this.height = height;
+    this.bitsPerPixel = bitsPerPixel;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(sfVideoMode.STRUCT_DEF, this);
+  }
 }
 
 export class SFMLEventUnion {
+  static STRUCT_DEF: StructDef = [
+    "i32",
+    { "struct": ["i32", "u32", "u32"] },
+    { "struct": ["i32", "i32", "i32", "i32", "i32", "i32", "i32"] },
+    { "struct": ["i32", "u32"] },
+    { "struct": ["i32", "i32", "i32"] },
+    { "struct": ["i32", "i32", "i32", "i32"] },
+    { "struct": ["i32", "i32", "i32", "i32"] },
+    { "struct": ["i32", "i32", "f32", "i32", "i32"] },
+    { "struct": ["i32", "u32", "i32", "f32"] },
+    { "struct": ["i32", "u32", "u32"] },
+    { "struct": ["i32", "u32"] },
+    { "struct": ["i32", "u32", "i32", "i32"] },
+    { "struct": ["i32", "i32", "f32", "f32", "f32"] },
+  ];
+
+  static deserialize(flatValues: NumberLikeType[]): SFMLEventUnion {
+    return new SFMLEventUnion(
+      flatValues.shift()! as number,
+      sfSizeEvent.deserialize(flatValues),
+      sfKeyEvent.deserialize(flatValues),
+      sfTextEvent.deserialize(flatValues),
+      sfMouseMoveEvent.deserialize(flatValues),
+      sfMouseButtonEvent.deserialize(flatValues),
+      sfMouseWheelEvent.deserialize(flatValues),
+      sfMouseWheelScrollEvent.deserialize(flatValues),
+      sfJoystickMoveEvent.deserialize(flatValues),
+      sfJoystickButtonEvent.deserialize(flatValues),
+      sfJoystickConnectEvent.deserialize(flatValues),
+      sfTouchEvent.deserialize(flatValues),
+      sfSensorEvent.deserialize(flatValues),
+    );
+  }
+
   type: number;
-  size: BufferSource;
-  key: BufferSource;
-  text: BufferSource;
-  mouseMove: BufferSource;
-  mouseButton: BufferSource;
-  mouseWheel: BufferSource;
-  mouseWheelScroll: BufferSource;
-  joystickMove: BufferSource;
-  joystickButton: BufferSource;
-  joystickConnect: BufferSource;
-  touch: BufferSource;
-  sensor: BufferSource;
+  size: sfSizeEvent;
+  key: sfKeyEvent;
+  text: sfTextEvent;
+  mouseMove: sfMouseMoveEvent;
+  mouseButton: sfMouseButtonEvent;
+  mouseWheel: sfMouseWheelEvent;
+  mouseWheelScroll: sfMouseWheelScrollEvent;
+  joystickMove: sfJoystickMoveEvent;
+  joystickButton: sfJoystickButtonEvent;
+  joystickConnect: sfJoystickConnectEvent;
+  touch: sfTouchEvent;
+  sensor: sfSensorEvent;
 
   constructor(
     type: number,
-    size: BufferSource,
-    key: BufferSource,
-    text: BufferSource,
-    mouseMove: BufferSource,
-    mouseButton: BufferSource,
-    mouseWheel: BufferSource,
-    mouseWheelScroll: BufferSource,
-    joystickMove: BufferSource,
-    joystickButton: BufferSource,
-    joystickConnect: BufferSource,
-    touch: BufferSource,
-    sensor: BufferSource,
+    size: sfSizeEvent,
+    key: sfKeyEvent,
+    text: sfTextEvent,
+    mouseMove: sfMouseMoveEvent,
+    mouseButton: sfMouseButtonEvent,
+    mouseWheel: sfMouseWheelEvent,
+    mouseWheelScroll: sfMouseWheelScrollEvent,
+    joystickMove: sfJoystickMoveEvent,
+    joystickButton: sfJoystickButtonEvent,
+    joystickConnect: sfJoystickConnectEvent,
+    touch: sfTouchEvent,
+    sensor: sfSensorEvent,
   ) {
     this.type = type;
     this.size = size;
@@ -4507,9 +4774,25 @@ export class SFMLEventUnion {
     this.touch = touch;
     this.sensor = sensor;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(SFMLEventUnion.STRUCT_DEF, this);
+  }
 }
 
 export class Color {
+  static STRUCT_DEF: StructDef = ["u8", "u8", "u8", "u8", "i16"];
+
+  static deserialize(flatValues: NumberLikeType[]): Color {
+    return new Color(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   r: number;
   g: number;
   b: number;
@@ -4522,6 +4805,10 @@ export class Color {
     this.b = b;
     this.a = a;
     this.isSet = isSet;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(Color.STRUCT_DEF, this);
   }
 
   /**
@@ -4588,10 +4875,22 @@ export class Color {
 }
 
 export class Duration {
+  static STRUCT_DEF: StructDef = ["i64"];
+
+  static deserialize(flatValues: NumberLikeType[]): Duration {
+    return new Duration(
+      flatValues.shift()! as bigint,
+    );
+  }
+
   nanoseconds: bigint;
 
   constructor(nanoseconds: bigint) {
     this.nanoseconds = nanoseconds;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(Duration.STRUCT_DEF, this);
   }
 
   /**
@@ -4654,8 +4953,8 @@ export class Duration {
    * @param duration `Duration { nanoseconds: long long }`
    * @returns `float`
    */
-  asSeconds(duration: BufferSource): ResultType<"tguiDuration_asSeconds"> {
-    return accessLib().symbols.tguiDuration_asSeconds(duration);
+  asSeconds(duration: Duration): ResultType<"tguiDuration_asSeconds"> {
+    return accessLib().symbols.tguiDuration_asSeconds(duration.buffer);
   }
 
   /**
@@ -4667,9 +4966,9 @@ export class Duration {
    * @returns `Int32`
    */
   asMilliseconds(
-    duration: BufferSource,
+    duration: Duration,
   ): ResultType<"tguiDuration_asMilliseconds"> {
-    return accessLib().symbols.tguiDuration_asMilliseconds(duration);
+    return accessLib().symbols.tguiDuration_asMilliseconds(duration.buffer);
   }
 
   /**
@@ -4681,9 +4980,9 @@ export class Duration {
    * @returns `Int64`
    */
   asMicroseconds(
-    duration: BufferSource,
+    duration: Duration,
   ): ResultType<"tguiDuration_asMicroseconds"> {
-    return accessLib().symbols.tguiDuration_asMicroseconds(duration);
+    return accessLib().symbols.tguiDuration_asMicroseconds(duration.buffer);
   }
 
   /**
@@ -4694,14 +4993,23 @@ export class Duration {
    * @param duration `Duration { nanoseconds: long long }`
    * @returns `Int64`
    */
-  asNanoseconds(
-    duration: BufferSource,
-  ): ResultType<"tguiDuration_asNanoseconds"> {
-    return accessLib().symbols.tguiDuration_asNanoseconds(duration);
+  asNanoseconds(duration: Duration): ResultType<"tguiDuration_asNanoseconds"> {
+    return accessLib().symbols.tguiDuration_asNanoseconds(duration.buffer);
   }
 }
 
 export class FloatRect {
+  static STRUCT_DEF: StructDef = ["f32", "f32", "f32", "f32"];
+
+  static deserialize(flatValues: NumberLikeType[]): FloatRect {
+    return new FloatRect(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   left: number;
   top: number;
   width: number;
@@ -4712,6 +5020,10 @@ export class FloatRect {
     this.top = top;
     this.width = width;
     this.height = height;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(FloatRect.STRUCT_DEF, this);
   }
 
   /**
@@ -4725,9 +5037,9 @@ export class FloatRect {
    */
   contains(
     rect: Deno.PointerValue<unknown>,
-    pos: BufferSource,
+    pos: Vector2f,
   ): ResultType<"tguiFloatRect_contains"> {
-    return accessLib().symbols.tguiFloatRect_contains(rect, pos);
+    return accessLib().symbols.tguiFloatRect_contains(rect, pos.buffer);
   }
 
   /**
@@ -4748,22 +5060,45 @@ export class FloatRect {
 }
 
 export class FontGlyph {
-  advance: number;
-  bounds: BufferSource;
-  textureRect: BufferSource;
+  static STRUCT_DEF: StructDef = ["f32", {
+    "struct": ["f32", "f32", "f32", "f32"],
+  }, { "struct": ["u16", "u16", "u16", "u16"] }];
 
-  constructor(
-    advance: number,
-    bounds: BufferSource,
-    textureRect: BufferSource,
-  ) {
+  static deserialize(flatValues: NumberLikeType[]): FontGlyph {
+    return new FontGlyph(
+      flatValues.shift()! as number,
+      FloatRect.deserialize(flatValues),
+      UIntRect.deserialize(flatValues),
+    );
+  }
+
+  advance: number;
+  bounds: FloatRect;
+  textureRect: UIntRect;
+
+  constructor(advance: number, bounds: FloatRect, textureRect: UIntRect) {
     this.advance = advance;
     this.bounds = bounds;
     this.textureRect = textureRect;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(FontGlyph.STRUCT_DEF, this);
+  }
 }
 
 export class UIntRect {
+  static STRUCT_DEF: StructDef = ["u16", "u16", "u16", "u16"];
+
+  static deserialize(flatValues: NumberLikeType[]): UIntRect {
+    return new UIntRect(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   left: number;
   top: number;
   width: number;
@@ -4774,6 +5109,10 @@ export class UIntRect {
     this.top = top;
     this.width = width;
     this.height = height;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(UIntRect.STRUCT_DEF, this);
   }
 
   /**
@@ -4787,9 +5126,9 @@ export class UIntRect {
    */
   contains(
     rect: Deno.PointerValue<unknown>,
-    pos: BufferSource,
+    pos: Vector2u,
   ): ResultType<"tguiUIntRect_contains"> {
-    return accessLib().symbols.tguiUIntRect_contains(rect, pos);
+    return accessLib().symbols.tguiUIntRect_contains(rect, pos.buffer);
   }
 
   /**
@@ -4810,26 +5149,61 @@ export class UIntRect {
 }
 
 export class Vector2f {
+  static STRUCT_DEF: StructDef = ["f32", "f32"];
+
+  static deserialize(flatValues: NumberLikeType[]): Vector2f {
+    return new Vector2f(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   x: number;
   y: number;
 
   constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(Vector2f.STRUCT_DEF, this);
   }
 }
 
 export class Vector2i {
+  static STRUCT_DEF: StructDef = ["i16", "i16"];
+
+  static deserialize(flatValues: NumberLikeType[]): Vector2i {
+    return new Vector2i(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   x: number;
   y: number;
 
   constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(Vector2i.STRUCT_DEF, this);
   }
 }
 
 export class Vector2u {
+  static STRUCT_DEF: StructDef = ["u16", "u16"];
+
+  static deserialize(flatValues: NumberLikeType[]): Vector2u {
+    return new Vector2u(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   x: number;
   y: number;
 
@@ -4837,25 +5211,52 @@ export class Vector2u {
     this.x = x;
     this.y = y;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(Vector2u.STRUCT_DEF, this);
+  }
 }
 
 export class Vertex {
-  position: BufferSource;
-  color: BufferSource;
-  texCoords: BufferSource;
+  static STRUCT_DEF: StructDef = [{ "struct": ["f32", "f32"] }, {
+    "struct": ["u8", "u8", "u8", "u8"],
+  }, { "struct": ["f32", "f32"] }];
 
-  constructor(
-    position: BufferSource,
-    color: BufferSource,
-    texCoords: BufferSource,
-  ) {
+  static deserialize(flatValues: NumberLikeType[]): Vertex {
+    return new Vertex(
+      Vector2f.deserialize(flatValues),
+      VertexColor.deserialize(flatValues),
+      Vector2f.deserialize(flatValues),
+    );
+  }
+
+  position: Vector2f;
+  color: VertexColor;
+  texCoords: Vector2f;
+
+  constructor(position: Vector2f, color: VertexColor, texCoords: Vector2f) {
     this.position = position;
     this.color = color;
     this.texCoords = texCoords;
   }
+
+  get buffer(): BufferSource {
+    return serializeStruct(Vertex.STRUCT_DEF, this);
+  }
 }
 
 export class VertexColor {
+  static STRUCT_DEF: StructDef = ["u8", "u8", "u8", "u8"];
+
+  static deserialize(flatValues: NumberLikeType[]): VertexColor {
+    return new VertexColor(
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+      flatValues.shift()! as number,
+    );
+  }
+
   r: number;
   g: number;
   b: number;
@@ -4866,6 +5267,10 @@ export class VertexColor {
     this.g = g;
     this.b = b;
     this.a = a;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(VertexColor.STRUCT_DEF, this);
   }
 }
 
@@ -4881,9 +5286,9 @@ export class IntRect {
    */
   contains(
     rect: Deno.PointerValue<unknown>,
-    pos: BufferSource,
+    pos: Vector2i,
   ): ResultType<"tguiIntRect_contains"> {
-    return accessLib().symbols.tguiIntRect_contains(rect, pos);
+    return accessLib().symbols.tguiIntRect_contains(rect, pos.buffer);
   }
 
   /**
@@ -4937,9 +5342,9 @@ export class tgui {
    * @returns `void`
    */
   setDoubleClickTime(
-    duration: BufferSource,
+    duration: Duration,
   ): ResultType<"tgui_setDoubleClickTime"> {
-    return accessLib().symbols.tgui_setDoubleClickTime(duration);
+    return accessLib().symbols.tgui_setDoubleClickTime(duration.buffer);
   }
 
   /**
@@ -4975,9 +5380,9 @@ export class tgui {
    * @returns `void`
    */
   setEditCursorBlinkRate(
-    blinkRate: BufferSource,
+    blinkRate: Duration,
   ): ResultType<"tgui_setEditCursorBlinkRate"> {
-    return accessLib().symbols.tgui_setEditCursorBlinkRate(blinkRate);
+    return accessLib().symbols.tgui_setEditCursorBlinkRate(blinkRate.buffer);
   }
 
   /**
@@ -5112,10 +5517,15 @@ export class Cursor {
   setStyle(
     type: number,
     pixels: Deno.PointerValue<unknown>,
-    size: BufferSource,
-    hotspot: BufferSource,
+    size: Vector2u,
+    hotspot: Vector2u,
   ): ResultType<"tguiCursor_setStyle"> {
-    return accessLib().symbols.tguiCursor_setStyle(type, pixels, size, hotspot);
+    return accessLib().symbols.tguiCursor_setStyle(
+      type,
+      pixels,
+      size.buffer,
+      hotspot.buffer,
+    );
   }
 
   /**
@@ -5193,9 +5603,12 @@ export class Gui {
    */
   setAbsoluteViewport(
     thisGui: Deno.PointerValue<unknown>,
-    viewport: BufferSource,
+    viewport: FloatRect,
   ): ResultType<"tguiGui_setAbsoluteViewport"> {
-    return accessLib().symbols.tguiGui_setAbsoluteViewport(thisGui, viewport);
+    return accessLib().symbols.tguiGui_setAbsoluteViewport(
+      thisGui,
+      viewport.buffer,
+    );
   }
 
   /**
@@ -5209,9 +5622,12 @@ export class Gui {
    */
   setRelativeViewport(
     thisGui: Deno.PointerValue<unknown>,
-    viewport: BufferSource,
+    viewport: FloatRect,
   ): ResultType<"tguiGui_setRelativeViewport"> {
-    return accessLib().symbols.tguiGui_setRelativeViewport(thisGui, viewport);
+    return accessLib().symbols.tguiGui_setRelativeViewport(
+      thisGui,
+      viewport.buffer,
+    );
   }
 
   /**
@@ -5239,9 +5655,9 @@ export class Gui {
    */
   setAbsoluteView(
     thisGui: Deno.PointerValue<unknown>,
-    view: BufferSource,
+    view: FloatRect,
   ): ResultType<"tguiGui_setAbsoluteView"> {
-    return accessLib().symbols.tguiGui_setAbsoluteView(thisGui, view);
+    return accessLib().symbols.tguiGui_setAbsoluteView(thisGui, view.buffer);
   }
 
   /**
@@ -5255,9 +5671,9 @@ export class Gui {
    */
   setRelativeView(
     thisGui: Deno.PointerValue<unknown>,
-    view: BufferSource,
+    view: FloatRect,
   ): ResultType<"tguiGui_setRelativeView"> {
-    return accessLib().symbols.tguiGui_setRelativeView(thisGui, view);
+    return accessLib().symbols.tguiGui_setRelativeView(thisGui, view.buffer);
   }
 
   /**
@@ -5450,10 +5866,14 @@ export class Gui {
    */
   getWidgetAtPos(
     thisGui: Deno.PointerValue<unknown>,
-    pos: BufferSource,
+    pos: Vector2f,
     recursive: number,
   ): ResultType<"tguiGui_getWidgetAtPos"> {
-    return accessLib().symbols.tguiGui_getWidgetAtPos(thisGui, pos, recursive);
+    return accessLib().symbols.tguiGui_getWidgetAtPos(
+      thisGui,
+      pos.buffer,
+      recursive,
+    );
   }
 
   /**
@@ -5468,12 +5888,12 @@ export class Gui {
    */
   getWidgetBelowMouseCursor(
     thisGui: Deno.PointerValue<unknown>,
-    mousePos: BufferSource,
+    mousePos: Vector2i,
     recursive: number,
   ): ResultType<"tguiGui_getWidgetBelowMouseCursor"> {
     return accessLib().symbols.tguiGui_getWidgetBelowMouseCursor(
       thisGui,
-      mousePos,
+      mousePos.buffer,
       recursive,
     );
   }
@@ -5772,9 +6192,9 @@ export class Gui {
    */
   mapPixelToCoords(
     thisGui: Deno.PointerValue<unknown>,
-    pixel: BufferSource,
+    pixel: Vector2i,
   ): ResultType<"tguiGui_mapPixelToCoords"> {
-    return accessLib().symbols.tguiGui_mapPixelToCoords(thisGui, pixel);
+    return accessLib().symbols.tguiGui_mapPixelToCoords(thisGui, pixel.buffer);
   }
 
   /**
@@ -5788,9 +6208,9 @@ export class Gui {
    */
   mapCoordsToPixel(
     thisGui: Deno.PointerValue<unknown>,
-    coord: BufferSource,
+    coord: Vector2f,
   ): ResultType<"tguiGui_mapCoordsToPixel"> {
-    return accessLib().symbols.tguiGui_mapCoordsToPixel(thisGui, coord);
+    return accessLib().symbols.tguiGui_mapCoordsToPixel(thisGui, coord.buffer);
   }
 
   /**
@@ -5837,9 +6257,9 @@ export class Gui {
    */
   mainLoop(
     thisGui: Deno.PointerValue<unknown>,
-    clearColor: BufferSource,
+    clearColor: Color,
   ): ResultType<"tguiGui_mainLoop"> {
-    return accessLib().symbols.tguiGui_mainLoop(thisGui, clearColor);
+    return accessLib().symbols.tguiGui_mainLoop(thisGui, clearColor.buffer);
   }
 }
 
@@ -5929,12 +6349,12 @@ export class BackendRenderTarget {
   addClippingLayer(
     target: Deno.PointerValue<unknown>,
     states: Deno.PointerValue<unknown>,
-    rect: BufferSource,
+    rect: FloatRect,
   ): ResultType<"tguiBackendRenderTarget_addClippingLayer"> {
     return accessLib().symbols.tguiBackendRenderTarget_addClippingLayer(
       target,
       states,
-      rect,
+      rect.buffer,
     );
   }
 
@@ -5970,15 +6390,15 @@ export class BackendRenderTarget {
     target: Deno.PointerValue<unknown>,
     states: Deno.PointerValue<unknown>,
     borders: Deno.PointerValue<unknown>,
-    size: BufferSource,
-    color: BufferSource,
+    size: Vector2f,
+    color: Color,
   ): ResultType<"tguiBackendRenderTarget_drawBorders"> {
     return accessLib().symbols.tguiBackendRenderTarget_drawBorders(
       target,
       states,
       borders,
-      size,
-      color,
+      size.buffer,
+      color.buffer,
     );
   }
 
@@ -5996,14 +6416,14 @@ export class BackendRenderTarget {
   drawFilledRect(
     target: Deno.PointerValue<unknown>,
     states: Deno.PointerValue<unknown>,
-    size: BufferSource,
-    color: BufferSource,
+    size: Vector2f,
+    color: Color,
   ): ResultType<"tguiBackendRenderTarget_drawFilledRect"> {
     return accessLib().symbols.tguiBackendRenderTarget_drawFilledRect(
       target,
       states,
-      size,
-      color,
+      size.buffer,
+      color.buffer,
     );
   }
 
@@ -6110,16 +6530,16 @@ export class BackendRenderTarget {
   drawTriangle(
     target: Deno.PointerValue<unknown>,
     states: Deno.PointerValue<unknown>,
-    point1: BufferSource,
-    point2: BufferSource,
-    point3: BufferSource,
+    point1: Vertex,
+    point2: Vertex,
+    point3: Vertex,
   ): ResultType<"tguiBackendRenderTarget_drawTriangle"> {
     return accessLib().symbols.tguiBackendRenderTarget_drawTriangle(
       target,
       states,
-      point1,
-      point2,
-      point3,
+      point1.buffer,
+      point2.buffer,
+      point3.buffer,
     );
   }
 
@@ -6140,17 +6560,17 @@ export class BackendRenderTarget {
     target: Deno.PointerValue<unknown>,
     states: Deno.PointerValue<unknown>,
     size: number,
-    backgroundColor: BufferSource,
+    backgroundColor: Color,
     borderThickness: number,
-    borderColor: BufferSource,
+    borderColor: Color,
   ): ResultType<"tguiBackendRenderTarget_drawCircle"> {
     return accessLib().symbols.tguiBackendRenderTarget_drawCircle(
       target,
       states,
       size,
-      backgroundColor,
+      backgroundColor.buffer,
       borderThickness,
-      borderColor,
+      borderColor.buffer,
     );
   }
 
@@ -6171,20 +6591,20 @@ export class BackendRenderTarget {
   drawRoundedRectangle(
     target: Deno.PointerValue<unknown>,
     states: Deno.PointerValue<unknown>,
-    size: BufferSource,
-    backgroundColor: BufferSource,
+    size: Vector2f,
+    backgroundColor: Color,
     radius: number,
     borders: Deno.PointerValue<unknown>,
-    borderColor: BufferSource,
+    borderColor: Color,
   ): ResultType<"tguiBackendRenderTarget_drawRoundedRectangle"> {
     return accessLib().symbols.tguiBackendRenderTarget_drawRoundedRectangle(
       target,
       states,
-      size,
-      backgroundColor,
+      size.buffer,
+      backgroundColor.buffer,
       radius,
       borders,
-      borderColor,
+      borderColor.buffer,
     );
   }
 
@@ -7110,8 +7530,8 @@ export class Layout2d {
    * @param constant `Vector2f { x: float; y: float }`
    * @returns `Layout2d *`
    */
-  constructor(constant: BufferSource) {
-    this.ptr = accessLib().symbols.tguiLayout2d_create(constant);
+  constructor(constant: Vector2f) {
+    this.ptr = accessLib().symbols.tguiLayout2d_create(constant.buffer);
   }
 
   /**
@@ -7459,9 +7879,9 @@ export class Sprite {
    */
   setPosition(
     thisSprite: Deno.PointerValue<unknown>,
-    value: BufferSource,
+    value: Vector2f,
   ): ResultType<"tguiSprite_setPosition"> {
-    return accessLib().symbols.tguiSprite_setPosition(thisSprite, value);
+    return accessLib().symbols.tguiSprite_setPosition(thisSprite, value.buffer);
   }
 
   /**
@@ -7489,9 +7909,9 @@ export class Sprite {
    */
   setSize(
     thisSprite: Deno.PointerValue<unknown>,
-    value: BufferSource,
+    value: Vector2f,
   ): ResultType<"tguiSprite_setSize"> {
-    return accessLib().symbols.tguiSprite_setSize(thisSprite, value);
+    return accessLib().symbols.tguiSprite_setSize(thisSprite, value.buffer);
   }
 
   /**
@@ -7549,9 +7969,12 @@ export class Sprite {
    */
   setVisibleRect(
     thisSprite: Deno.PointerValue<unknown>,
-    value: BufferSource,
+    value: FloatRect,
   ): ResultType<"tguiSprite_setVisibleRect"> {
-    return accessLib().symbols.tguiSprite_setVisibleRect(thisSprite, value);
+    return accessLib().symbols.tguiSprite_setVisibleRect(
+      thisSprite,
+      value.buffer,
+    );
   }
 
   /**
@@ -7609,9 +8032,12 @@ export class Sprite {
    */
   isTransparentPixel(
     thisSprite: Deno.PointerValue<unknown>,
-    pos: BufferSource,
+    pos: Vector2f,
   ): ResultType<"tguiSprite_isTransparentPixel"> {
-    return accessLib().symbols.tguiSprite_isTransparentPixel(thisSprite, pos);
+    return accessLib().symbols.tguiSprite_isTransparentPixel(
+      thisSprite,
+      pos.buffer,
+    );
   }
 }
 
@@ -7811,8 +8237,8 @@ export class Text {
    * @param value `Vector2f { x: float; y: float }`
    * @returns `void`
    */
-  setPosition(value: BufferSource): ResultType<"tguiText_setPosition"> {
-    return accessLib().symbols.tguiText_setPosition(this.pointer, value);
+  setPosition(value: Vector2f): ResultType<"tguiText_setPosition"> {
+    return accessLib().symbols.tguiText_setPosition(this.pointer, value.buffer);
   }
 
   /**
@@ -7886,8 +8312,8 @@ export class Text {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setColor(value: BufferSource): ResultType<"tguiText_setColor"> {
-    return accessLib().symbols.tguiText_setColor(this.pointer, value);
+  setColor(value: Color): ResultType<"tguiText_setColor"> {
+    return accessLib().symbols.tguiText_setColor(this.pointer, value.buffer);
   }
 
   /**
@@ -7986,8 +8412,11 @@ export class Text {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setOutlineColor(value: BufferSource): ResultType<"tguiText_setOutlineColor"> {
-    return accessLib().symbols.tguiText_setOutlineColor(this.pointer, value);
+  setOutlineColor(value: Color): ResultType<"tguiText_setOutlineColor"> {
+    return accessLib().symbols.tguiText_setOutlineColor(
+      this.pointer,
+      value.buffer,
+    );
   }
 
   /**
@@ -8121,13 +8550,13 @@ export class Texture {
    */
   createFromFile(
     filename: BufferSource,
-    partRect: BufferSource,
-    middleRect: BufferSource,
+    partRect: UIntRect,
+    middleRect: UIntRect,
   ): ResultType<"tguiTexture_createFromFile"> {
     return accessLib().symbols.tguiTexture_createFromFile(
       filename,
-      partRect,
-      middleRect,
+      partRect.buffer,
+      middleRect.buffer,
     );
   }
 
@@ -8144,14 +8573,14 @@ export class Texture {
    */
   createFromFileEx(
     filename: BufferSource,
-    partRect: BufferSource,
-    middleRect: BufferSource,
+    partRect: UIntRect,
+    middleRect: UIntRect,
     smoothing: number,
   ): ResultType<"tguiTexture_createFromFileEx"> {
     return accessLib().symbols.tguiTexture_createFromFileEx(
       filename,
-      partRect,
-      middleRect,
+      partRect.buffer,
+      middleRect.buffer,
       smoothing,
     );
   }
@@ -8170,14 +8599,14 @@ export class Texture {
   createFromMemory(
     data: BufferSource,
     dataSize: bigint,
-    partRect: BufferSource,
-    middleRect: BufferSource,
+    partRect: UIntRect,
+    middleRect: UIntRect,
   ): ResultType<"tguiTexture_createFromMemory"> {
     return accessLib().symbols.tguiTexture_createFromMemory(
       data,
       dataSize,
-      partRect,
-      middleRect,
+      partRect.buffer,
+      middleRect.buffer,
     );
   }
 
@@ -8196,15 +8625,15 @@ export class Texture {
   createFromMemoryEx(
     data: BufferSource,
     dataSize: bigint,
-    partRect: BufferSource,
-    middleRect: BufferSource,
+    partRect: UIntRect,
+    middleRect: UIntRect,
     smoothing: number,
   ): ResultType<"tguiTexture_createFromMemoryEx"> {
     return accessLib().symbols.tguiTexture_createFromMemoryEx(
       data,
       dataSize,
-      partRect,
-      middleRect,
+      partRect.buffer,
+      middleRect.buffer,
       smoothing,
     );
   }
@@ -8221,16 +8650,16 @@ export class Texture {
    * @returns `Texture *`
    */
   createFromPixelData(
-    size: BufferSource,
+    size: Vector2u,
     pixels: BufferSource,
-    partRect: BufferSource,
-    middleRect: BufferSource,
+    partRect: UIntRect,
+    middleRect: UIntRect,
   ): ResultType<"tguiTexture_createFromPixelData"> {
     return accessLib().symbols.tguiTexture_createFromPixelData(
-      size,
+      size.buffer,
       pixels,
-      partRect,
-      middleRect,
+      partRect.buffer,
+      middleRect.buffer,
     );
   }
 
@@ -8247,17 +8676,17 @@ export class Texture {
    * @returns `Texture *`
    */
   createFromPixelDataEx(
-    size: BufferSource,
+    size: Vector2u,
     pixels: BufferSource,
-    partRect: BufferSource,
-    middleRect: BufferSource,
+    partRect: UIntRect,
+    middleRect: UIntRect,
     smoothing: number,
   ): ResultType<"tguiTexture_createFromPixelDataEx"> {
     return accessLib().symbols.tguiTexture_createFromPixelDataEx(
-      size,
+      size.buffer,
       pixels,
-      partRect,
-      middleRect,
+      partRect.buffer,
+      middleRect.buffer,
       smoothing,
     );
   }
@@ -8274,13 +8703,13 @@ export class Texture {
    */
   createFromBase64(
     imageAsBase64: BufferSource,
-    partRect: BufferSource,
-    middleRect: BufferSource,
+    partRect: UIntRect,
+    middleRect: UIntRect,
   ): ResultType<"tguiTexture_createFromBase64"> {
     return accessLib().symbols.tguiTexture_createFromBase64(
       imageAsBase64,
-      partRect,
-      middleRect,
+      partRect.buffer,
+      middleRect.buffer,
     );
   }
 
@@ -8297,14 +8726,14 @@ export class Texture {
    */
   createFromBase64Ex(
     imageAsBase64: BufferSource,
-    partRect: BufferSource,
-    middleRect: BufferSource,
+    partRect: UIntRect,
+    middleRect: UIntRect,
     smoothing: number,
   ): ResultType<"tguiTexture_createFromBase64Ex"> {
     return accessLib().symbols.tguiTexture_createFromBase64Ex(
       imageAsBase64,
-      partRect,
-      middleRect,
+      partRect.buffer,
+      middleRect.buffer,
       smoothing,
     );
   }
@@ -8334,9 +8763,9 @@ export class Texture {
    */
   setColor(
     thisTexture: Deno.PointerValue<unknown>,
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTexture_setColor"> {
-    return accessLib().symbols.tguiTexture_setColor(thisTexture, value);
+    return accessLib().symbols.tguiTexture_setColor(thisTexture, value.buffer);
   }
 
   /**
@@ -8364,9 +8793,12 @@ export class Texture {
    */
   setMiddleRect(
     thisTexture: Deno.PointerValue<unknown>,
-    value: BufferSource,
+    value: UIntRect,
   ): ResultType<"tguiTexture_setMiddleRect"> {
-    return accessLib().symbols.tguiTexture_setMiddleRect(thisTexture, value);
+    return accessLib().symbols.tguiTexture_setMiddleRect(
+      thisTexture,
+      value.buffer,
+    );
   }
 
   /**
@@ -8450,9 +8882,12 @@ export class Texture {
    */
   isTransparentPixel(
     thisTexture: Deno.PointerValue<unknown>,
-    pos: BufferSource,
+    pos: Vector2u,
   ): ResultType<"tguiTexture_isTransparentPixel"> {
-    return accessLib().symbols.tguiTexture_isTransparentPixel(thisTexture, pos);
+    return accessLib().symbols.tguiTexture_isTransparentPixel(
+      thisTexture,
+      pos.buffer,
+    );
   }
 
   /**
@@ -8958,9 +9393,12 @@ export class Timer {
    */
   scheduleCallback(
     callback: Deno.PointerValue<unknown>,
-    interval: BufferSource,
+    interval: Duration,
   ): ResultType<"tguiTimer_scheduleCallback"> {
-    return accessLib().symbols.tguiTimer_scheduleCallback(callback, interval);
+    return accessLib().symbols.tguiTimer_scheduleCallback(
+      callback,
+      interval.buffer,
+    );
   }
 
   protected ptr: Deno.PointerValue<unknown>;
@@ -8981,10 +9419,14 @@ export class Timer {
    */
   constructor(
     callback: Deno.PointerValue<unknown>,
-    interval: BufferSource,
+    interval: Duration,
     enable: number,
   ) {
-    this.ptr = accessLib().symbols.tguiTimer_create(callback, interval, enable);
+    this.ptr = accessLib().symbols.tguiTimer_create(
+      callback,
+      interval.buffer,
+      enable,
+    );
   }
 
   /**
@@ -9010,9 +9452,9 @@ export class Timer {
    */
   setInterval(
     timer: Deno.PointerValue<unknown>,
-    interval: BufferSource,
+    interval: Duration,
   ): ResultType<"tguiTimer_setInterval"> {
-    return accessLib().symbols.tguiTimer_setInterval(timer, interval);
+    return accessLib().symbols.tguiTimer_setInterval(timer, interval.buffer);
   }
 
   /**
@@ -9097,10 +9539,8 @@ export class ToolTip {
    * @param delay `Duration { nanoseconds: long long }`
    * @returns `void`
    */
-  setInitialDelay(
-    delay: BufferSource,
-  ): ResultType<"tguiToolTip_setInitialDelay"> {
-    return accessLib().symbols.tguiToolTip_setInitialDelay(delay);
+  setInitialDelay(delay: Duration): ResultType<"tguiToolTip_setInitialDelay"> {
+    return accessLib().symbols.tguiToolTip_setInitialDelay(delay.buffer);
   }
 
   /**
@@ -9124,9 +9564,9 @@ export class ToolTip {
    * @returns `void`
    */
   setDistanceToMouse(
-    distance: BufferSource,
+    distance: Vector2f,
   ): ResultType<"tguiToolTip_setDistanceToMouse"> {
-    return accessLib().symbols.tguiToolTip_setDistanceToMouse(distance);
+    return accessLib().symbols.tguiToolTip_setDistanceToMouse(distance.buffer);
   }
 
   /**
@@ -9169,20 +9609,6 @@ export class ToolTip {
 }
 
 export class SFMLEvent {
-  /**
-   * @original ```c
-   * SFMLEventUnion SFMLEvent_convert(sfEvent * SFMLEvent);
-   * ```
-   *
-   * @param SFMLEvent `sfEvent *`
-   * @returns `SFMLEventUnion { type: sfEventType; size: sfSizeEvent; key: sfKeyEvent; text: sfTextEvent; mouseMove: sfMouseMoveEvent; mouseButton: sfMouseButtonEvent; mouseWheel: sfMouseWheelEvent; mouseWheelScroll: sfMouseWheelScrollEvent; joystickMove: sfJoystickMoveEvent; joystickButton: sfJoystickButtonEvent; joystickConnect: sfJoystickConnectEvent; touch: sfTouchEvent; sensor: sfSensorEvent }`
-   */
-  convert(
-    SFMLEvent: Deno.PointerValue<unknown>,
-  ): ResultType<"SFMLEvent_convert"> {
-    return accessLib().symbols.SFMLEvent_convert(SFMLEvent);
-  }
-
   protected ptr: Deno.PointerValue<unknown>;
 
   get pointer(): Deno.PointerValue<unknown> {
@@ -9199,6 +9625,20 @@ export class SFMLEvent {
    */
   constructor() {
     this.ptr = accessLib().symbols.SFMLEvent_create();
+  }
+
+  /**
+   * @original ```c
+   * SFMLEventUnion SFMLEvent_convert(sfEvent * SFMLEvent);
+   * ```
+   *
+   * @param SFMLEvent `sfEvent *`
+   * @returns `SFMLEventUnion { type: sfEventType; size: sfSizeEvent; key: sfKeyEvent; text: sfTextEvent; mouseMove: sfMouseMoveEvent; mouseButton: sfMouseButtonEvent; mouseWheel: sfMouseWheelEvent; mouseWheelScroll: sfMouseWheelScrollEvent; joystickMove: sfJoystickMoveEvent; joystickButton: sfJoystickButtonEvent; joystickConnect: sfJoystickConnectEvent; touch: sfTouchEvent; sensor: sfSensorEvent }`
+   */
+  convert(
+    SFMLEvent: Deno.PointerValue<unknown>,
+  ): ResultType<"SFMLEvent_convert"> {
+    return accessLib().symbols.SFMLEvent_convert(SFMLEvent);
   }
 
   /**
@@ -9228,13 +9668,17 @@ export class renderWindow {
    * sfRenderWindow * renderWindow_create(sfVideoMode mode, const char * title, unsigned int style);
    * ```
    *
-   * @param mode `sfVideoMode`
+   * @param mode `sfVideoMode { width: unsigned int; height: unsigned int; bitsPerPixel: unsigned int }`
    * @param title `const char *`
    * @param style `unsigned int`
    * @returns `sfRenderWindow *`
    */
-  constructor(mode: BufferSource, title: BufferSource, style: number) {
-    this.ptr = accessLib().symbols.renderWindow_create(mode, title, style);
+  constructor(mode: sfVideoMode, title: BufferSource, style: number) {
+    this.ptr = accessLib().symbols.renderWindow_create(
+      mode.buffer,
+      title,
+      style,
+    );
   }
 
   /**
@@ -9285,8 +9729,8 @@ export class renderWindow {
    * @param color `sfColor { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char }`
    * @returns `void`
    */
-  clear(color: BufferSource): ResultType<"renderWindow_clear"> {
-    return accessLib().symbols.renderWindow_clear(this.pointer, color);
+  clear(color: sfColor): ResultType<"renderWindow_clear"> {
+    return accessLib().symbols.renderWindow_clear(this.pointer, color.buffer);
   }
 
   /**
@@ -9423,12 +9867,12 @@ export class ChatBox extends Widget {
    */
   addLineWithColor(
     text: BufferSource,
-    color: BufferSource,
+    color: Color,
   ): ResultType<"tguiChatBox_addLineWithColor"> {
     return accessLib().symbols.tguiChatBox_addLineWithColor(
       this.pointer,
       text,
-      color,
+      color.buffer,
     );
   }
 
@@ -9445,13 +9889,13 @@ export class ChatBox extends Widget {
    */
   addLineWithColorAndStyle(
     text: BufferSource,
-    color: BufferSource,
+    color: Color,
     style: number,
   ): ResultType<"tguiChatBox_addLineWithColorAndStyle"> {
     return accessLib().symbols.tguiChatBox_addLineWithColorAndStyle(
       this.pointer,
       text,
-      color,
+      color.buffer,
       style,
     );
   }
@@ -9574,8 +10018,11 @@ export class ChatBox extends Widget {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setTextColor(value: BufferSource): ResultType<"tguiChatBox_setTextColor"> {
-    return accessLib().symbols.tguiChatBox_setTextColor(this.pointer, value);
+  setTextColor(value: Color): ResultType<"tguiChatBox_setTextColor"> {
+    return accessLib().symbols.tguiChatBox_setTextColor(
+      this.pointer,
+      value.buffer,
+    );
   }
 
   /**
@@ -9712,8 +10159,11 @@ export class ColorPicker extends ChildWindow {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setColor(value: BufferSource): ResultType<"tguiColorPicker_setColor"> {
-    return accessLib().symbols.tguiColorPicker_setColor(this.pointer, value);
+  setColor(value: Color): ResultType<"tguiColorPicker_setColor"> {
+    return accessLib().symbols.tguiColorPicker_setColor(
+      this.pointer,
+      value.buffer,
+    );
   }
 
   /**
@@ -13451,11 +13901,11 @@ export class ListView extends Widget {
    * @returns `void`
    */
   setFixedIconSize(
-    value: BufferSource,
+    value: Vector2f,
   ): ResultType<"tguiListView_setFixedIconSize"> {
     return accessLib().symbols.tguiListView_setFixedIconSize(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -16761,12 +17211,10 @@ export class ButtonRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setTextColor(
-    value: BufferSource,
-  ): ResultType<"tguiButtonRenderer_setTextColor"> {
+  setTextColor(value: Color): ResultType<"tguiButtonRenderer_setTextColor"> {
     return accessLib().symbols.tguiButtonRenderer_setTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -16792,11 +17240,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setTextColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setTextColorHover"> {
     return accessLib().symbols.tguiButtonRenderer_setTextColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -16824,11 +17272,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setTextColorFocused(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setTextColorFocused"> {
     return accessLib().symbols.tguiButtonRenderer_setTextColorFocused(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -16856,11 +17304,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setTextColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setTextColorDisabled"> {
     return accessLib().symbols.tguiButtonRenderer_setTextColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -16890,11 +17338,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setTextColorDown(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setTextColorDown"> {
     return accessLib().symbols.tguiButtonRenderer_setTextColorDown(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -16922,11 +17370,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setTextColorDownHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setTextColorDownHover"> {
     return accessLib().symbols.tguiButtonRenderer_setTextColorDownHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -16956,11 +17404,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setTextColorDownFocused(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setTextColorDownFocused"> {
     return accessLib().symbols.tguiButtonRenderer_setTextColorDownFocused(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -16990,11 +17438,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setTextColorDownDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setTextColorDownDisabled"> {
     return accessLib().symbols.tguiButtonRenderer_setTextColorDownDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17024,11 +17472,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiButtonRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17056,11 +17504,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBackgroundColorHover"> {
     return accessLib().symbols.tguiButtonRenderer_setBackgroundColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17090,11 +17538,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBackgroundColorFocused(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBackgroundColorFocused"> {
     return accessLib().symbols.tguiButtonRenderer_setBackgroundColorFocused(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17124,11 +17572,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBackgroundColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBackgroundColorDisabled"> {
     return accessLib().symbols.tguiButtonRenderer_setBackgroundColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17158,11 +17606,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBackgroundColorDown(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBackgroundColorDown"> {
     return accessLib().symbols.tguiButtonRenderer_setBackgroundColorDown(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17192,11 +17640,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBackgroundColorDownHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBackgroundColorDownHover"> {
     return accessLib().symbols.tguiButtonRenderer_setBackgroundColorDownHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17226,11 +17674,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBackgroundColorDownFocused(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBackgroundColorDownFocused"> {
     return accessLib().symbols.tguiButtonRenderer_setBackgroundColorDownFocused(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17260,10 +17708,13 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBackgroundColorDownDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBackgroundColorDownDisabled"> {
     return accessLib().symbols
-      .tguiButtonRenderer_setBackgroundColorDownDisabled(this.pointer, value);
+      .tguiButtonRenderer_setBackgroundColorDownDisabled(
+        this.pointer,
+        value.buffer,
+      );
   }
 
   /**
@@ -17291,11 +17742,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBorderColor"> {
     return accessLib().symbols.tguiButtonRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17321,11 +17772,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBorderColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBorderColorHover"> {
     return accessLib().symbols.tguiButtonRenderer_setBorderColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17353,11 +17804,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBorderColorFocused(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBorderColorFocused"> {
     return accessLib().symbols.tguiButtonRenderer_setBorderColorFocused(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17387,11 +17838,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBorderColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBorderColorDisabled"> {
     return accessLib().symbols.tguiButtonRenderer_setBorderColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17421,11 +17872,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBorderColorDown(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBorderColorDown"> {
     return accessLib().symbols.tguiButtonRenderer_setBorderColorDown(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17453,11 +17904,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBorderColorDownHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBorderColorDownHover"> {
     return accessLib().symbols.tguiButtonRenderer_setBorderColorDownHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17487,11 +17938,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBorderColorDownFocused(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBorderColorDownFocused"> {
     return accessLib().symbols.tguiButtonRenderer_setBorderColorDownFocused(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -17521,11 +17972,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setBorderColorDownDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setBorderColorDownDisabled"> {
     return accessLib().symbols.tguiButtonRenderer_setBorderColorDownDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -18069,11 +18520,11 @@ export class ButtonRenderer {
    * @returns `void`
    */
   setTextOutlineColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiButtonRenderer_setTextOutlineColor"> {
     return accessLib().symbols.tguiButtonRenderer_setTextOutlineColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -18265,11 +18716,11 @@ export class ChatBoxRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiChatBoxRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiChatBoxRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -18297,11 +18748,11 @@ export class ChatBoxRenderer {
    * @returns `void`
    */
   setBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiChatBoxRenderer_setBorderColor"> {
     return accessLib().symbols.tguiChatBoxRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -18635,11 +19086,11 @@ export class ComboBoxRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiComboBoxRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiComboBoxRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -18667,11 +19118,11 @@ export class ComboBoxRenderer {
    * @returns `void`
    */
   setBackgroundColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiComboBoxRenderer_setBackgroundColorDisabled"> {
     return accessLib().symbols.tguiComboBoxRenderer_setBackgroundColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -18700,12 +19151,10 @@ export class ComboBoxRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setTextColor(
-    value: BufferSource,
-  ): ResultType<"tguiComboBoxRenderer_setTextColor"> {
+  setTextColor(value: Color): ResultType<"tguiComboBoxRenderer_setTextColor"> {
     return accessLib().symbols.tguiComboBoxRenderer_setTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -18731,11 +19180,11 @@ export class ComboBoxRenderer {
    * @returns `void`
    */
   setTextColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiComboBoxRenderer_setTextColorDisabled"> {
     return accessLib().symbols.tguiComboBoxRenderer_setTextColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -18765,11 +19214,11 @@ export class ComboBoxRenderer {
    * @returns `void`
    */
   setDefaultTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiComboBoxRenderer_setDefaultTextColor"> {
     return accessLib().symbols.tguiComboBoxRenderer_setDefaultTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -18799,11 +19248,11 @@ export class ComboBoxRenderer {
    * @returns `void`
    */
   setArrowBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiComboBoxRenderer_setArrowBackgroundColor"> {
     return accessLib().symbols.tguiComboBoxRenderer_setArrowBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -18833,10 +19282,13 @@ export class ComboBoxRenderer {
    * @returns `void`
    */
   setArrowBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiComboBoxRenderer_setArrowBackgroundColorHover"> {
     return accessLib().symbols
-      .tguiComboBoxRenderer_setArrowBackgroundColorHover(this.pointer, value);
+      .tguiComboBoxRenderer_setArrowBackgroundColorHover(
+        this.pointer,
+        value.buffer,
+      );
   }
 
   /**
@@ -18864,12 +19316,12 @@ export class ComboBoxRenderer {
    * @returns `void`
    */
   setArrowBackgroundColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiComboBoxRenderer_setArrowBackgroundColorDisabled"> {
     return accessLib().symbols
       .tguiComboBoxRenderer_setArrowBackgroundColorDisabled(
         this.pointer,
-        value,
+        value.buffer,
       );
   }
 
@@ -18898,11 +19350,11 @@ export class ComboBoxRenderer {
    * @returns `void`
    */
   setArrowColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiComboBoxRenderer_setArrowColor"> {
     return accessLib().symbols.tguiComboBoxRenderer_setArrowColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -18928,11 +19380,11 @@ export class ComboBoxRenderer {
    * @returns `void`
    */
   setArrowColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiComboBoxRenderer_setArrowColorHover"> {
     return accessLib().symbols.tguiComboBoxRenderer_setArrowColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -18960,11 +19412,11 @@ export class ComboBoxRenderer {
    * @returns `void`
    */
   setArrowColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiComboBoxRenderer_setArrowColorDisabled"> {
     return accessLib().symbols.tguiComboBoxRenderer_setArrowColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -18994,11 +19446,11 @@ export class ComboBoxRenderer {
    * @returns `void`
    */
   setBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiComboBoxRenderer_setBorderColor"> {
     return accessLib().symbols.tguiComboBoxRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19408,12 +19860,10 @@ export class EditBoxRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setTextColor(
-    value: BufferSource,
-  ): ResultType<"tguiEditBoxRenderer_setTextColor"> {
+  setTextColor(value: Color): ResultType<"tguiEditBoxRenderer_setTextColor"> {
     return accessLib().symbols.tguiEditBoxRenderer_setTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19439,11 +19889,11 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setDefaultTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setDefaultTextColor"> {
     return accessLib().symbols.tguiEditBoxRenderer_setDefaultTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19471,11 +19921,11 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setTextColorFocused(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setTextColorFocused"> {
     return accessLib().symbols.tguiEditBoxRenderer_setTextColorFocused(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19503,11 +19953,11 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setTextColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setTextColorDisabled"> {
     return accessLib().symbols.tguiEditBoxRenderer_setTextColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19537,11 +19987,11 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setSelectedTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setSelectedTextColor"> {
     return accessLib().symbols.tguiEditBoxRenderer_setSelectedTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19571,10 +20021,13 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setSelectedTextBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setSelectedTextBackgroundColor"> {
     return accessLib().symbols
-      .tguiEditBoxRenderer_setSelectedTextBackgroundColor(this.pointer, value);
+      .tguiEditBoxRenderer_setSelectedTextBackgroundColor(
+        this.pointer,
+        value.buffer,
+      );
   }
 
   /**
@@ -19602,11 +20055,11 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiEditBoxRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19634,11 +20087,11 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setBackgroundColorHover"> {
     return accessLib().symbols.tguiEditBoxRenderer_setBackgroundColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19668,11 +20121,11 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setBackgroundColorFocused(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setBackgroundColorFocused"> {
     return accessLib().symbols.tguiEditBoxRenderer_setBackgroundColorFocused(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19702,11 +20155,11 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setBackgroundColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setBackgroundColorDisabled"> {
     return accessLib().symbols.tguiEditBoxRenderer_setBackgroundColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19735,12 +20188,10 @@ export class EditBoxRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setCaretColor(
-    value: BufferSource,
-  ): ResultType<"tguiEditBoxRenderer_setCaretColor"> {
+  setCaretColor(value: Color): ResultType<"tguiEditBoxRenderer_setCaretColor"> {
     return accessLib().symbols.tguiEditBoxRenderer_setCaretColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19766,11 +20217,11 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setCaretColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setCaretColorHover"> {
     return accessLib().symbols.tguiEditBoxRenderer_setCaretColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19798,11 +20249,11 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setBorderColor"> {
     return accessLib().symbols.tguiEditBoxRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19828,11 +20279,11 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setBorderColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setBorderColorHover"> {
     return accessLib().symbols.tguiEditBoxRenderer_setBorderColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19860,11 +20311,11 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setBorderColorFocused(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setBorderColorFocused"> {
     return accessLib().symbols.tguiEditBoxRenderer_setBorderColorFocused(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -19894,11 +20345,11 @@ export class EditBoxRenderer {
    * @returns `void`
    */
   setBorderColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiEditBoxRenderer_setBorderColorDisabled"> {
     return accessLib().symbols.tguiEditBoxRenderer_setBorderColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -20487,11 +20938,11 @@ export class KnobRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiKnobRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiKnobRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -20518,12 +20969,10 @@ export class KnobRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setThumbColor(
-    value: BufferSource,
-  ): ResultType<"tguiKnobRenderer_setThumbColor"> {
+  setThumbColor(value: Color): ResultType<"tguiKnobRenderer_setThumbColor"> {
     return accessLib().symbols.tguiKnobRenderer_setThumbColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -20548,12 +20997,10 @@ export class KnobRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setBorderColor(
-    value: BufferSource,
-  ): ResultType<"tguiKnobRenderer_setBorderColor"> {
+  setBorderColor(value: Color): ResultType<"tguiKnobRenderer_setBorderColor"> {
     return accessLib().symbols.tguiKnobRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -20768,12 +21215,10 @@ export class LabelRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setTextColor(
-    value: BufferSource,
-  ): ResultType<"tguiLabelRenderer_setTextColor"> {
+  setTextColor(value: Color): ResultType<"tguiLabelRenderer_setTextColor"> {
     return accessLib().symbols.tguiLabelRenderer_setTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -20799,11 +21244,11 @@ export class LabelRenderer {
    * @returns `void`
    */
   setTextOutlineColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiLabelRenderer_setTextOutlineColor"> {
     return accessLib().symbols.tguiLabelRenderer_setTextOutlineColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -20865,11 +21310,11 @@ export class LabelRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiLabelRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiLabelRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -20896,12 +21341,10 @@ export class LabelRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setBorderColor(
-    value: BufferSource,
-  ): ResultType<"tguiLabelRenderer_setBorderColor"> {
+  setBorderColor(value: Color): ResultType<"tguiLabelRenderer_setBorderColor"> {
     return accessLib().symbols.tguiLabelRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21145,11 +21588,11 @@ export class ListBoxRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListBoxRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiListBoxRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21177,11 +21620,11 @@ export class ListBoxRenderer {
    * @returns `void`
    */
   setBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListBoxRenderer_setBackgroundColorHover"> {
     return accessLib().symbols.tguiListBoxRenderer_setBackgroundColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21211,11 +21654,11 @@ export class ListBoxRenderer {
    * @returns `void`
    */
   setSelectedBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListBoxRenderer_setSelectedBackgroundColor"> {
     return accessLib().symbols.tguiListBoxRenderer_setSelectedBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21245,10 +21688,13 @@ export class ListBoxRenderer {
    * @returns `void`
    */
   setSelectedBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListBoxRenderer_setSelectedBackgroundColorHover"> {
     return accessLib().symbols
-      .tguiListBoxRenderer_setSelectedBackgroundColorHover(this.pointer, value);
+      .tguiListBoxRenderer_setSelectedBackgroundColorHover(
+        this.pointer,
+        value.buffer,
+      );
   }
 
   /**
@@ -21275,12 +21721,10 @@ export class ListBoxRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setTextColor(
-    value: BufferSource,
-  ): ResultType<"tguiListBoxRenderer_setTextColor"> {
+  setTextColor(value: Color): ResultType<"tguiListBoxRenderer_setTextColor"> {
     return accessLib().symbols.tguiListBoxRenderer_setTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21306,11 +21750,11 @@ export class ListBoxRenderer {
    * @returns `void`
    */
   setTextColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListBoxRenderer_setTextColorHover"> {
     return accessLib().symbols.tguiListBoxRenderer_setTextColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21338,11 +21782,11 @@ export class ListBoxRenderer {
    * @returns `void`
    */
   setSelectedTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListBoxRenderer_setSelectedTextColor"> {
     return accessLib().symbols.tguiListBoxRenderer_setSelectedTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21372,11 +21816,11 @@ export class ListBoxRenderer {
    * @returns `void`
    */
   setSelectedTextColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListBoxRenderer_setSelectedTextColorHover"> {
     return accessLib().symbols.tguiListBoxRenderer_setSelectedTextColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21406,11 +21850,11 @@ export class ListBoxRenderer {
    * @returns `void`
    */
   setBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListBoxRenderer_setBorderColor"> {
     return accessLib().symbols.tguiListBoxRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21690,11 +22134,11 @@ export class ListViewRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListViewRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiListViewRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21722,11 +22166,11 @@ export class ListViewRenderer {
    * @returns `void`
    */
   setBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListViewRenderer_setBackgroundColorHover"> {
     return accessLib().symbols.tguiListViewRenderer_setBackgroundColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21756,11 +22200,11 @@ export class ListViewRenderer {
    * @returns `void`
    */
   setSelectedBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListViewRenderer_setSelectedBackgroundColor"> {
     return accessLib().symbols.tguiListViewRenderer_setSelectedBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21790,12 +22234,12 @@ export class ListViewRenderer {
    * @returns `void`
    */
   setSelectedBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListViewRenderer_setSelectedBackgroundColorHover"> {
     return accessLib().symbols
       .tguiListViewRenderer_setSelectedBackgroundColorHover(
         this.pointer,
-        value,
+        value.buffer,
       );
   }
 
@@ -21823,12 +22267,10 @@ export class ListViewRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setTextColor(
-    value: BufferSource,
-  ): ResultType<"tguiListViewRenderer_setTextColor"> {
+  setTextColor(value: Color): ResultType<"tguiListViewRenderer_setTextColor"> {
     return accessLib().symbols.tguiListViewRenderer_setTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21854,11 +22296,11 @@ export class ListViewRenderer {
    * @returns `void`
    */
   setTextColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListViewRenderer_setTextColorHover"> {
     return accessLib().symbols.tguiListViewRenderer_setTextColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21886,11 +22328,11 @@ export class ListViewRenderer {
    * @returns `void`
    */
   setSelectedTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListViewRenderer_setSelectedTextColor"> {
     return accessLib().symbols.tguiListViewRenderer_setSelectedTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21920,11 +22362,11 @@ export class ListViewRenderer {
    * @returns `void`
    */
   setSelectedTextColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListViewRenderer_setSelectedTextColorHover"> {
     return accessLib().symbols.tguiListViewRenderer_setSelectedTextColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21954,11 +22396,11 @@ export class ListViewRenderer {
    * @returns `void`
    */
   setHeaderBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListViewRenderer_setHeaderBackgroundColor"> {
     return accessLib().symbols.tguiListViewRenderer_setHeaderBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -21988,11 +22430,11 @@ export class ListViewRenderer {
    * @returns `void`
    */
   setHeaderTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListViewRenderer_setHeaderTextColor"> {
     return accessLib().symbols.tguiListViewRenderer_setHeaderTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -22020,11 +22462,11 @@ export class ListViewRenderer {
    * @returns `void`
    */
   setBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListViewRenderer_setBorderColor"> {
     return accessLib().symbols.tguiListViewRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -22052,11 +22494,11 @@ export class ListViewRenderer {
    * @returns `void`
    */
   setSeparatorColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListViewRenderer_setSeparatorColor"> {
     return accessLib().symbols.tguiListViewRenderer_setSeparatorColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -22084,11 +22526,11 @@ export class ListViewRenderer {
    * @returns `void`
    */
   setGridLinesColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiListViewRenderer_setGridLinesColor"> {
     return accessLib().symbols.tguiListViewRenderer_setGridLinesColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -22282,11 +22724,11 @@ export class MenuBarRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiMenuBarRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiMenuBarRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -22314,11 +22756,11 @@ export class MenuBarRenderer {
    * @returns `void`
    */
   setSelectedBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiMenuBarRenderer_setSelectedBackgroundColor"> {
     return accessLib().symbols.tguiMenuBarRenderer_setSelectedBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -22347,12 +22789,10 @@ export class MenuBarRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setTextColor(
-    value: BufferSource,
-  ): ResultType<"tguiMenuBarRenderer_setTextColor"> {
+  setTextColor(value: Color): ResultType<"tguiMenuBarRenderer_setTextColor"> {
     return accessLib().symbols.tguiMenuBarRenderer_setTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -22378,11 +22818,11 @@ export class MenuBarRenderer {
    * @returns `void`
    */
   setSelectedTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiMenuBarRenderer_setSelectedTextColor"> {
     return accessLib().symbols.tguiMenuBarRenderer_setSelectedTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -22412,11 +22852,11 @@ export class MenuBarRenderer {
    * @returns `void`
    */
   setTextColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiMenuBarRenderer_setTextColorDisabled"> {
     return accessLib().symbols.tguiMenuBarRenderer_setTextColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -22446,11 +22886,11 @@ export class MenuBarRenderer {
    * @returns `void`
    */
   setSeparatorColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiMenuBarRenderer_setSeparatorColor"> {
     return accessLib().symbols.tguiMenuBarRenderer_setSeparatorColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -22740,11 +23180,11 @@ export class MessageBoxRenderer extends ChildWindowRenderer {
    * @returns `void`
    */
   setTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiMessageBoxRenderer_setTextColor"> {
     return accessLib().symbols.tguiMessageBoxRenderer_setTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -22934,11 +23374,11 @@ export class ProgressBarRenderer {
    * @returns `void`
    */
   setTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiProgressBarRenderer_setTextColor"> {
     return accessLib().symbols.tguiProgressBarRenderer_setTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -22966,11 +23406,11 @@ export class ProgressBarRenderer {
    * @returns `void`
    */
   setTextColorFilled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiProgressBarRenderer_setTextColorFilled"> {
     return accessLib().symbols.tguiProgressBarRenderer_setTextColorFilled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23000,11 +23440,11 @@ export class ProgressBarRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiProgressBarRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiProgressBarRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23034,11 +23474,11 @@ export class ProgressBarRenderer {
    * @returns `void`
    */
   setFillColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiProgressBarRenderer_setFillColor"> {
     return accessLib().symbols.tguiProgressBarRenderer_setFillColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23066,11 +23506,11 @@ export class ProgressBarRenderer {
    * @returns `void`
    */
   setBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiProgressBarRenderer_setBorderColor"> {
     return accessLib().symbols.tguiProgressBarRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23196,11 +23636,11 @@ export class ProgressBarRenderer {
    * @returns `void`
    */
   setTextOutlineColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiProgressBarRenderer_setTextOutlineColor"> {
     return accessLib().symbols.tguiProgressBarRenderer_setTextOutlineColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23364,11 +23804,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setTextColor"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23396,11 +23836,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setTextColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setTextColorHover"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setTextColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23428,11 +23868,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setTextColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setTextColorDisabled"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setTextColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23462,11 +23902,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setTextColorChecked(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setTextColorChecked"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setTextColorChecked(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23496,11 +23936,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setTextColorCheckedHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setTextColorCheckedHover"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setTextColorCheckedHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23530,10 +23970,13 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setTextColorCheckedDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setTextColorCheckedDisabled"> {
     return accessLib().symbols
-      .tguiRadioButtonRenderer_setTextColorCheckedDisabled(this.pointer, value);
+      .tguiRadioButtonRenderer_setTextColorCheckedDisabled(
+        this.pointer,
+        value.buffer,
+      );
   }
 
   /**
@@ -23561,11 +24004,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23595,11 +24038,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorHover"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setBackgroundColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23629,10 +24072,13 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBackgroundColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorDisabled"> {
     return accessLib().symbols
-      .tguiRadioButtonRenderer_setBackgroundColorDisabled(this.pointer, value);
+      .tguiRadioButtonRenderer_setBackgroundColorDisabled(
+        this.pointer,
+        value.buffer,
+      );
   }
 
   /**
@@ -23660,10 +24106,13 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBackgroundColorChecked(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorChecked"> {
     return accessLib().symbols
-      .tguiRadioButtonRenderer_setBackgroundColorChecked(this.pointer, value);
+      .tguiRadioButtonRenderer_setBackgroundColorChecked(
+        this.pointer,
+        value.buffer,
+      );
   }
 
   /**
@@ -23691,12 +24140,12 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBackgroundColorCheckedHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorCheckedHover"> {
     return accessLib().symbols
       .tguiRadioButtonRenderer_setBackgroundColorCheckedHover(
         this.pointer,
-        value,
+        value.buffer,
       );
   }
 
@@ -23725,12 +24174,12 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBackgroundColorCheckedDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorCheckedDisabled"> {
     return accessLib().symbols
       .tguiRadioButtonRenderer_setBackgroundColorCheckedDisabled(
         this.pointer,
-        value,
+        value.buffer,
       );
   }
 
@@ -23759,11 +24208,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBorderColor"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23791,11 +24240,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBorderColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBorderColorHover"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setBorderColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23825,11 +24274,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBorderColorFocused(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBorderColorFocused"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setBorderColorFocused(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23859,11 +24308,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBorderColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBorderColorDisabled"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setBorderColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23893,11 +24342,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBorderColorChecked(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBorderColorChecked"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setBorderColorChecked(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -23927,10 +24376,13 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBorderColorCheckedHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBorderColorCheckedHover"> {
     return accessLib().symbols
-      .tguiRadioButtonRenderer_setBorderColorCheckedHover(this.pointer, value);
+      .tguiRadioButtonRenderer_setBorderColorCheckedHover(
+        this.pointer,
+        value.buffer,
+      );
   }
 
   /**
@@ -23958,12 +24410,12 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBorderColorCheckedFocused(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBorderColorCheckedFocused"> {
     return accessLib().symbols
       .tguiRadioButtonRenderer_setBorderColorCheckedFocused(
         this.pointer,
-        value,
+        value.buffer,
       );
   }
 
@@ -23992,12 +24444,12 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setBorderColorCheckedDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setBorderColorCheckedDisabled"> {
     return accessLib().symbols
       .tguiRadioButtonRenderer_setBorderColorCheckedDisabled(
         this.pointer,
-        value,
+        value.buffer,
       );
   }
 
@@ -24026,11 +24478,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setCheckColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setCheckColor"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setCheckColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -24058,11 +24510,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setCheckColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setCheckColorHover"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setCheckColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -24092,11 +24544,11 @@ export class RadioButtonRenderer {
    * @returns `void`
    */
   setCheckColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRadioButtonRenderer_setCheckColorDisabled"> {
     return accessLib().symbols.tguiRadioButtonRenderer_setCheckColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -24479,11 +24931,11 @@ export class RangeSliderRenderer extends SliderRenderer {
    * @returns `void`
    */
   setSelectedTrackColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRangeSliderRenderer_setSelectedTrackColor"> {
     return accessLib().symbols.tguiRangeSliderRenderer_setSelectedTrackColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -24513,10 +24965,13 @@ export class RangeSliderRenderer extends SliderRenderer {
    * @returns `void`
    */
   setSelectedTrackColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiRangeSliderRenderer_setSelectedTrackColorHover"> {
     return accessLib().symbols
-      .tguiRangeSliderRenderer_setSelectedTrackColorHover(this.pointer, value);
+      .tguiRangeSliderRenderer_setSelectedTrackColorHover(
+        this.pointer,
+        value.buffer,
+      );
   }
 
   /**
@@ -24648,11 +25103,11 @@ export class ScrollbarRenderer {
    * @returns `void`
    */
   setTrackColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiScrollbarRenderer_setTrackColor"> {
     return accessLib().symbols.tguiScrollbarRenderer_setTrackColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -24680,11 +25135,11 @@ export class ScrollbarRenderer {
    * @returns `void`
    */
   setTrackColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiScrollbarRenderer_setTrackColorHover"> {
     return accessLib().symbols.tguiScrollbarRenderer_setTrackColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -24712,11 +25167,11 @@ export class ScrollbarRenderer {
    * @returns `void`
    */
   setThumbColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiScrollbarRenderer_setThumbColor"> {
     return accessLib().symbols.tguiScrollbarRenderer_setThumbColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -24744,11 +25199,11 @@ export class ScrollbarRenderer {
    * @returns `void`
    */
   setThumbColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiScrollbarRenderer_setThumbColorHover"> {
     return accessLib().symbols.tguiScrollbarRenderer_setThumbColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -24776,11 +25231,11 @@ export class ScrollbarRenderer {
    * @returns `void`
    */
   setArrowBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiScrollbarRenderer_setArrowBackgroundColor"> {
     return accessLib().symbols.tguiScrollbarRenderer_setArrowBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -24810,10 +25265,13 @@ export class ScrollbarRenderer {
    * @returns `void`
    */
   setArrowBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiScrollbarRenderer_setArrowBackgroundColorHover"> {
     return accessLib().symbols
-      .tguiScrollbarRenderer_setArrowBackgroundColorHover(this.pointer, value);
+      .tguiScrollbarRenderer_setArrowBackgroundColorHover(
+        this.pointer,
+        value.buffer,
+      );
   }
 
   /**
@@ -24841,11 +25299,11 @@ export class ScrollbarRenderer {
    * @returns `void`
    */
   setArrowColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiScrollbarRenderer_setArrowColor"> {
     return accessLib().symbols.tguiScrollbarRenderer_setArrowColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -24873,11 +25331,11 @@ export class ScrollbarRenderer {
    * @returns `void`
    */
   setArrowColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiScrollbarRenderer_setArrowColorHover"> {
     return accessLib().symbols.tguiScrollbarRenderer_setArrowColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25271,11 +25729,11 @@ export class SpinButtonRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiSpinButtonRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiSpinButtonRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25305,11 +25763,11 @@ export class SpinButtonRenderer {
    * @returns `void`
    */
   setBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiSpinButtonRenderer_setBackgroundColorHover"> {
     return accessLib().symbols.tguiSpinButtonRenderer_setBackgroundColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25339,11 +25797,11 @@ export class SpinButtonRenderer {
    * @returns `void`
    */
   setArrowColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiSpinButtonRenderer_setArrowColor"> {
     return accessLib().symbols.tguiSpinButtonRenderer_setArrowColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25371,11 +25829,11 @@ export class SpinButtonRenderer {
    * @returns `void`
    */
   setArrowColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiSpinButtonRenderer_setArrowColorHover"> {
     return accessLib().symbols.tguiSpinButtonRenderer_setArrowColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25405,11 +25863,11 @@ export class SpinButtonRenderer {
    * @returns `void`
    */
   setBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiSpinButtonRenderer_setBorderColor"> {
     return accessLib().symbols.tguiSpinButtonRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25634,11 +26092,11 @@ export class TabsRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTabsRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiTabsRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25666,11 +26124,11 @@ export class TabsRenderer {
    * @returns `void`
    */
   setBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTabsRenderer_setBackgroundColorHover"> {
     return accessLib().symbols.tguiTabsRenderer_setBackgroundColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25700,11 +26158,11 @@ export class TabsRenderer {
    * @returns `void`
    */
   setSelectedBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTabsRenderer_setSelectedBackgroundColor"> {
     return accessLib().symbols.tguiTabsRenderer_setSelectedBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25734,11 +26192,11 @@ export class TabsRenderer {
    * @returns `void`
    */
   setSelectedBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTabsRenderer_setSelectedBackgroundColorHover"> {
     return accessLib().symbols.tguiTabsRenderer_setSelectedBackgroundColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25768,11 +26226,11 @@ export class TabsRenderer {
    * @returns `void`
    */
   setBackgroundColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTabsRenderer_setBackgroundColorDisabled"> {
     return accessLib().symbols.tguiTabsRenderer_setBackgroundColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25801,12 +26259,10 @@ export class TabsRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setTextColor(
-    value: BufferSource,
-  ): ResultType<"tguiTabsRenderer_setTextColor"> {
+  setTextColor(value: Color): ResultType<"tguiTabsRenderer_setTextColor"> {
     return accessLib().symbols.tguiTabsRenderer_setTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25832,11 +26288,11 @@ export class TabsRenderer {
    * @returns `void`
    */
   setTextColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTabsRenderer_setTextColorHover"> {
     return accessLib().symbols.tguiTabsRenderer_setTextColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25862,11 +26318,11 @@ export class TabsRenderer {
    * @returns `void`
    */
   setSelectedTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTabsRenderer_setSelectedTextColor"> {
     return accessLib().symbols.tguiTabsRenderer_setSelectedTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25894,11 +26350,11 @@ export class TabsRenderer {
    * @returns `void`
    */
   setSelectedTextColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTabsRenderer_setSelectedTextColorHover"> {
     return accessLib().symbols.tguiTabsRenderer_setSelectedTextColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25928,11 +26384,11 @@ export class TabsRenderer {
    * @returns `void`
    */
   setTextColorDisabled(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTabsRenderer_setTextColorDisabled"> {
     return accessLib().symbols.tguiTabsRenderer_setTextColorDisabled(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25959,12 +26415,10 @@ export class TabsRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setBorderColor(
-    value: BufferSource,
-  ): ResultType<"tguiTabsRenderer_setBorderColor"> {
+  setBorderColor(value: Color): ResultType<"tguiTabsRenderer_setBorderColor"> {
     return accessLib().symbols.tguiTabsRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -25990,11 +26444,11 @@ export class TabsRenderer {
    * @returns `void`
    */
   setBorderColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTabsRenderer_setBorderColorHover"> {
     return accessLib().symbols.tguiTabsRenderer_setBorderColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -26022,11 +26476,11 @@ export class TabsRenderer {
    * @returns `void`
    */
   setSelectedBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTabsRenderer_setSelectedBorderColor"> {
     return accessLib().symbols.tguiTabsRenderer_setSelectedBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -26056,11 +26510,11 @@ export class TabsRenderer {
    * @returns `void`
    */
   setSelectedBorderColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTabsRenderer_setSelectedBorderColorHover"> {
     return accessLib().symbols.tguiTabsRenderer_setSelectedBorderColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -26380,11 +26834,11 @@ export class TextAreaRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTextAreaRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiTextAreaRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -26411,12 +26865,10 @@ export class TextAreaRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setTextColor(
-    value: BufferSource,
-  ): ResultType<"tguiTextAreaRenderer_setTextColor"> {
+  setTextColor(value: Color): ResultType<"tguiTextAreaRenderer_setTextColor"> {
     return accessLib().symbols.tguiTextAreaRenderer_setTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -26442,11 +26894,11 @@ export class TextAreaRenderer {
    * @returns `void`
    */
   setDefaultTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTextAreaRenderer_setDefaultTextColor"> {
     return accessLib().symbols.tguiTextAreaRenderer_setDefaultTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -26476,11 +26928,11 @@ export class TextAreaRenderer {
    * @returns `void`
    */
   setSelectedTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTextAreaRenderer_setSelectedTextColor"> {
     return accessLib().symbols.tguiTextAreaRenderer_setSelectedTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -26510,10 +26962,13 @@ export class TextAreaRenderer {
    * @returns `void`
    */
   setSelectedTextBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTextAreaRenderer_setSelectedTextBackgroundColor"> {
     return accessLib().symbols
-      .tguiTextAreaRenderer_setSelectedTextBackgroundColor(this.pointer, value);
+      .tguiTextAreaRenderer_setSelectedTextBackgroundColor(
+        this.pointer,
+        value.buffer,
+      );
   }
 
   /**
@@ -26541,11 +26996,11 @@ export class TextAreaRenderer {
    * @returns `void`
    */
   setBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTextAreaRenderer_setBorderColor"> {
     return accessLib().symbols.tguiTextAreaRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -26573,11 +27028,11 @@ export class TextAreaRenderer {
    * @returns `void`
    */
   setCaretColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTextAreaRenderer_setCaretColor"> {
     return accessLib().symbols.tguiTextAreaRenderer_setCaretColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -26825,11 +27280,11 @@ export class TreeViewRenderer {
    * @returns `void`
    */
   setBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTreeViewRenderer_setBackgroundColor"> {
     return accessLib().symbols.tguiTreeViewRenderer_setBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -26857,11 +27312,11 @@ export class TreeViewRenderer {
    * @returns `void`
    */
   setBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTreeViewRenderer_setBackgroundColorHover"> {
     return accessLib().symbols.tguiTreeViewRenderer_setBackgroundColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -26891,11 +27346,11 @@ export class TreeViewRenderer {
    * @returns `void`
    */
   setSelectedBackgroundColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTreeViewRenderer_setSelectedBackgroundColor"> {
     return accessLib().symbols.tguiTreeViewRenderer_setSelectedBackgroundColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -26925,12 +27380,12 @@ export class TreeViewRenderer {
    * @returns `void`
    */
   setSelectedBackgroundColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTreeViewRenderer_setSelectedBackgroundColorHover"> {
     return accessLib().symbols
       .tguiTreeViewRenderer_setSelectedBackgroundColorHover(
         this.pointer,
-        value,
+        value.buffer,
       );
   }
 
@@ -26958,12 +27413,10 @@ export class TreeViewRenderer {
    * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  setTextColor(
-    value: BufferSource,
-  ): ResultType<"tguiTreeViewRenderer_setTextColor"> {
+  setTextColor(value: Color): ResultType<"tguiTreeViewRenderer_setTextColor"> {
     return accessLib().symbols.tguiTreeViewRenderer_setTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -26989,11 +27442,11 @@ export class TreeViewRenderer {
    * @returns `void`
    */
   setTextColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTreeViewRenderer_setTextColorHover"> {
     return accessLib().symbols.tguiTreeViewRenderer_setTextColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -27021,11 +27474,11 @@ export class TreeViewRenderer {
    * @returns `void`
    */
   setSelectedTextColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTreeViewRenderer_setSelectedTextColor"> {
     return accessLib().symbols.tguiTreeViewRenderer_setSelectedTextColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -27055,11 +27508,11 @@ export class TreeViewRenderer {
    * @returns `void`
    */
   setSelectedTextColorHover(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTreeViewRenderer_setSelectedTextColorHover"> {
     return accessLib().symbols.tguiTreeViewRenderer_setSelectedTextColorHover(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -27089,11 +27542,11 @@ export class TreeViewRenderer {
    * @returns `void`
    */
   setBorderColor(
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiTreeViewRenderer_setBorderColor"> {
     return accessLib().symbols.tguiTreeViewRenderer_setBorderColor(
       this.pointer,
-      value,
+      value.buffer,
     );
   }
 
@@ -27573,12 +28026,12 @@ export class WidgetRenderer {
    */
   setPropertyColor(
     property: BufferSource,
-    value: BufferSource,
+    value: Color,
   ): ResultType<"tguiWidgetRenderer_setPropertyColor"> {
     return accessLib().symbols.tguiWidgetRenderer_setPropertyColor(
       this.pointer,
       property,
-      value,
+      value.buffer,
     );
   }
 

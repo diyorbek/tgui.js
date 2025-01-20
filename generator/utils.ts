@@ -1,4 +1,4 @@
-import { C_NATIVE_TYPE_MAP } from "./typeMap.ts";
+import { C_NATIVE_TYPE_MAP, type StructMeta } from "./typeMap.ts";
 
 function getStructDefinition(structName: string) {
   const structNode = C_NATIVE_TYPE_MAP[structName];
@@ -36,4 +36,18 @@ export function createComment(declaration: any) {
    ""
  )}${getStructDefinition(declaration.returnType)}\`
  */`;
+}
+
+export function createNativeType(
+  meta: StructMeta[] | Deno.NativeType
+): Deno.NativeType {
+  if (typeof meta === "string") {
+    return meta;
+  }
+
+  return {
+    struct: (meta as StructMeta[]).map((field) => {
+      return createNativeType(field.nativeType);
+    }),
+  };
 }

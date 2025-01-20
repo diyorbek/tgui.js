@@ -1,5 +1,5 @@
-import { type StructMeta, C_NATIVE_TYPE_MAP } from "./typeMap.ts";
-import { createComment } from "./utils.ts";
+import { C_NATIVE_TYPE_MAP } from "./typeMap.ts";
+import { createComment, createNativeType } from "./utils.ts";
 
 const decoder = new TextDecoder();
 const encoder = new TextEncoder();
@@ -49,20 +49,6 @@ function getNativeType(resultType: string): any {
   }
 
   return resultType;
-}
-
-function createNativeType(
-  meta: StructMeta[] | Deno.NativeType
-): Deno.NativeType {
-  if (typeof meta === "string") {
-    return meta;
-  }
-
-  return {
-    struct: (meta as StructMeta[]).map((field) => {
-      return createNativeType(field.nativeType);
-    }),
-  };
 }
 
 async function processAst() {

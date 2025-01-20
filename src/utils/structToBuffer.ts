@@ -3,6 +3,8 @@ export type StructDef = readonly (
   | Deno.NativeBigIntType
   | { readonly struct: StructDef }
 )[];
+export type NumberLikeType = number | bigint;
+export type Struct = { [key: string]: number | Struct };
 
 type StructField = StructDef[number];
 
@@ -116,8 +118,9 @@ function writeToBuffer(
 
 export function serializeStruct(
   structDef: StructDef,
-  flattenedValues: number[]
+  struct: unknown
 ): ArrayBuffer {
+  const flattenedValues = flattenStruct(struct);
   const buffer = createStructBuffer(structDef);
 
   writeToBuffer(buffer, structDef, flattenedValues);
@@ -128,10 +131,10 @@ export function serializeStruct(
 export function deserializeStruct(
   structDef: StructDef,
   buffer: BufferSource
-): number[] {
+): NumberLikeType[] {
   const view = new DataView("buffer" in buffer ? buffer.buffer : buffer);
   let offset = 0;
-  const values: number[] = [];
+  const values: NumberLikeType[] = [];
 
   function readValue(field: StructField) {
     if (typeof field === "string") {
@@ -162,7 +165,7 @@ export function deserializeStruct(
           break;
         case "i64":
         case "u64":
-          values.push(Number(view.getBigInt64(offset, true)));
+          values.push(view.getBigInt64(offset, true));
           break;
       }
 
@@ -177,16 +180,21 @@ export function deserializeStruct(
   return values;
 }
 
-// // Example usage:
-// const structDef: StructDef = ["i32", { struct: ["i32", "u32", "u32"] }];
+function flattenStruct(struct: unknown): number[] {
+  if (typeof struct !== "object" || struct == null)
+    throw new Error("Invalid struct");
 
-// // Create empty buffer
-// const buffer = createStructBuffer(structDef);
+  const flattened = [];
 
-// // Write values
-// const values = [1, 2, 3, 4]; // Values to write into the struct
-// writeToBuffer(buffer, structDef, values);
+  for (const key in struct) {
+    const value = (struct as Struct)[key];
 
-// // Example reading a value back
-// const view = new DataView(buffer);
-// console.log(view.getInt32(0, true)); // Read first i32
+    if (typeof value === "number") {
+      flattened.push(value);
+    } else {
+      flattened.concat(flattenStruct(value));
+    }
+  }
+
+  return flattened.flat();
+}

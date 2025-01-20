@@ -1,10 +1,14 @@
-import { Button, Gui, GuiCSFMLGraphics, renderWindow } from "../mod.ts";
-import { CTGUI_SYMBOLS } from "../src/ctguiSymbols.ts";
-import { SFMLEvent } from "../src/lib.ts";
 import {
-  deserializeStruct,
-  serializeStruct,
-} from "../src/utils/structToBuffer.ts";
+  Button,
+  Gui,
+  GuiCSFMLGraphics,
+  renderWindow,
+  sfColor,
+  SFMLEvent,
+  sfVideoMode,
+} from "../mod.ts";
+import { CTGUI_SYMBOLS } from "../src/ctguiSymbols.ts";
+import { deserializeStruct } from "../src/utils/structToBuffer.ts";
 import { CTGUI_LIB } from "./index.ts";
 
 export function encodeUTF32(str: string) {
@@ -20,10 +24,7 @@ export function encodeUTF32(str: string) {
 
 function main() {
   const title = new TextEncoder().encode("Hello, World!\0");
-  const mode = serializeStruct(
-    CTGUI_SYMBOLS.renderWindow_create.parameters[0].struct,
-    [800, 300, 32]
-  );
+  const mode = new sfVideoMode(800, 300, 32);
   const window = new renderWindow(mode, title, 7);
   const sfGui = new GuiCSFMLGraphics(window.pointer);
 
@@ -48,10 +49,7 @@ function main() {
       sfGui.handleEvent(event.pointer);
     }
 
-    const clearColor = serializeStruct(
-      CTGUI_SYMBOLS.renderWindow_clear.parameters[1].struct,
-      [0, 100, 200, 255]
-    );
+    const clearColor = new sfColor(0, 0, 0, 255);
     window.clear(clearColor);
 
     gui.draw(sfGui.pointer);

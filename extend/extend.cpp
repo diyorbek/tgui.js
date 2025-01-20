@@ -1,6 +1,10 @@
 #include <CTGUI/CTGUI.h>
 #include <CTGUI/extend.h>
 
+sfEvent* SFMLEvent_create() {
+  return new sfEvent;
+}
+
 SFMLEventUnion SFMLEvent_convert(sfEvent* SFMLEvent) {
   return {.type = SFMLEvent->type,
           .size = SFMLEvent->size,
@@ -15,10 +19,6 @@ SFMLEventUnion SFMLEvent_convert(sfEvent* SFMLEvent) {
           .joystickConnect = SFMLEvent->joystickConnect,
           .touch = SFMLEvent->touch,
           .sensor = SFMLEvent->sensor};
-}
-
-sfEvent* SFMLEvent_create() {
-  return new sfEvent;
 }
 
 void SFMLEvent_destroy(sfEvent* SFMLEvent) {

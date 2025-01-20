@@ -135,6 +135,11 @@ export const C_NATIVE_TYPE_MAP: CNativeTypeMap = {
     { "name": "x", "type": "int", "nativeType": "i32" },
     { "name": "y", "type": "int", "nativeType": "i32" }
   ],
+  "sfVideoMode": [
+    { name: "width", type: "unsigned int", nativeType: "u32" },
+    { name: "height", type: "unsigned int", nativeType: "u32" },
+    { name: "bitsPerPixel", type: "unsigned int", nativeType: "u32" },
+  ],
   "SFMLEventUnion": [
     { "name": "type", "type": "sfEventType", "nativeType": "i32" },
     {

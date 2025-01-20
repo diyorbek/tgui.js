@@ -1,6 +1,6 @@
 import { FUNCTION_DECLARATIONS } from "./declarations.ts";
 import { type StructMeta, C_NATIVE_TYPE_MAP } from "./typeMap.ts";
-import { createComment } from "./utils.ts";
+import { createComment, createNativeType } from "./utils.ts";
 
 const encoder = new TextEncoder();
 
@@ -100,18 +100,23 @@ const DENO_TYPE_MAP = {
   function: "Deno.PointerValue<unknown>",
 };
 
-function getNativeTypeDecl(nativeType: Deno.NativeType) {
+function getNativeTypeDecl(nativeType: Deno.NativeType | StructMeta[]) {
   // if (typeof nativeType === "object") return "Uint32Array";
   if (typeof nativeType === "object") return "BufferSource";
   return DENO_TYPE_MAP[nativeType];
 }
 
-function getJSTypeDecl(nativeType: Deno.NativeType, cType: string) {
+function getJSTypeDecl(
+  nativeType: Deno.NativeType | StructMeta[],
+  cType: string
+) {
   if (typeof nativeType === "object") return cType.replace("tgui", "");
   return DENO_TYPE_MAP[nativeType];
 }
 
-let code = `import { accessLib, type ResultType } from "./ctgui.ts";\n\n`;
+let code = `import { accessLib, type ResultType } from "./ctgui.ts";
+import { type NumberLikeType, serializeStruct, type StructDef } from "./utils/structToBuffer.ts";\n\n`;
+
 const CTGUI_LIB = "accessLib()";
 
 Object.entries(names)
@@ -127,24 +132,60 @@ Object.entries(names)
     const hasChild = !!inheritanceRank[declName];
     const isIntercessor = !!parent && hasChild;
 
+    /** Creates fields with constructor.
+     *
+     * The generated constructor may conflict with classes with _create/_copy method.
+     *
+     * Also, structdefs are duplicated in the generated code:
+     * - in CTGUI_SYMBOLS
+     * - in Class struct definitions
+     * */
     function createFields() {
       if (!body.fields) return "";
+
+      const structDef = createNativeType(body.fields);
+      const structDefString = JSON.stringify(
+        typeof structDef === "object" ? structDef.struct : structDef
+      );
+
+      const deserializeFunc = `static deserialize(flatValues: NumberLikeType[]): ${declName} {
+        return new ${declName}(
+          ${body.fields
+            .map((field) => {
+              if (field.nativeType instanceof Array) {
+                const className = field.type.replace("tgui", "");
+                return `${className}.deserialize(flatValues)`;
+              }
+
+              return `flatValues.shift()! as ${getJSTypeDecl(
+                field.nativeType,
+                field.type
+              )}`;
+            })
+            .join(",\n")}
+        );
+      }`;
 
       const fields = body.fields.map((field) => {
         if (!(field.type in C_NATIVE_TYPE_MAP)) {
           // console.log(field.type);
         }
 
-        return `${field.name}: ${getNativeTypeDecl(
-          field.nativeType as Deno.NativeType
-        )}`;
+        return `${field.name}: ${getJSTypeDecl(field.nativeType, field.type)}`;
       });
 
       const constructorFunc = `constructor(${fields.join(",")}) { 
-      ${body.fields.map((f) => `this.${f.name} = ${f.name}`).join(";")} 
-    }`;
+          ${body.fields.map((f) => `this.${f.name} = ${f.name}`).join(";")} 
+        }`;
 
-      return `${fields.join("\n")}\n\n${constructorFunc}`;
+      return `static STRUCT_DEF: StructDef = ${structDefString}\n
+        ${deserializeFunc}\n
+        ${fields.join("\n")}\n
+        ${constructorFunc}
+        
+        get buffer(): BufferSource {
+          return serializeStruct(${declName}.STRUCT_DEF, this);
+        }`;
     }
 
     function checkConstructors() {
@@ -202,7 +243,7 @@ Object.entries(names)
           return (
             correctNaming(p.name) +
             ": " +
-            getNativeTypeDecl(p.nativeType as Deno.NativeType)
+            getJSTypeDecl(p.nativeType as Deno.NativeType, p.type)
           );
         })
         .join(",");
@@ -213,7 +254,13 @@ Object.entries(names)
         (typeof FUNCTION_DECLARATIONS)[number]
       >[number]["parameters"]
     ) {
-      return parameters.map((m) => correctNaming(m.name)).join(",");
+      return parameters
+        .map((p) => {
+          const argName = correctNaming(p.name);
+          if (p.nativeType instanceof Array) return argName + ".buffer";
+          return argName;
+        })
+        .join(",");
     }
 
     function checkOverride(declName: string, methodName: string) {
