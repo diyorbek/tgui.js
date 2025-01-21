@@ -3189,12 +3189,11 @@ export class ButtonBase extends ClickableWidget {
    * @returns `void`
    */
   setTextPositionAbs(
-    widget: Deno.PointerValue<unknown>,
     position: Vector2f,
     origin: Vector2f,
   ): ResultType<"tguiButtonBase_setTextPositionAbs"> {
     return accessLib().symbols.tguiButtonBase_setTextPositionAbs(
-      widget,
+      this.pointer,
       position.buffer,
       origin.buffer,
     );
@@ -3211,12 +3210,11 @@ export class ButtonBase extends ClickableWidget {
    * @returns `void`
    */
   setTextPositionRel(
-    widget: Deno.PointerValue<unknown>,
     position: Vector2f,
     origin: Vector2f,
   ): ResultType<"tguiButtonBase_setTextPositionRel"> {
     return accessLib().symbols.tguiButtonBase_setTextPositionRel(
-      widget,
+      this.pointer,
       position.buffer,
       origin.buffer,
     );
@@ -6903,11 +6901,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setPositionChangedCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setPositionChangedCallback"> {
     return accessLib().symbols.tguiCustomWidget_setPositionChangedCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -6922,11 +6919,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setSizeChangedCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setSizeChangedCallback"> {
     return accessLib().symbols.tguiCustomWidget_setSizeChangedCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -6941,11 +6937,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setVisibleChangedCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setVisibleChangedCallback"> {
     return accessLib().symbols.tguiCustomWidget_setVisibleChangedCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -6960,11 +6955,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setEnableChangedCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setEnableChangedCallback"> {
     return accessLib().symbols.tguiCustomWidget_setEnableChangedCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -6979,11 +6973,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setFocusChangedCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setFocusChangedCallback"> {
     return accessLib().symbols.tguiCustomWidget_setFocusChangedCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -6998,11 +6991,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setCanGainFocusCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setCanGainFocusCallback"> {
     return accessLib().symbols.tguiCustomWidget_setCanGainFocusCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7017,11 +7009,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setGetFullSizeCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setGetFullSizeCallback"> {
     return accessLib().symbols.tguiCustomWidget_setGetFullSizeCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7036,11 +7027,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setGetWidgetOffsetCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setGetWidgetOffsetCallback"> {
     return accessLib().symbols.tguiCustomWidget_setGetWidgetOffsetCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7055,11 +7045,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setUpdateTimeCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setUpdateTimeCallback"> {
     return accessLib().symbols.tguiCustomWidget_setUpdateTimeCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7074,11 +7063,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setMouseOnWidgetCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setMouseOnWidgetCallback"> {
     return accessLib().symbols.tguiCustomWidget_setMouseOnWidgetCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7093,11 +7081,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setLeftMousePressedCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setLeftMousePressedCallback"> {
     return accessLib().symbols.tguiCustomWidget_setLeftMousePressedCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7112,11 +7099,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setLeftMouseReleasedCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setLeftMouseReleasedCallback"> {
     return accessLib().symbols.tguiCustomWidget_setLeftMouseReleasedCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7131,11 +7117,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setRightMousePressedCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setRightMousePressedCallback"> {
     return accessLib().symbols.tguiCustomWidget_setRightMousePressedCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7150,11 +7135,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setRightMouseReleasedCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setRightMouseReleasedCallback"> {
     return accessLib().symbols.tguiCustomWidget_setRightMouseReleasedCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7169,11 +7153,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setMouseMovedCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setMouseMovedCallback"> {
     return accessLib().symbols.tguiCustomWidget_setMouseMovedCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7188,11 +7171,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setKeyPressedCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setKeyPressedCallback"> {
     return accessLib().symbols.tguiCustomWidget_setKeyPressedCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7207,11 +7189,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setTextEnteredCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setTextEnteredCallback"> {
     return accessLib().symbols.tguiCustomWidget_setTextEnteredCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7226,11 +7207,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setScrolledCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setScrolledCallback"> {
     return accessLib().symbols.tguiCustomWidget_setScrolledCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7245,11 +7225,13 @@ export class CustomWidget {
    * @returns `void`
    */
   setMouseNoLongerOnWidgetCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setMouseNoLongerOnWidgetCallback"> {
     return accessLib().symbols
-      .tguiCustomWidget_setMouseNoLongerOnWidgetCallback(widget, callback);
+      .tguiCustomWidget_setMouseNoLongerOnWidgetCallback(
+        this.pointer,
+        callback,
+      );
   }
 
   /**
@@ -7262,12 +7244,11 @@ export class CustomWidget {
    * @returns `void`
    */
   setLeftMouseButtonNoLongerDownCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setLeftMouseButtonNoLongerDownCallback"> {
     return accessLib().symbols
       .tguiCustomWidget_setLeftMouseButtonNoLongerDownCallback(
-        widget,
+        this.pointer,
         callback,
       );
   }
@@ -7282,11 +7263,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setMouseEnteredWidgetCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setMouseEnteredWidgetCallback"> {
     return accessLib().symbols.tguiCustomWidget_setMouseEnteredWidgetCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7301,11 +7281,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setMouseLeftWidgetCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setMouseLeftWidgetCallback"> {
     return accessLib().symbols.tguiCustomWidget_setMouseLeftWidgetCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7320,11 +7299,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setRendererChangedCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setRendererChangedCallback"> {
     return accessLib().symbols.tguiCustomWidget_setRendererChangedCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -7339,11 +7317,10 @@ export class CustomWidget {
    * @returns `void`
    */
   setDrawCallback(
-    widget: Deno.PointerValue<unknown>,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiCustomWidget_setDrawCallback"> {
     return accessLib().symbols.tguiCustomWidget_setDrawCallback(
-      widget,
+      this.pointer,
       callback,
     );
   }
@@ -11862,11 +11839,8 @@ export class FileDialog extends ChildWindow {
    * @param path `Utf32`
    * @returns `void`
    */
-  setPath(
-    widget: Deno.PointerValue<unknown>,
-    path: BufferSource,
-  ): ResultType<"tguiFileDialog_setPath"> {
-    return accessLib().symbols.tguiFileDialog_setPath(widget, path);
+  setPath(path: BufferSource): ResultType<"tguiFileDialog_setPath"> {
+    return accessLib().symbols.tguiFileDialog_setPath(this.pointer, path);
   }
 
   /**
@@ -11877,10 +11851,8 @@ export class FileDialog extends ChildWindow {
    * @param widget `const Widget *`
    * @returns `Utf32`
    */
-  getPath(
-    widget: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiFileDialog_getPath"> {
-    return accessLib().symbols.tguiFileDialog_getPath(widget);
+  getPath(): ResultType<"tguiFileDialog_getPath"> {
+    return accessLib().symbols.tguiFileDialog_getPath(this.pointer);
   }
 
   /**
@@ -11893,10 +11865,12 @@ export class FileDialog extends ChildWindow {
    * @returns `const Utf32 *`
    */
   getSelectedPaths(
-    widget: Deno.PointerValue<unknown>,
     count: Deno.PointerValue<unknown>,
   ): ResultType<"tguiFileDialog_getSelectedPaths"> {
-    return accessLib().symbols.tguiFileDialog_getSelectedPaths(widget, count);
+    return accessLib().symbols.tguiFileDialog_getSelectedPaths(
+      this.pointer,
+      count,
+    );
   }
 
   /**
@@ -11911,13 +11885,12 @@ export class FileDialog extends ChildWindow {
    * @returns `void`
    */
   setFileTypeFilters(
-    widget: Deno.PointerValue<unknown>,
     filters: Deno.PointerValue<unknown>,
     filterCount: bigint,
     defaultFilterIndex: bigint,
   ): ResultType<"tguiFileDialog_setFileTypeFilters"> {
     return accessLib().symbols.tguiFileDialog_setFileTypeFilters(
-      widget,
+      this.pointer,
       filters,
       filterCount,
       defaultFilterIndex,
@@ -11934,10 +11907,12 @@ export class FileDialog extends ChildWindow {
    * @returns `FileDialogFilter **`
    */
   getFileTypeFilters(
-    widget: Deno.PointerValue<unknown>,
     count: Deno.PointerValue<unknown>,
   ): ResultType<"tguiFileDialog_getFileTypeFilters"> {
-    return accessLib().symbols.tguiFileDialog_getFileTypeFilters(widget, count);
+    return accessLib().symbols.tguiFileDialog_getFileTypeFilters(
+      this.pointer,
+      count,
+    );
   }
 
   /**
@@ -11952,13 +11927,12 @@ export class FileDialog extends ChildWindow {
    * @returns `void`
    */
   setListViewColumnCaptions(
-    widget: Deno.PointerValue<unknown>,
     nameColumnText: BufferSource,
     sizeColumnText: BufferSource,
     modifiedColumnText: BufferSource,
   ): ResultType<"tguiFileDialog_setListViewColumnCaptions"> {
     return accessLib().symbols.tguiFileDialog_setListViewColumnCaptions(
-      widget,
+      this.pointer,
       nameColumnText,
       sizeColumnText,
       modifiedColumnText,
@@ -11973,11 +11947,11 @@ export class FileDialog extends ChildWindow {
    * @param widget `const Widget *`
    * @returns `Utf32`
    */
-  getListViewColumnCaptionsName(
-    widget: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiFileDialog_getListViewColumnCaptionsName"> {
+  getListViewColumnCaptionsName(): ResultType<
+    "tguiFileDialog_getListViewColumnCaptionsName"
+  > {
     return accessLib().symbols.tguiFileDialog_getListViewColumnCaptionsName(
-      widget,
+      this.pointer,
     );
   }
 
@@ -11989,11 +11963,11 @@ export class FileDialog extends ChildWindow {
    * @param widget `const Widget *`
    * @returns `Utf32`
    */
-  getListViewColumnCaptionsSize(
-    widget: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiFileDialog_getListViewColumnCaptionsSize"> {
+  getListViewColumnCaptionsSize(): ResultType<
+    "tguiFileDialog_getListViewColumnCaptionsSize"
+  > {
     return accessLib().symbols.tguiFileDialog_getListViewColumnCaptionsSize(
-      widget,
+      this.pointer,
     );
   }
 
@@ -12005,11 +11979,11 @@ export class FileDialog extends ChildWindow {
    * @param widget `const Widget *`
    * @returns `Utf32`
    */
-  getListViewColumnCaptionsModified(
-    widget: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiFileDialog_getListViewColumnCaptionsModified"> {
+  getListViewColumnCaptionsModified(): ResultType<
+    "tguiFileDialog_getListViewColumnCaptionsModified"
+  > {
     return accessLib().symbols.tguiFileDialog_getListViewColumnCaptionsModified(
-      widget,
+      this.pointer,
     );
   }
 }
@@ -14192,11 +14166,10 @@ export class ListView extends Widget {
    * @returns `void`
    */
   sort(
-    widget: Deno.PointerValue<unknown>,
     index: bigint,
     callback: Deno.PointerValue<unknown>,
   ): ResultType<"tguiListView_sort"> {
-    return accessLib().symbols.tguiListView_sort(widget, index, callback);
+    return accessLib().symbols.tguiListView_sort(this.pointer, index, callback);
   }
 }
 
@@ -14591,10 +14564,8 @@ export class MenuBar extends Widget {
    * @param widget `Widget *`
    * @returns `MenuBarMenuList *`
    */
-  getMenus(
-    widget: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiMenuBar_getMenus"> {
-    return accessLib().symbols.tguiMenuBar_getMenus(widget);
+  getMenus(): ResultType<"tguiMenuBar_getMenus"> {
+    return accessLib().symbols.tguiMenuBar_getMenus(this.pointer);
   }
 }
 
@@ -16506,11 +16477,14 @@ export class TabContainer extends Container {
    * @returns `Widget *`
    */
   addTab(
-    widget: Deno.PointerValue<unknown>,
     name: BufferSource,
     select: number,
   ): ResultType<"tguiTabContainer_addTab"> {
-    return accessLib().symbols.tguiTabContainer_addTab(widget, name, select);
+    return accessLib().symbols.tguiTabContainer_addTab(
+      this.pointer,
+      name,
+      select,
+    );
   }
 
   /**
@@ -16525,13 +16499,12 @@ export class TabContainer extends Container {
    * @returns `Widget *`
    */
   insertTab(
-    widget: Deno.PointerValue<unknown>,
     index: bigint,
     name: BufferSource,
     select: number,
   ): ResultType<"tguiTabContainer_insertTab"> {
     return accessLib().symbols.tguiTabContainer_insertTab(
-      widget,
+      this.pointer,
       index,
       name,
       select,
@@ -16548,10 +16521,9 @@ export class TabContainer extends Container {
    * @returns `int`
    */
   getIndex(
-    widget: Deno.PointerValue<unknown>,
     panel: Deno.PointerValue<unknown>,
   ): ResultType<"tguiTabContainer_getIndex"> {
-    return accessLib().symbols.tguiTabContainer_getIndex(widget, panel);
+    return accessLib().symbols.tguiTabContainer_getIndex(this.pointer, panel);
   }
 
   /**
@@ -16562,10 +16534,8 @@ export class TabContainer extends Container {
    * @param widget `const Widget *`
    * @returns `Widget *`
    */
-  getSelected(
-    widget: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiTabContainer_getSelected"> {
-    return accessLib().symbols.tguiTabContainer_getSelected(widget);
+  getSelected(): ResultType<"tguiTabContainer_getSelected"> {
+    return accessLib().symbols.tguiTabContainer_getSelected(this.pointer);
   }
 
   /**
@@ -16577,11 +16547,8 @@ export class TabContainer extends Container {
    * @param index `int`
    * @returns `Widget *`
    */
-  getPanel(
-    widget: Deno.PointerValue<unknown>,
-    index: number,
-  ): ResultType<"tguiTabContainer_getPanel"> {
-    return accessLib().symbols.tguiTabContainer_getPanel(widget, index);
+  getPanel(index: number): ResultType<"tguiTabContainer_getPanel"> {
+    return accessLib().symbols.tguiTabContainer_getPanel(this.pointer, index);
   }
 
   /**
@@ -16592,10 +16559,8 @@ export class TabContainer extends Container {
    * @param widget `const Widget *`
    * @returns `Widget *`
    */
-  getTabs(
-    widget: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiTabContainer_getTabs"> {
-    return accessLib().symbols.tguiTabContainer_getTabs(widget);
+  getTabs(): ResultType<"tguiTabContainer_getTabs"> {
+    return accessLib().symbols.tguiTabContainer_getTabs(this.pointer);
   }
 }
 
@@ -17249,12 +17214,11 @@ export class TreeView extends Widget {
    * @returns `const TreeViewConstNode *`
    */
   getNode(
-    widget: Deno.PointerValue<unknown>,
     hierarchy: Deno.PointerValue<unknown>,
     hierarchyLength: number,
   ): ResultType<"tguiTreeView_getNode"> {
     return accessLib().symbols.tguiTreeView_getNode(
-      widget,
+      this.pointer,
       hierarchy,
       hierarchyLength,
     );
@@ -17270,10 +17234,9 @@ export class TreeView extends Widget {
    * @returns `TreeViewConstNode **`
    */
   getNodes(
-    widget: Deno.PointerValue<unknown>,
     count: Deno.PointerValue<unknown>,
   ): ResultType<"tguiTreeView_getNodes"> {
-    return accessLib().symbols.tguiTreeView_getNodes(widget, count);
+    return accessLib().symbols.tguiTreeView_getNodes(this.pointer, count);
   }
 }
 

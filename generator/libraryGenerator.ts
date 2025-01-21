@@ -236,6 +236,13 @@ Object.entries(names)
     function isLocalPointerName(name: string) {
       return (
         name === "SFMLEvent" ||
+        (name === "widget" && declName === "ButtonBase") ||
+        (name === "widget" && declName === "CustomWidget") ||
+        (name === "widget" && declName === "FileDialog") ||
+        (name === "widget" && declName === "ListView") ||
+        (name === "widget" && declName === "MenuBar") ||
+        (name === "widget" && declName === "TabContainer") ||
+        (name === "widget" && declName === "TreeView") ||
         (name === "widget" && declName === "Widget") ||
         (name === "gui" && declName === "Gui") ||
         (name === "window" && declName !== "Gui") ||
