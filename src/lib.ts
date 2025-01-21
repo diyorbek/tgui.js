@@ -1,5 +1,6 @@
 import { accessLib, type ResultType } from "./ctgui.ts";
 import {
+  deserializeStruct,
   type NumberLikeType,
   serializeStruct,
   type StructDef,
@@ -4269,12 +4270,23 @@ export class SliderRenderer {
 export class sfColor {
   static STRUCT_DEF: StructDef = ["u8", "u8", "u8", "u8"];
 
-  static deserialize(flatValues: NumberLikeType[]): sfColor {
+  static deserialize(buffer: BufferSource): sfColor;
+  static deserialize(flatValues: NumberLikeType[]): sfColor;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfColor {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfColor.STRUCT_DEF, source);
+    }
+
     return new sfColor(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4298,12 +4310,23 @@ export class sfColor {
 export class sfJoystickMoveEvent {
   static STRUCT_DEF: StructDef = ["i32", "u32", "i32", "f32"];
 
-  static deserialize(flatValues: NumberLikeType[]): sfJoystickMoveEvent {
+  static deserialize(buffer: BufferSource): sfJoystickMoveEvent;
+  static deserialize(flatValues: NumberLikeType[]): sfJoystickMoveEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfJoystickMoveEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfJoystickMoveEvent.STRUCT_DEF, source);
+    }
+
     return new sfJoystickMoveEvent(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4332,11 +4355,22 @@ export class sfJoystickMoveEvent {
 export class sfJoystickButtonEvent {
   static STRUCT_DEF: StructDef = ["i32", "u32", "u32"];
 
-  static deserialize(flatValues: NumberLikeType[]): sfJoystickButtonEvent {
+  static deserialize(buffer: BufferSource): sfJoystickButtonEvent;
+  static deserialize(flatValues: NumberLikeType[]): sfJoystickButtonEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfJoystickButtonEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfJoystickButtonEvent.STRUCT_DEF, source);
+    }
+
     return new sfJoystickButtonEvent(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4358,10 +4392,21 @@ export class sfJoystickButtonEvent {
 export class sfJoystickConnectEvent {
   static STRUCT_DEF: StructDef = ["i32", "u32"];
 
-  static deserialize(flatValues: NumberLikeType[]): sfJoystickConnectEvent {
+  static deserialize(buffer: BufferSource): sfJoystickConnectEvent;
+  static deserialize(flatValues: NumberLikeType[]): sfJoystickConnectEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfJoystickConnectEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfJoystickConnectEvent.STRUCT_DEF, source);
+    }
+
     return new sfJoystickConnectEvent(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4389,15 +4434,26 @@ export class sfKeyEvent {
     "i32",
   ];
 
-  static deserialize(flatValues: NumberLikeType[]): sfKeyEvent {
+  static deserialize(buffer: BufferSource): sfKeyEvent;
+  static deserialize(flatValues: NumberLikeType[]): sfKeyEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfKeyEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfKeyEvent.STRUCT_DEF, source);
+    }
+
     return new sfKeyEvent(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4435,11 +4491,22 @@ export class sfKeyEvent {
 export class sfMouseMoveEvent {
   static STRUCT_DEF: StructDef = ["i32", "i32", "i32"];
 
-  static deserialize(flatValues: NumberLikeType[]): sfMouseMoveEvent {
+  static deserialize(buffer: BufferSource): sfMouseMoveEvent;
+  static deserialize(flatValues: NumberLikeType[]): sfMouseMoveEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfMouseMoveEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfMouseMoveEvent.STRUCT_DEF, source);
+    }
+
     return new sfMouseMoveEvent(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4461,12 +4528,23 @@ export class sfMouseMoveEvent {
 export class sfMouseButtonEvent {
   static STRUCT_DEF: StructDef = ["i32", "i32", "i32", "i32"];
 
-  static deserialize(flatValues: NumberLikeType[]): sfMouseButtonEvent {
+  static deserialize(buffer: BufferSource): sfMouseButtonEvent;
+  static deserialize(flatValues: NumberLikeType[]): sfMouseButtonEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfMouseButtonEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfMouseButtonEvent.STRUCT_DEF, source);
+    }
+
     return new sfMouseButtonEvent(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4490,12 +4568,23 @@ export class sfMouseButtonEvent {
 export class sfMouseWheelEvent {
   static STRUCT_DEF: StructDef = ["i32", "i32", "i32", "i32"];
 
-  static deserialize(flatValues: NumberLikeType[]): sfMouseWheelEvent {
+  static deserialize(buffer: BufferSource): sfMouseWheelEvent;
+  static deserialize(flatValues: NumberLikeType[]): sfMouseWheelEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfMouseWheelEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfMouseWheelEvent.STRUCT_DEF, source);
+    }
+
     return new sfMouseWheelEvent(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4519,13 +4608,24 @@ export class sfMouseWheelEvent {
 export class sfMouseWheelScrollEvent {
   static STRUCT_DEF: StructDef = ["i32", "i32", "f32", "i32", "i32"];
 
-  static deserialize(flatValues: NumberLikeType[]): sfMouseWheelScrollEvent {
+  static deserialize(buffer: BufferSource): sfMouseWheelScrollEvent;
+  static deserialize(flatValues: NumberLikeType[]): sfMouseWheelScrollEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfMouseWheelScrollEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfMouseWheelScrollEvent.STRUCT_DEF, source);
+    }
+
     return new sfMouseWheelScrollEvent(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4557,13 +4657,24 @@ export class sfMouseWheelScrollEvent {
 export class sfSensorEvent {
   static STRUCT_DEF: StructDef = ["i32", "i32", "f32", "f32", "f32"];
 
-  static deserialize(flatValues: NumberLikeType[]): sfSensorEvent {
+  static deserialize(buffer: BufferSource): sfSensorEvent;
+  static deserialize(flatValues: NumberLikeType[]): sfSensorEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfSensorEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfSensorEvent.STRUCT_DEF, source);
+    }
+
     return new sfSensorEvent(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4595,11 +4706,22 @@ export class sfSensorEvent {
 export class sfSizeEvent {
   static STRUCT_DEF: StructDef = ["i32", "u32", "u32"];
 
-  static deserialize(flatValues: NumberLikeType[]): sfSizeEvent {
+  static deserialize(buffer: BufferSource): sfSizeEvent;
+  static deserialize(flatValues: NumberLikeType[]): sfSizeEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfSizeEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfSizeEvent.STRUCT_DEF, source);
+    }
+
     return new sfSizeEvent(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4621,10 +4743,21 @@ export class sfSizeEvent {
 export class sfTextEvent {
   static STRUCT_DEF: StructDef = ["i32", "u32"];
 
-  static deserialize(flatValues: NumberLikeType[]): sfTextEvent {
+  static deserialize(buffer: BufferSource): sfTextEvent;
+  static deserialize(flatValues: NumberLikeType[]): sfTextEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfTextEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfTextEvent.STRUCT_DEF, source);
+    }
+
     return new sfTextEvent(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4644,12 +4777,23 @@ export class sfTextEvent {
 export class sfTouchEvent {
   static STRUCT_DEF: StructDef = ["i32", "u32", "i32", "i32"];
 
-  static deserialize(flatValues: NumberLikeType[]): sfTouchEvent {
+  static deserialize(buffer: BufferSource): sfTouchEvent;
+  static deserialize(flatValues: NumberLikeType[]): sfTouchEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfTouchEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfTouchEvent.STRUCT_DEF, source);
+    }
+
     return new sfTouchEvent(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4673,11 +4817,22 @@ export class sfTouchEvent {
 export class sfVideoMode {
   static STRUCT_DEF: StructDef = ["u32", "u32", "u32"];
 
-  static deserialize(flatValues: NumberLikeType[]): sfVideoMode {
+  static deserialize(buffer: BufferSource): sfVideoMode;
+  static deserialize(flatValues: NumberLikeType[]): sfVideoMode;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): sfVideoMode {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(sfVideoMode.STRUCT_DEF, source);
+    }
+
     return new sfVideoMode(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4713,21 +4868,32 @@ export class SFMLEventUnion {
     { "struct": ["i32", "i32", "f32", "f32", "f32"] },
   ];
 
-  static deserialize(flatValues: NumberLikeType[]): SFMLEventUnion {
+  static deserialize(buffer: BufferSource): SFMLEventUnion;
+  static deserialize(flatValues: NumberLikeType[]): SFMLEventUnion;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): SFMLEventUnion {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(SFMLEventUnion.STRUCT_DEF, source);
+    }
+
     return new SFMLEventUnion(
-      flatValues.shift()! as number,
-      sfSizeEvent.deserialize(flatValues),
-      sfKeyEvent.deserialize(flatValues),
-      sfTextEvent.deserialize(flatValues),
-      sfMouseMoveEvent.deserialize(flatValues),
-      sfMouseButtonEvent.deserialize(flatValues),
-      sfMouseWheelEvent.deserialize(flatValues),
-      sfMouseWheelScrollEvent.deserialize(flatValues),
-      sfJoystickMoveEvent.deserialize(flatValues),
-      sfJoystickButtonEvent.deserialize(flatValues),
-      sfJoystickConnectEvent.deserialize(flatValues),
-      sfTouchEvent.deserialize(flatValues),
-      sfSensorEvent.deserialize(flatValues),
+      values.shift()! as number,
+      sfSizeEvent.deserialize(values),
+      sfKeyEvent.deserialize(values),
+      sfTextEvent.deserialize(values),
+      sfMouseMoveEvent.deserialize(values),
+      sfMouseButtonEvent.deserialize(values),
+      sfMouseWheelEvent.deserialize(values),
+      sfMouseWheelScrollEvent.deserialize(values),
+      sfJoystickMoveEvent.deserialize(values),
+      sfJoystickButtonEvent.deserialize(values),
+      sfJoystickConnectEvent.deserialize(values),
+      sfTouchEvent.deserialize(values),
+      sfSensorEvent.deserialize(values),
     );
   }
 
@@ -4783,13 +4949,24 @@ export class SFMLEventUnion {
 export class Color {
   static STRUCT_DEF: StructDef = ["u8", "u8", "u8", "u8", "i16"];
 
-  static deserialize(flatValues: NumberLikeType[]): Color {
+  static deserialize(buffer: BufferSource): Color;
+  static deserialize(flatValues: NumberLikeType[]): Color;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): Color {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(Color.STRUCT_DEF, source);
+    }
+
     return new Color(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -4877,9 +5054,20 @@ export class Color {
 export class Duration {
   static STRUCT_DEF: StructDef = ["i64"];
 
-  static deserialize(flatValues: NumberLikeType[]): Duration {
+  static deserialize(buffer: BufferSource): Duration;
+  static deserialize(flatValues: NumberLikeType[]): Duration;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): Duration {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(Duration.STRUCT_DEF, source);
+    }
+
     return new Duration(
-      flatValues.shift()! as bigint,
+      values.shift()! as bigint,
     );
   }
 
@@ -5001,12 +5189,23 @@ export class Duration {
 export class FloatRect {
   static STRUCT_DEF: StructDef = ["f32", "f32", "f32", "f32"];
 
-  static deserialize(flatValues: NumberLikeType[]): FloatRect {
+  static deserialize(buffer: BufferSource): FloatRect;
+  static deserialize(flatValues: NumberLikeType[]): FloatRect;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): FloatRect {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(FloatRect.STRUCT_DEF, source);
+    }
+
     return new FloatRect(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -5064,11 +5263,22 @@ export class FontGlyph {
     "struct": ["f32", "f32", "f32", "f32"],
   }, { "struct": ["u16", "u16", "u16", "u16"] }];
 
-  static deserialize(flatValues: NumberLikeType[]): FontGlyph {
+  static deserialize(buffer: BufferSource): FontGlyph;
+  static deserialize(flatValues: NumberLikeType[]): FontGlyph;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): FontGlyph {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(FontGlyph.STRUCT_DEF, source);
+    }
+
     return new FontGlyph(
-      flatValues.shift()! as number,
-      FloatRect.deserialize(flatValues),
-      UIntRect.deserialize(flatValues),
+      values.shift()! as number,
+      FloatRect.deserialize(values),
+      UIntRect.deserialize(values),
     );
   }
 
@@ -5090,12 +5300,23 @@ export class FontGlyph {
 export class UIntRect {
   static STRUCT_DEF: StructDef = ["u16", "u16", "u16", "u16"];
 
-  static deserialize(flatValues: NumberLikeType[]): UIntRect {
+  static deserialize(buffer: BufferSource): UIntRect;
+  static deserialize(flatValues: NumberLikeType[]): UIntRect;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): UIntRect {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(UIntRect.STRUCT_DEF, source);
+    }
+
     return new UIntRect(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -5151,10 +5372,21 @@ export class UIntRect {
 export class Vector2f {
   static STRUCT_DEF: StructDef = ["f32", "f32"];
 
-  static deserialize(flatValues: NumberLikeType[]): Vector2f {
+  static deserialize(buffer: BufferSource): Vector2f;
+  static deserialize(flatValues: NumberLikeType[]): Vector2f;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): Vector2f {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(Vector2f.STRUCT_DEF, source);
+    }
+
     return new Vector2f(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -5174,10 +5406,21 @@ export class Vector2f {
 export class Vector2i {
   static STRUCT_DEF: StructDef = ["i16", "i16"];
 
-  static deserialize(flatValues: NumberLikeType[]): Vector2i {
+  static deserialize(buffer: BufferSource): Vector2i;
+  static deserialize(flatValues: NumberLikeType[]): Vector2i;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): Vector2i {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(Vector2i.STRUCT_DEF, source);
+    }
+
     return new Vector2i(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -5197,10 +5440,21 @@ export class Vector2i {
 export class Vector2u {
   static STRUCT_DEF: StructDef = ["u16", "u16"];
 
-  static deserialize(flatValues: NumberLikeType[]): Vector2u {
+  static deserialize(buffer: BufferSource): Vector2u;
+  static deserialize(flatValues: NumberLikeType[]): Vector2u;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): Vector2u {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(Vector2u.STRUCT_DEF, source);
+    }
+
     return new Vector2u(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -5222,11 +5476,22 @@ export class Vertex {
     "struct": ["u8", "u8", "u8", "u8"],
   }, { "struct": ["f32", "f32"] }];
 
-  static deserialize(flatValues: NumberLikeType[]): Vertex {
+  static deserialize(buffer: BufferSource): Vertex;
+  static deserialize(flatValues: NumberLikeType[]): Vertex;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): Vertex {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(Vertex.STRUCT_DEF, source);
+    }
+
     return new Vertex(
-      Vector2f.deserialize(flatValues),
-      VertexColor.deserialize(flatValues),
-      Vector2f.deserialize(flatValues),
+      Vector2f.deserialize(values),
+      VertexColor.deserialize(values),
+      Vector2f.deserialize(values),
     );
   }
 
@@ -5248,12 +5513,23 @@ export class Vertex {
 export class VertexColor {
   static STRUCT_DEF: StructDef = ["u8", "u8", "u8", "u8"];
 
-  static deserialize(flatValues: NumberLikeType[]): VertexColor {
+  static deserialize(buffer: BufferSource): VertexColor;
+  static deserialize(flatValues: NumberLikeType[]): VertexColor;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): VertexColor {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(VertexColor.STRUCT_DEF, source);
+    }
+
     return new VertexColor(
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
-      flatValues.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
     );
   }
 
@@ -5550,8 +5826,8 @@ export class Gui {
    * @param gui `Gui *`
    * @returns `void`
    */
-  draw(gui: Deno.PointerValue<unknown>): ResultType<"tguiGui_draw"> {
-    return accessLib().symbols.tguiGui_draw(gui);
+  draw(): ResultType<"tguiGui_draw"> {
+    return accessLib().symbols.tguiGui_draw(this.pointer);
   }
 
   /**
@@ -5565,12 +5841,11 @@ export class Gui {
    * @returns `Bool`
    */
   loadWidgetsFromFile(
-    gui: Deno.PointerValue<unknown>,
     filename: BufferSource,
     replaceExisting: number,
   ): ResultType<"tguiGui_loadWidgetsFromFile"> {
     return accessLib().symbols.tguiGui_loadWidgetsFromFile(
-      gui,
+      this.pointer,
       filename,
       replaceExisting,
     );
@@ -5586,10 +5861,12 @@ export class Gui {
    * @returns `Bool`
    */
   saveWidgetsToFile(
-    gui: Deno.PointerValue<unknown>,
     filename: BufferSource,
   ): ResultType<"tguiGui_saveWidgetsToFile"> {
-    return accessLib().symbols.tguiGui_saveWidgetsToFile(gui, filename);
+    return accessLib().symbols.tguiGui_saveWidgetsToFile(
+      this.pointer,
+      filename,
+    );
   }
 
   /**
@@ -5602,11 +5879,10 @@ export class Gui {
    * @returns `void`
    */
   setAbsoluteViewport(
-    thisGui: Deno.PointerValue<unknown>,
     viewport: FloatRect,
   ): ResultType<"tguiGui_setAbsoluteViewport"> {
     return accessLib().symbols.tguiGui_setAbsoluteViewport(
-      thisGui,
+      this.pointer,
       viewport.buffer,
     );
   }
@@ -5621,11 +5897,10 @@ export class Gui {
    * @returns `void`
    */
   setRelativeViewport(
-    thisGui: Deno.PointerValue<unknown>,
     viewport: FloatRect,
   ): ResultType<"tguiGui_setRelativeViewport"> {
     return accessLib().symbols.tguiGui_setRelativeViewport(
-      thisGui,
+      this.pointer,
       viewport.buffer,
     );
   }
@@ -5638,10 +5913,8 @@ export class Gui {
    * @param thisGui `const Gui *`
    * @returns `FloatRect { left: float; top: float; width: float; height: float }`
    */
-  getViewport(
-    thisGui: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGui_getViewport"> {
-    return accessLib().symbols.tguiGui_getViewport(thisGui);
+  getViewport(): ResultType<"tguiGui_getViewport"> {
+    return accessLib().symbols.tguiGui_getViewport(this.pointer);
   }
 
   /**
@@ -5653,11 +5926,11 @@ export class Gui {
    * @param view `FloatRect { left: float; top: float; width: float; height: float }`
    * @returns `void`
    */
-  setAbsoluteView(
-    thisGui: Deno.PointerValue<unknown>,
-    view: FloatRect,
-  ): ResultType<"tguiGui_setAbsoluteView"> {
-    return accessLib().symbols.tguiGui_setAbsoluteView(thisGui, view.buffer);
+  setAbsoluteView(view: FloatRect): ResultType<"tguiGui_setAbsoluteView"> {
+    return accessLib().symbols.tguiGui_setAbsoluteView(
+      this.pointer,
+      view.buffer,
+    );
   }
 
   /**
@@ -5669,11 +5942,11 @@ export class Gui {
    * @param view `FloatRect { left: float; top: float; width: float; height: float }`
    * @returns `void`
    */
-  setRelativeView(
-    thisGui: Deno.PointerValue<unknown>,
-    view: FloatRect,
-  ): ResultType<"tguiGui_setRelativeView"> {
-    return accessLib().symbols.tguiGui_setRelativeView(thisGui, view.buffer);
+  setRelativeView(view: FloatRect): ResultType<"tguiGui_setRelativeView"> {
+    return accessLib().symbols.tguiGui_setRelativeView(
+      this.pointer,
+      view.buffer,
+    );
   }
 
   /**
@@ -5684,8 +5957,8 @@ export class Gui {
    * @param thisGui `const Gui *`
    * @returns `FloatRect { left: float; top: float; width: float; height: float }`
    */
-  getView(thisGui: Deno.PointerValue<unknown>): ResultType<"tguiGui_getView"> {
-    return accessLib().symbols.tguiGui_getView(thisGui);
+  getView(): ResultType<"tguiGui_getView"> {
+    return accessLib().symbols.tguiGui_getView(this.pointer);
   }
 
   /**
@@ -5698,10 +5971,12 @@ export class Gui {
    * @returns `void`
    */
   setTabKeyUsageEnabled(
-    thisGui: Deno.PointerValue<unknown>,
     value: number,
   ): ResultType<"tguiGui_setTabKeyUsageEnabled"> {
-    return accessLib().symbols.tguiGui_setTabKeyUsageEnabled(thisGui, value);
+    return accessLib().symbols.tguiGui_setTabKeyUsageEnabled(
+      this.pointer,
+      value,
+    );
   }
 
   /**
@@ -5712,10 +5987,8 @@ export class Gui {
    * @param thisGui `const Gui *`
    * @returns `Bool`
    */
-  isTabKeyUsageEnabled(
-    thisGui: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGui_isTabKeyUsageEnabled"> {
-    return accessLib().symbols.tguiGui_isTabKeyUsageEnabled(thisGui);
+  isTabKeyUsageEnabled(): ResultType<"tguiGui_isTabKeyUsageEnabled"> {
+    return accessLib().symbols.tguiGui_isTabKeyUsageEnabled(this.pointer);
   }
 
   /**
@@ -5727,11 +6000,8 @@ export class Gui {
    * @param value `const Font *`
    * @returns `void`
    */
-  setFont(
-    thisGui: Deno.PointerValue<unknown>,
-    value: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGui_setFont"> {
-    return accessLib().symbols.tguiGui_setFont(thisGui, value);
+  setFont(value: Deno.PointerValue<unknown>): ResultType<"tguiGui_setFont"> {
+    return accessLib().symbols.tguiGui_setFont(this.pointer, value);
   }
 
   /**
@@ -5742,8 +6012,8 @@ export class Gui {
    * @param thisGui `const Gui *`
    * @returns `const Font *`
    */
-  getFont(thisGui: Deno.PointerValue<unknown>): ResultType<"tguiGui_getFont"> {
-    return accessLib().symbols.tguiGui_getFont(thisGui);
+  getFont(): ResultType<"tguiGui_getFont"> {
+    return accessLib().symbols.tguiGui_getFont(this.pointer);
   }
 
   /**
@@ -5757,11 +6027,10 @@ export class Gui {
    * @returns `void`
    */
   add(
-    thisGui: Deno.PointerValue<unknown>,
     widget: Deno.PointerValue<unknown>,
     widgetName: BufferSource,
   ): ResultType<"tguiGui_add"> {
-    return accessLib().symbols.tguiGui_add(thisGui, widget, widgetName);
+    return accessLib().symbols.tguiGui_add(this.pointer, widget, widgetName);
   }
 
   /**
@@ -5773,11 +6042,8 @@ export class Gui {
    * @param widgetName `Utf32`
    * @returns `Widget *`
    */
-  get(
-    thisGui: Deno.PointerValue<unknown>,
-    widgetName: BufferSource,
-  ): ResultType<"tguiGui_get"> {
-    return accessLib().symbols.tguiGui_get(thisGui, widgetName);
+  get(widgetName: BufferSource): ResultType<"tguiGui_get"> {
+    return accessLib().symbols.tguiGui_get(this.pointer, widgetName);
   }
 
   /**
@@ -5790,10 +6056,9 @@ export class Gui {
    * @returns `Widget **`
    */
   getWidgets(
-    thisGui: Deno.PointerValue<unknown>,
     returnCount: Deno.PointerValue<unknown>,
   ): ResultType<"tguiGui_getWidgets"> {
-    return accessLib().symbols.tguiGui_getWidgets(thisGui, returnCount);
+    return accessLib().symbols.tguiGui_getWidgets(this.pointer, returnCount);
   }
 
   /**
@@ -5805,11 +6070,8 @@ export class Gui {
    * @param widget `Widget *`
    * @returns `Bool`
    */
-  remove(
-    thisGui: Deno.PointerValue<unknown>,
-    widget: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGui_remove"> {
-    return accessLib().symbols.tguiGui_remove(thisGui, widget);
+  remove(widget: Deno.PointerValue<unknown>): ResultType<"tguiGui_remove"> {
+    return accessLib().symbols.tguiGui_remove(this.pointer, widget);
   }
 
   /**
@@ -5820,10 +6082,8 @@ export class Gui {
    * @param thisGui `Gui *`
    * @returns `void`
    */
-  removeAllWidgets(
-    thisGui: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGui_removeAllWidgets"> {
-    return accessLib().symbols.tguiGui_removeAllWidgets(thisGui);
+  removeAllWidgets(): ResultType<"tguiGui_removeAllWidgets"> {
+    return accessLib().symbols.tguiGui_removeAllWidgets(this.pointer);
   }
 
   /**
@@ -5834,10 +6094,8 @@ export class Gui {
    * @param thisGui `const Gui *`
    * @returns `Widget *`
    */
-  getFocusedChild(
-    thisGui: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGui_getFocusedChild"> {
-    return accessLib().symbols.tguiGui_getFocusedChild(thisGui);
+  getFocusedChild(): ResultType<"tguiGui_getFocusedChild"> {
+    return accessLib().symbols.tguiGui_getFocusedChild(this.pointer);
   }
 
   /**
@@ -5848,10 +6106,8 @@ export class Gui {
    * @param thisGui `const Gui *`
    * @returns `Widget *`
    */
-  getFocusedLeaf(
-    thisGui: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGui_getFocusedLeaf"> {
-    return accessLib().symbols.tguiGui_getFocusedLeaf(thisGui);
+  getFocusedLeaf(): ResultType<"tguiGui_getFocusedLeaf"> {
+    return accessLib().symbols.tguiGui_getFocusedLeaf(this.pointer);
   }
 
   /**
@@ -5865,12 +6121,11 @@ export class Gui {
    * @returns `Widget *`
    */
   getWidgetAtPos(
-    thisGui: Deno.PointerValue<unknown>,
     pos: Vector2f,
     recursive: number,
   ): ResultType<"tguiGui_getWidgetAtPos"> {
     return accessLib().symbols.tguiGui_getWidgetAtPos(
-      thisGui,
+      this.pointer,
       pos.buffer,
       recursive,
     );
@@ -5887,12 +6142,11 @@ export class Gui {
    * @returns `Widget *`
    */
   getWidgetBelowMouseCursor(
-    thisGui: Deno.PointerValue<unknown>,
     mousePos: Vector2i,
     recursive: number,
   ): ResultType<"tguiGui_getWidgetBelowMouseCursor"> {
     return accessLib().symbols.tguiGui_getWidgetBelowMouseCursor(
-      thisGui,
+      this.pointer,
       mousePos.buffer,
       recursive,
     );
@@ -5907,11 +6161,8 @@ export class Gui {
    * @param recursive `Bool`
    * @returns `Bool`
    */
-  focusNextWidget(
-    thisGui: Deno.PointerValue<unknown>,
-    recursive: number,
-  ): ResultType<"tguiGui_focusNextWidget"> {
-    return accessLib().symbols.tguiGui_focusNextWidget(thisGui, recursive);
+  focusNextWidget(recursive: number): ResultType<"tguiGui_focusNextWidget"> {
+    return accessLib().symbols.tguiGui_focusNextWidget(this.pointer, recursive);
   }
 
   /**
@@ -5924,10 +6175,12 @@ export class Gui {
    * @returns `Bool`
    */
   focusPreviousWidget(
-    thisGui: Deno.PointerValue<unknown>,
     recursive: number,
   ): ResultType<"tguiGui_focusPreviousWidget"> {
-    return accessLib().symbols.tguiGui_focusPreviousWidget(thisGui, recursive);
+    return accessLib().symbols.tguiGui_focusPreviousWidget(
+      this.pointer,
+      recursive,
+    );
   }
 
   /**
@@ -5938,10 +6191,8 @@ export class Gui {
    * @param thisGui `Gui *`
    * @returns `void`
    */
-  unfocusAllWidgets(
-    thisGui: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGui_unfocusAllWidgets"> {
-    return accessLib().symbols.tguiGui_unfocusAllWidgets(thisGui);
+  unfocusAllWidgets(): ResultType<"tguiGui_unfocusAllWidgets"> {
+    return accessLib().symbols.tguiGui_unfocusAllWidgets(this.pointer);
   }
 
   /**
@@ -5954,10 +6205,9 @@ export class Gui {
    * @returns `void`
    */
   moveWidgetToFront(
-    thisGui: Deno.PointerValue<unknown>,
     widget: Deno.PointerValue<unknown>,
   ): ResultType<"tguiGui_moveWidgetToFront"> {
-    return accessLib().symbols.tguiGui_moveWidgetToFront(thisGui, widget);
+    return accessLib().symbols.tguiGui_moveWidgetToFront(this.pointer, widget);
   }
 
   /**
@@ -5970,10 +6220,9 @@ export class Gui {
    * @returns `void`
    */
   moveWidgetToBack(
-    thisGui: Deno.PointerValue<unknown>,
     widget: Deno.PointerValue<unknown>,
   ): ResultType<"tguiGui_moveWidgetToBack"> {
-    return accessLib().symbols.tguiGui_moveWidgetToBack(thisGui, widget);
+    return accessLib().symbols.tguiGui_moveWidgetToBack(this.pointer, widget);
   }
 
   /**
@@ -5986,10 +6235,9 @@ export class Gui {
    * @returns `size_t`
    */
   moveWidgetForward(
-    thisGui: Deno.PointerValue<unknown>,
     widget: Deno.PointerValue<unknown>,
   ): ResultType<"tguiGui_moveWidgetForward"> {
-    return accessLib().symbols.tguiGui_moveWidgetForward(thisGui, widget);
+    return accessLib().symbols.tguiGui_moveWidgetForward(this.pointer, widget);
   }
 
   /**
@@ -6002,10 +6250,9 @@ export class Gui {
    * @returns `size_t`
    */
   moveWidgetBackward(
-    thisGui: Deno.PointerValue<unknown>,
     widget: Deno.PointerValue<unknown>,
   ): ResultType<"tguiGui_moveWidgetBackward"> {
-    return accessLib().symbols.tguiGui_moveWidgetBackward(thisGui, widget);
+    return accessLib().symbols.tguiGui_moveWidgetBackward(this.pointer, widget);
   }
 
   /**
@@ -6019,11 +6266,14 @@ export class Gui {
    * @returns `Bool`
    */
   setWidgetIndex(
-    thisGui: Deno.PointerValue<unknown>,
     widget: Deno.PointerValue<unknown>,
     index: bigint,
   ): ResultType<"tguiGui_setWidgetIndex"> {
-    return accessLib().symbols.tguiGui_setWidgetIndex(thisGui, widget, index);
+    return accessLib().symbols.tguiGui_setWidgetIndex(
+      this.pointer,
+      widget,
+      index,
+    );
   }
 
   /**
@@ -6036,10 +6286,9 @@ export class Gui {
    * @returns `int`
    */
   getWidgetIndex(
-    thisGui: Deno.PointerValue<unknown>,
     widget: Deno.PointerValue<unknown>,
   ): ResultType<"tguiGui_getWidgetIndex"> {
-    return accessLib().symbols.tguiGui_getWidgetIndex(thisGui, widget);
+    return accessLib().symbols.tguiGui_getWidgetIndex(this.pointer, widget);
   }
 
   /**
@@ -6051,11 +6300,8 @@ export class Gui {
    * @param value `float`
    * @returns `void`
    */
-  setOpacity(
-    thisGui: Deno.PointerValue<unknown>,
-    value: number,
-  ): ResultType<"tguiGui_setOpacity"> {
-    return accessLib().symbols.tguiGui_setOpacity(thisGui, value);
+  setOpacity(value: number): ResultType<"tguiGui_setOpacity"> {
+    return accessLib().symbols.tguiGui_setOpacity(this.pointer, value);
   }
 
   /**
@@ -6066,10 +6312,8 @@ export class Gui {
    * @param thisGui `const Gui *`
    * @returns `float`
    */
-  getOpacity(
-    thisGui: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGui_getOpacity"> {
-    return accessLib().symbols.tguiGui_getOpacity(thisGui);
+  getOpacity(): ResultType<"tguiGui_getOpacity"> {
+    return accessLib().symbols.tguiGui_getOpacity(this.pointer);
   }
 
   /**
@@ -6081,11 +6325,8 @@ export class Gui {
    * @param value `unsigned int`
    * @returns `void`
    */
-  setTextSize(
-    thisGui: Deno.PointerValue<unknown>,
-    value: number,
-  ): ResultType<"tguiGui_setTextSize"> {
-    return accessLib().symbols.tguiGui_setTextSize(thisGui, value);
+  setTextSize(value: number): ResultType<"tguiGui_setTextSize"> {
+    return accessLib().symbols.tguiGui_setTextSize(this.pointer, value);
   }
 
   /**
@@ -6096,10 +6337,8 @@ export class Gui {
    * @param thisGui `const Gui *`
    * @returns `unsigned int`
    */
-  getTextSize(
-    thisGui: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGui_getTextSize"> {
-    return accessLib().symbols.tguiGui_getTextSize(thisGui);
+  getTextSize(): ResultType<"tguiGui_getTextSize"> {
+    return accessLib().symbols.tguiGui_getTextSize(this.pointer);
   }
 
   /**
@@ -6112,11 +6351,10 @@ export class Gui {
    * @returns `void`
    */
   setDrawingUpdatesTime(
-    thisGui: Deno.PointerValue<unknown>,
     drawUpdatesTime: number,
   ): ResultType<"tguiGui_setDrawingUpdatesTime"> {
     return accessLib().symbols.tguiGui_setDrawingUpdatesTime(
-      thisGui,
+      this.pointer,
       drawUpdatesTime,
     );
   }
@@ -6129,10 +6367,8 @@ export class Gui {
    * @param thisGui `Gui *`
    * @returns `Bool`
    */
-  updateTime(
-    thisGui: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGui_updateTime"> {
-    return accessLib().symbols.tguiGui_updateTime(thisGui);
+  updateTime(): ResultType<"tguiGui_updateTime"> {
+    return accessLib().symbols.tguiGui_updateTime(this.pointer);
   }
 
   /**
@@ -6145,10 +6381,12 @@ export class Gui {
    * @returns `void`
    */
   setOverrideMouseCursor(
-    thisGui: Deno.PointerValue<unknown>,
     type: number,
   ): ResultType<"tguiGui_setOverrideMouseCursor"> {
-    return accessLib().symbols.tguiGui_setOverrideMouseCursor(thisGui, type);
+    return accessLib().symbols.tguiGui_setOverrideMouseCursor(
+      this.pointer,
+      type,
+    );
   }
 
   /**
@@ -6159,10 +6397,10 @@ export class Gui {
    * @param thisGui `Gui *`
    * @returns `void`
    */
-  restoreOverrideMouseCursor(
-    thisGui: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGui_restoreOverrideMouseCursor"> {
-    return accessLib().symbols.tguiGui_restoreOverrideMouseCursor(thisGui);
+  restoreOverrideMouseCursor(): ResultType<
+    "tguiGui_restoreOverrideMouseCursor"
+  > {
+    return accessLib().symbols.tguiGui_restoreOverrideMouseCursor(this.pointer);
   }
 
   /**
@@ -6174,11 +6412,8 @@ export class Gui {
    * @param type `CursorType`
    * @returns `void`
    */
-  requestMouseCursor(
-    thisGui: Deno.PointerValue<unknown>,
-    type: number,
-  ): ResultType<"tguiGui_requestMouseCursor"> {
-    return accessLib().symbols.tguiGui_requestMouseCursor(thisGui, type);
+  requestMouseCursor(type: number): ResultType<"tguiGui_requestMouseCursor"> {
+    return accessLib().symbols.tguiGui_requestMouseCursor(this.pointer, type);
   }
 
   /**
@@ -6190,11 +6425,11 @@ export class Gui {
    * @param pixel `Vector2i { x: int; y: int }`
    * @returns `Vector2f { x: float; y: float }`
    */
-  mapPixelToCoords(
-    thisGui: Deno.PointerValue<unknown>,
-    pixel: Vector2i,
-  ): ResultType<"tguiGui_mapPixelToCoords"> {
-    return accessLib().symbols.tguiGui_mapPixelToCoords(thisGui, pixel.buffer);
+  mapPixelToCoords(pixel: Vector2i): ResultType<"tguiGui_mapPixelToCoords"> {
+    return accessLib().symbols.tguiGui_mapPixelToCoords(
+      this.pointer,
+      pixel.buffer,
+    );
   }
 
   /**
@@ -6206,11 +6441,11 @@ export class Gui {
    * @param coord `Vector2f { x: float; y: float }`
    * @returns `Vector2f { x: float; y: float }`
    */
-  mapCoordsToPixel(
-    thisGui: Deno.PointerValue<unknown>,
-    coord: Vector2f,
-  ): ResultType<"tguiGui_mapCoordsToPixel"> {
-    return accessLib().symbols.tguiGui_mapCoordsToPixel(thisGui, coord.buffer);
+  mapCoordsToPixel(coord: Vector2f): ResultType<"tguiGui_mapCoordsToPixel"> {
+    return accessLib().symbols.tguiGui_mapCoordsToPixel(
+      this.pointer,
+      coord.buffer,
+    );
   }
 
   /**
@@ -6223,11 +6458,10 @@ export class Gui {
    * @returns `void`
    */
   setKeyboardNavigationEnabled(
-    thisGui: Deno.PointerValue<unknown>,
     value: number,
   ): ResultType<"tguiGui_setKeyboardNavigationEnabled"> {
     return accessLib().symbols.tguiGui_setKeyboardNavigationEnabled(
-      thisGui,
+      this.pointer,
       value,
     );
   }
@@ -6240,10 +6474,12 @@ export class Gui {
    * @param thisGui `const Gui *`
    * @returns `Bool`
    */
-  isKeyboardNavigationEnabled(
-    thisGui: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGui_isKeyboardNavigationEnabled"> {
-    return accessLib().symbols.tguiGui_isKeyboardNavigationEnabled(thisGui);
+  isKeyboardNavigationEnabled(): ResultType<
+    "tguiGui_isKeyboardNavigationEnabled"
+  > {
+    return accessLib().symbols.tguiGui_isKeyboardNavigationEnabled(
+      this.pointer,
+    );
   }
 
   /**
@@ -6255,15 +6491,13 @@ export class Gui {
    * @param clearColor `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
    * @returns `void`
    */
-  mainLoop(
-    thisGui: Deno.PointerValue<unknown>,
-    clearColor: Color,
-  ): ResultType<"tguiGui_mainLoop"> {
-    return accessLib().symbols.tguiGui_mainLoop(thisGui, clearColor.buffer);
+  mainLoop(clearColor: Color): ResultType<"tguiGui_mainLoop"> {
+    return accessLib().symbols.tguiGui_mainLoop(
+      this.pointer,
+      clearColor.buffer,
+    );
   }
-}
 
-export class GuiCSFMLGraphics {
   protected ptr: Deno.PointerValue<unknown>;
 
   get pointer(): Deno.PointerValue<unknown> {
@@ -9629,16 +9863,14 @@ export class SFMLEvent {
 
   /**
    * @original ```c
-   * SFMLEventUnion SFMLEvent_convert(sfEvent * SFMLEvent);
+   * SFMLEventUnion SFMLEvent_convertToUnion(sfEvent * SFMLEvent);
    * ```
    *
    * @param SFMLEvent `sfEvent *`
    * @returns `SFMLEventUnion { type: sfEventType; size: sfSizeEvent; key: sfKeyEvent; text: sfTextEvent; mouseMove: sfMouseMoveEvent; mouseButton: sfMouseButtonEvent; mouseWheel: sfMouseWheelEvent; mouseWheelScroll: sfMouseWheelScrollEvent; joystickMove: sfJoystickMoveEvent; joystickButton: sfJoystickButtonEvent; joystickConnect: sfJoystickConnectEvent; touch: sfTouchEvent; sensor: sfSensorEvent }`
    */
-  convert(
-    SFMLEvent: Deno.PointerValue<unknown>,
-  ): ResultType<"SFMLEvent_convert"> {
-    return accessLib().symbols.SFMLEvent_convert(SFMLEvent);
+  convertToUnion(): ResultType<"SFMLEvent_convertToUnion"> {
+    return accessLib().symbols.SFMLEvent_convertToUnion(this.pointer);
   }
 
   /**
@@ -9649,10 +9881,8 @@ export class SFMLEvent {
    * @param SFMLEvent `sfEvent *`
    * @returns `void`
    */
-  destroy(
-    SFMLEvent: Deno.PointerValue<unknown>,
-  ): ResultType<"SFMLEvent_destroy"> {
-    return accessLib().symbols.SFMLEvent_destroy(SFMLEvent);
+  destroy(): ResultType<"SFMLEvent_destroy"> {
+    return accessLib().symbols.SFMLEvent_destroy(this.pointer);
   }
 }
 

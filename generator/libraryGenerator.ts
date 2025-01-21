@@ -45,7 +45,6 @@ function createInheritanceGraph() {
 
 const { inheritanceGraph, inheritanceRank } = createInheritanceGraph();
 // console.log(inheritanceGraph);
-
 const names: Record<
   string,
   {
@@ -68,7 +67,10 @@ FUNCTION_DECLARATIONS.forEach((func) => {
 
   if (!method) return;
 
-  const declName = struct !== "tgui" ? struct.replace("tgui", "") : struct;
+  const declName =
+    struct !== "tgui"
+      ? struct.replace("tgui", "").replace("CSFMLGraphics", "")
+      : struct;
 
   names[declName] ??= { methods: [] };
   names[declName].methods!.push(func);
@@ -115,7 +117,7 @@ function getJSTypeDecl(
 }
 
 let code = `import { accessLib, type ResultType } from "./ctgui.ts";
-import { type NumberLikeType, serializeStruct, type StructDef } from "./utils/structToBuffer.ts";\n\n`;
+import { deserializeStruct, type NumberLikeType, serializeStruct, type StructDef } from "./utils/structToBuffer.ts";\n\n`;
 
 const CTGUI_LIB = "accessLib()";
 
@@ -148,22 +150,34 @@ Object.entries(names)
         typeof structDef === "object" ? structDef.struct : structDef
       );
 
-      const deserializeFunc = `static deserialize(flatValues: NumberLikeType[]): ${declName} {
-        return new ${declName}(
-          ${body.fields
-            .map((field) => {
-              if (field.nativeType instanceof Array) {
-                const className = field.type.replace("tgui", "");
-                return `${className}.deserialize(flatValues)`;
-              }
+      const deserializeFunc = `
+        static deserialize(buffer: BufferSource): ${declName};
+        static deserialize(flatValues: NumberLikeType[]): ${declName};
+        // deno-lint-ignore no-explicit-any
+        static deserialize(source: any): ${declName} {
+          let values;
+      
+          if (source instanceof Array) {
+            values = source;
+          } else {
+            values = deserializeStruct(${declName}.STRUCT_DEF, source);
+          }
 
-              return `flatValues.shift()! as ${getJSTypeDecl(
-                field.nativeType,
-                field.type
-              )}`;
-            })
-            .join(",\n")}
-        );
+          return new ${declName}(
+            ${body.fields
+              .map((field) => {
+                if (field.nativeType instanceof Array) {
+                  const className = field.type.replace("tgui", "");
+                  return `${className}.deserialize(values)`;
+                }
+
+                return `values.shift()! as ${getJSTypeDecl(
+                  field.nativeType,
+                  field.type
+                )}`;
+              })
+              .join(",\n")}
+          );
       }`;
 
       const fields = body.fields.map((field) => {
@@ -214,17 +228,18 @@ Object.entries(names)
     function getMethodName(declName: string, funcName: string) {
       return funcName
         .replace("tgui", "")
+        .replace("CSFMLGraphics", "")
         .replace(declName, "")
         .replace("_", "");
     }
 
     function isLocalPointerName(name: string) {
       return (
-        // name === "event" ||
+        name === "SFMLEvent" ||
         (name === "widget" && declName === "Widget") ||
-        (name === "gui" && declName !== "Gui") ||
-        (name === "window" && declName !== "GuiCSFMLGraphics") ||
-        (name.startsWith("this") && !/sprite|gui|texture|font/i.test(name))
+        (name === "gui" && declName === "Gui") ||
+        (name === "window" && declName !== "Gui") ||
+        (name.startsWith("this") && !/sprite|texture|font/i.test(name))
       );
     }
 

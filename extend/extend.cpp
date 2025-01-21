@@ -5,7 +5,7 @@ sfEvent* SFMLEvent_create() {
   return new sfEvent;
 }
 
-SFMLEventUnion SFMLEvent_convert(sfEvent* SFMLEvent) {
+SFMLEventUnion SFMLEvent_convertToUnion(sfEvent* SFMLEvent) {
   return {.type = SFMLEvent->type,
           .size = SFMLEvent->size,
           .key = SFMLEvent->key,

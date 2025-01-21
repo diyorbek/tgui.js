@@ -1,14 +1,14 @@
 import {
   Button,
+  CheckBox,
   Gui,
-  GuiCSFMLGraphics,
   renderWindow,
   sfColor,
   SFMLEvent,
   sfVideoMode,
+  VerticalLayout,
 } from "../mod.ts";
-import { CTGUI_SYMBOLS } from "../src/ctguiSymbols.ts";
-import { deserializeStruct } from "../src/utils/structToBuffer.ts";
+import { SFMLEventUnion } from "../src/lib.ts";
 import { CTGUI_LIB } from "./index.ts";
 
 export function encodeUTF32(str: string) {
@@ -26,39 +26,42 @@ function main() {
   const title = new TextEncoder().encode("Hello, World!\0");
   const mode = new sfVideoMode(800, 300, 32);
   const window = new renderWindow(mode, title, 7);
-  const sfGui = new GuiCSFMLGraphics(window.pointer);
+  const gui = new Gui(window.pointer);
+
+  const cont = new VerticalLayout();
 
   const button = new Button();
   button.setText(encodeUTF32("Hello, World!"));
+  const checkbox = new CheckBox();
+  checkbox.setText(encodeUTF32("Check me!"));
 
-  const gui = new Gui();
-  gui.add(sfGui.pointer, button.pointer, encodeUTF32(""));
+  cont.add(button.pointer, encodeUTF32(""));
+  cont.add(checkbox.pointer, encodeUTF32(""));
+
+  gui.add(cont.pointer, encodeUTF32(""));
 
   while (window.isOpen()) {
     const event = new SFMLEvent();
 
     while (window.pollEvent(event.pointer)) {
-      const eventUnion = deserializeStruct(
-        CTGUI_SYMBOLS.SFMLEvent_convert.result.struct,
-        event.convert(event.pointer)
-      );
+      const eventUnion = SFMLEventUnion.deserialize(event.convertToUnion());
 
-      if (eventUnion[0] === 0) window.close();
+      if (eventUnion.type === 0) window.close();
 
-      console.log("Event", eventUnion[0]);
-      sfGui.handleEvent(event.pointer);
+      console.log("Event", eventUnion);
+      gui.handleEvent(event.pointer);
     }
 
     const clearColor = new sfColor(0, 0, 0, 255);
     window.clear(clearColor);
 
-    gui.draw(sfGui.pointer);
+    gui.draw();
     window.display();
-    event.destroy(event.pointer);
+    event.destroy();
   }
 
   button.destroy();
-  sfGui.destroy();
+  gui.destroy();
   window.destroy();
 }
 

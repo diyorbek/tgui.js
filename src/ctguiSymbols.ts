@@ -5171,13 +5171,13 @@ export const CTGUI_SYMBOLS = {
 
   /**
    * @original ```c
-   * SFMLEventUnion SFMLEvent_convert(sfEvent * SFMLEvent);
+   * SFMLEventUnion SFMLEvent_convertToUnion(sfEvent * SFMLEvent);
    * ```
    *
    * @param SFMLEvent `sfEvent *`
    * @returns `SFMLEventUnion { type: sfEventType; size: sfSizeEvent; key: sfKeyEvent; text: sfTextEvent; mouseMove: sfMouseMoveEvent; mouseButton: sfMouseButtonEvent; mouseWheel: sfMouseWheelEvent; mouseWheelScroll: sfMouseWheelScrollEvent; joystickMove: sfJoystickMoveEvent; joystickButton: sfJoystickButtonEvent; joystickConnect: sfJoystickConnectEvent; touch: sfTouchEvent; sensor: sfSensorEvent }`
    */
-  SFMLEvent_convert: {
+  SFMLEvent_convertToUnion: {
     parameters: ["pointer"],
     result: {
       struct: [
