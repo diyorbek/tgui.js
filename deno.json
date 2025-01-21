@@ -4,6 +4,6 @@
   "exports": "./mod.ts",
   "license": "MIT",
   "publish": {
-    "include": ["LICENSE", "README.md", "symbols/**/*.ts", "mod.ts"]
+    "include": ["LICENSE", "README.md", "src/**/*.ts", "mod.ts"]
   }
 }

@@ -1,4 +1,5 @@
-import { type StructMeta, TYPE_MAP } from "./typeMap.ts";
+import { C_NATIVE_TYPE_MAP } from "./typeMap.ts";
+import { createComment, createNativeType } from "./utils.ts";
 
 const decoder = new TextDecoder();
 const encoder = new TextEncoder();
@@ -9,10 +10,12 @@ const functions: string[] = [];
 const structs: string[] = [];
 
 const functionDeclarations: any[] = [];
+// const structDeclarations: Record<string, any> = {};
+// const enumDeclarations: Record<string, any> = {};
 
 function getNativeType(resultType: string): any {
-  if (TYPE_MAP[resultType]) {
-    return TYPE_MAP[resultType];
+  if (C_NATIVE_TYPE_MAP[resultType]) {
+    return C_NATIVE_TYPE_MAP[resultType];
   }
 
   if (resultType.match(/\(.*\)/)) {
@@ -38,27 +41,14 @@ function getNativeType(resultType: string): any {
           name: inner.name,
           type: inner.type?.desugaredQualType || inner.type!.qualType,
           nativeType: getNativeType(
-            inner.type!.qualType || inner.type!.desugaredQualType
+            // inner.type!.qualType || inner.type!.desugaredQualType
+            inner.type!.desugaredQualType || inner.type!.qualType
           ),
         }));
     }
   }
 
   return resultType;
-}
-
-function createNativeType(
-  meta: StructMeta[] | Deno.NativeType
-): Deno.NativeType {
-  if (typeof meta === "string") {
-    return meta;
-  }
-
-  return {
-    struct: (meta as StructMeta[]).map((field) => {
-      return createNativeType(field.nativeType);
-    }),
-  };
 }
 
 async function processAst() {
@@ -68,6 +58,7 @@ async function processAst() {
   }
 
   ast = JSON.parse(chunks.join(""));
+  // Deno.writeFileSync("ast.json", encoder.encode(JSON.stringify(ast)));
 
   ast.inner.forEach((node) => {
     if (
@@ -83,9 +74,9 @@ async function processAst() {
 
         const parameters = node.inner
           .filter((inner) => inner.kind === "ParmVarDecl")
-          .map((inner) => {
+          .map((inner, i) => {
             return {
-              name: inner.name,
+              name: inner.name || `arg${i}`,
               nativeType: getNativeType(inner.type!.qualType),
               type: inner.type!.qualType,
             };
@@ -111,41 +102,6 @@ async function processAst() {
   // console.log("Available Functions: ", functions.length);
   // console.log("Available Structs: ", structs.length);
 }
-
-function getStructDefinition(structName: string) {
-  const structNode = TYPE_MAP[structName];
-
-  if (!(structNode instanceof Array)) {
-    return "";
-  }
-
-  const definiton = structNode
-    .map((field) => ` ${field.name}: ${field.type}`)
-    .join(";");
-  return ` {${definiton} }`;
-}
-
-const createComment = (declaration: any) => `/**
- * @original \`\`\`c
- * ${declaration.returnType} ${declaration.name}(${declaration.parameters
-  .map((param: any) => `${param.type} ${param.name}`)
-  .join(", ")});
- * \`\`\`
- *
- * 
- * @param ${declaration.parameters
-   .map(
-     (param: any) =>
-       `${param.name} \`${param.type.replace("tgui", "")}${getStructDefinition(
-         param.type
-       )}\``
-   )
-   .join("\n * @param ")}
- * @returns \`${declaration.returnType.replace(
-   "tgui",
-   ""
- )}${getStructDefinition(declaration.returnType)}\`
- */`;
 
 function generateSymbols() {
   const symbols: any = {};
@@ -178,16 +134,16 @@ function generateSymbols() {
   Deno.stdout.writeSync(encoder.encode(fileContents));
 }
 
-// var a = {
-//   /**
-//    * This is b
-//    */
-//   b: 5,
-// };
-
 await processAst();
 
 generateSymbols();
+
+Deno.writeFileSync(
+  "declarations.ts",
+  encoder.encode(
+    `export const FUNCTION_DECLARATIONS=${JSON.stringify(functionDeclarations)}`
+  )
+);
 
 interface Ast {
   inner: Node[];

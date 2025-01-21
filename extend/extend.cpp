@@ -1,11 +1,28 @@
+#include <CTGUI/CTGUI.h>
 #include <CTGUI/extend.h>
 
-sfEvent* sfEvent_create() {
+sfEvent* SFMLEvent_create() {
   return new sfEvent;
 }
 
-void sfEvent_destroy(sfEvent* event) {
-  delete event;
+SFMLEventUnion SFMLEvent_convertToUnion(sfEvent* SFMLEvent) {
+  return {.type = SFMLEvent->type,
+          .size = SFMLEvent->size,
+          .key = SFMLEvent->key,
+          .text = SFMLEvent->text,
+          .mouseMove = SFMLEvent->mouseMove,
+          .mouseButton = SFMLEvent->mouseButton,
+          .mouseWheel = SFMLEvent->mouseWheel,
+          .mouseWheelScroll = SFMLEvent->mouseWheelScroll,
+          .joystickMove = SFMLEvent->joystickMove,
+          .joystickButton = SFMLEvent->joystickButton,
+          .joystickConnect = SFMLEvent->joystickConnect,
+          .touch = SFMLEvent->touch,
+          .sensor = SFMLEvent->sensor};
+}
+
+void SFMLEvent_destroy(sfEvent* SFMLEvent) {
+  delete SFMLEvent;
 }
 
 sfRenderWindow* renderWindow_create(sfVideoMode mode,
@@ -19,6 +36,7 @@ sfBool renderWindow_isOpen(const sfWindow* window) {
 }
 
 sfBool renderWindow_pollEvent(sfRenderWindow* window, sfEvent* event) {
+  auto e = new tguiEvent;
   return sfRenderWindow_pollEvent(window, event);
 }
 
