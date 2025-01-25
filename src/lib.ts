@@ -39,6 +39,18 @@ export class Widget {
 
   /**
    * @original ```c
+   * tguiWidget * tguiWidget_addPointerReference(tguiWidget * widget);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @returns `Widget *`
+   */
+  addPointerReference(): ResultType<"tguiWidget_addPointerReference"> {
+    return accessLib().symbols.tguiWidget_addPointerReference(this.pointer);
+  }
+
+  /**
+   * @original ```c
    * void tguiWidget_setAutoLayout(const tguiWidget * widget, tguiAutoLayout layout);
    * ```
    *
@@ -64,11 +76,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalConnect(tguiWidget * widget, const char * signalName, void (*)(void) function);
+   * unsigned int tguiWidget_signalConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(void) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(void)`
    * @returns `unsigned int`
    */
@@ -85,11 +97,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalConnectEx(tguiWidget * widget, const char * signalName, void (*)(tguiWidget *, tguiUtf32) function);
+   * unsigned int tguiWidget_signalConnectEx(tguiWidget * widget, tguiUtf32 signalName, void (*)(tguiWidget *, tguiUtf32) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(Widget *, tguiUtf32)`
    * @returns `unsigned int`
    */
@@ -106,11 +118,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalIntConnect(tguiWidget * widget, const char * signalName, void (*)(int) function);
+   * unsigned int tguiWidget_signalIntConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(int) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(int)`
    * @returns `unsigned int`
    */
@@ -127,11 +139,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalUIntConnect(tguiWidget * widget, const char * signalName, void (*)(unsigned int) function);
+   * unsigned int tguiWidget_signalUIntConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(unsigned int) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(unsigned int)`
    * @returns `unsigned int`
    */
@@ -148,11 +160,32 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalBoolConnect(tguiWidget * widget, const char * signalName, void (*)(tguiBool) function);
+   * unsigned int tguiWidget_signalSizeTConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(size_t) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
+   * @param function `void (*)(size_t)`
+   * @returns `unsigned int`
+   */
+  signalSizeTConnect(
+    signalName: BufferSource,
+    callback: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiWidget_signalSizeTConnect"> {
+    return accessLib().symbols.tguiWidget_signalSizeTConnect(
+      this.pointer,
+      signalName,
+      callback,
+    );
+  }
+
+  /**
+   * @original ```c
+   * unsigned int tguiWidget_signalBoolConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(tguiBool) function);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @param signalName `Utf32`
    * @param function `void (*)(Bool)`
    * @returns `unsigned int`
    */
@@ -169,11 +202,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalFloatConnect(tguiWidget * widget, const char * signalName, void (*)(float) function);
+   * unsigned int tguiWidget_signalFloatConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(float) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(float)`
    * @returns `unsigned int`
    */
@@ -190,11 +223,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalColorConnect(tguiWidget * widget, const char * signalName, void (*)(tguiColor) function);
+   * unsigned int tguiWidget_signalColorConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(tguiColor) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(Color)`
    * @returns `unsigned int`
    */
@@ -211,11 +244,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalStringConnect(tguiWidget * widget, const char * signalName, void (*)(tguiUtf32) function);
+   * unsigned int tguiWidget_signalStringConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(tguiUtf32) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(Utf32)`
    * @returns `unsigned int`
    */
@@ -232,11 +265,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalVector2fConnect(tguiWidget * widget, const char * signalName, void (*)(tguiVector2f) function);
+   * unsigned int tguiWidget_signalVector2fConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(tguiVector2f) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(Vector2f)`
    * @returns `unsigned int`
    */
@@ -253,11 +286,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalFloatRectConnect(tguiWidget * widget, const char * signalName, void (*)(tguiFloatRect) function);
+   * unsigned int tguiWidget_signalFloatRectConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(tguiFloatRect) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(FloatRect)`
    * @returns `unsigned int`
    */
@@ -274,11 +307,32 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalRangeConnect(tguiWidget * widget, const char * signalName, void (*)(float, float) function);
+   * unsigned int tguiWidget_signalBoolPtrConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(tguiBool *) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
+   * @param function `void (*)(Bool *)`
+   * @returns `unsigned int`
+   */
+  signalBoolPtrConnect(
+    signalName: BufferSource,
+    callback: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiWidget_signalBoolPtrConnect"> {
+    return accessLib().symbols.tguiWidget_signalBoolPtrConnect(
+      this.pointer,
+      signalName,
+      callback,
+    );
+  }
+
+  /**
+   * @original ```c
+   * unsigned int tguiWidget_signalRangeConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(float, float) function);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @param signalName `Utf32`
    * @param function `void (*)(float, float)`
    * @returns `unsigned int`
    */
@@ -295,11 +349,32 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalChildWindowConnect(tguiWidget * widget, const char * signalName, void (*)(tguiWidget *) function);
+   * unsigned int tguiWidget_signalTabSelectionChangingConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(int, tguiBool *) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
+   * @param function `void (*)(int, Bool *)`
+   * @returns `unsigned int`
+   */
+  signalTabSelectionChangingConnect(
+    signalName: BufferSource,
+    callback: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiWidget_signalTabSelectionChangingConnect"> {
+    return accessLib().symbols.tguiWidget_signalTabSelectionChangingConnect(
+      this.pointer,
+      signalName,
+      callback,
+    );
+  }
+
+  /**
+   * @original ```c
+   * unsigned int tguiWidget_signalChildWindowConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(tguiWidget *) function);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @param signalName `Utf32`
    * @param function `void (*)(Widget *)`
    * @returns `unsigned int`
    */
@@ -316,11 +391,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalItemConnect(tguiWidget * widget, const char * signalName, void (*)(int) function);
+   * unsigned int tguiWidget_signalItemConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(int) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(int)`
    * @returns `unsigned int`
    */
@@ -337,11 +412,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalPanelListBoxItemConnect(tguiWidget * widget, const char * signalName, void (*)(int) function);
+   * unsigned int tguiWidget_signalPanelListBoxItemConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(int) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(int)`
    * @returns `unsigned int`
    */
@@ -358,11 +433,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalFileDialogPathsConnect(tguiWidget * widget, const char * signalName, void (*)(size_t, const tguiUtf32 *) function);
+   * unsigned int tguiWidget_signalFileDialogPathsConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(size_t, const tguiUtf32 *) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(size_t, const Utf32 *)`
    * @returns `unsigned int`
    */
@@ -379,11 +454,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalShowEffectConnect(tguiWidget * widget, const char * signalName, void (*)(tguiShowEffectType, tguiBool) function);
+   * unsigned int tguiWidget_signalShowEffectConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(tguiShowEffectType, tguiBool) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(ShowEffectType, tguiBool)`
    * @returns `unsigned int`
    */
@@ -400,11 +475,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalAnimationTypeConnect(tguiWidget * widget, const char * signalName, void (*)(tguiAnimationType) function);
+   * unsigned int tguiWidget_signalAnimationTypeConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(tguiAnimationType) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(AnimationType)`
    * @returns `unsigned int`
    */
@@ -421,11 +496,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * unsigned int tguiWidget_signalItemHierarchyConnect(tguiWidget * widget, const char * signalName, void (*)(size_t, const tguiUtf32 *) function);
+   * unsigned int tguiWidget_signalItemHierarchyConnect(tguiWidget * widget, tguiUtf32 signalName, void (*)(size_t, const tguiUtf32 *) function);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param function `void (*)(size_t, const Utf32 *)`
    * @returns `unsigned int`
    */
@@ -442,11 +517,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * tguiBool tguiWidget_signalDisconnect(tguiWidget * widget, const char * signalName, unsigned int id);
+   * tguiBool tguiWidget_signalDisconnect(tguiWidget * widget, tguiUtf32 signalName, unsigned int id);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param id `unsigned int`
    * @returns `Bool`
    */
@@ -463,11 +538,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * void tguiWidget_signalDisconnectAll(tguiWidget * widget, const char * signalName);
+   * void tguiWidget_signalDisconnectAll(tguiWidget * widget, tguiUtf32 signalName);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @returns `void`
    */
   signalDisconnectAll(
@@ -481,11 +556,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * tguiBool tguiWidget_setSignalEnabled(tguiWidget * widget, const char * signalName, tguiBool enabled);
+   * tguiBool tguiWidget_setSignalEnabled(tguiWidget * widget, tguiUtf32 signalName, tguiBool enabled);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @param enabled `Bool`
    * @returns `Bool`
    */
@@ -502,11 +577,11 @@ export class Widget {
 
   /**
    * @original ```c
-   * tguiBool tguiWidget_isSignalEnabled(tguiWidget * widget, const char * signalName);
+   * tguiBool tguiWidget_isSignalEnabled(tguiWidget * widget, tguiUtf32 signalName);
    * ```
    *
    * @param widget `Widget *`
-   * @param signalName `const char *`
+   * @param signalName `Utf32`
    * @returns `Bool`
    */
   isSignalEnabled(
@@ -678,6 +753,18 @@ export class Widget {
    */
   getParent(): ResultType<"tguiWidget_getParent"> {
     return accessLib().symbols.tguiWidget_getParent(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * tguiGui * tguiWidget_getParentGui(const tguiWidget * widget);
+   * ```
+   *
+   * @param widget `const Widget *`
+   * @returns `Gui *`
+   */
+  getParentGui(): ResultType<"tguiWidget_getParentGui"> {
+    return accessLib().symbols.tguiWidget_getParentGui(this.pointer);
   }
 
   /**
@@ -1862,6 +1949,90 @@ export class Container extends Widget {
   }
 }
 
+export class BoxLayout extends Group {
+  /**
+   * @original ```c
+   * void tguiBoxLayout_insert(tguiWidget * thisWidget, size_t index, tguiWidget * widgetToAdd, tguiUtf32 widgetName);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param index `size_t`
+   * @param widgetToAdd `Widget *`
+   * @param widgetName `Utf32`
+   * @returns `void`
+   */
+  insert(
+    index: bigint,
+    widgetToAdd: Deno.PointerValue<unknown>,
+    widgetName: BufferSource,
+  ): ResultType<"tguiBoxLayout_insert"> {
+    return accessLib().symbols.tguiBoxLayout_insert(
+      this.pointer,
+      index,
+      widgetToAdd,
+      widgetName,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiBoxLayout_removeAtIndex(tguiWidget * thisWidget, size_t index);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param index `size_t`
+   * @returns `Bool`
+   */
+  removeAtIndex(index: bigint): ResultType<"tguiBoxLayout_removeAtIndex"> {
+    return accessLib().symbols.tguiBoxLayout_removeAtIndex(this.pointer, index);
+  }
+
+  /**
+   * @original ```c
+   * tguiWidget * tguiBoxLayout_getAtIndex(const tguiWidget * thisWidget, size_t index);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @param index `size_t`
+   * @returns `Widget *`
+   */
+  getAtIndex(index: bigint): ResultType<"tguiBoxLayout_getAtIndex"> {
+    return accessLib().symbols.tguiBoxLayout_getAtIndex(this.pointer, index);
+  }
+}
+
+export class DualScrollbarChildInterface {
+  /**
+   * @original ```c
+   * tguiScrollbarAccessor * tguiDualScrollbarChildInterface_getVerticalScrollbar(tguiWidget * widget);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @returns `ScrollbarAccessor *`
+   */
+  getVerticalScrollbar(
+    widget: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiDualScrollbarChildInterface_getVerticalScrollbar"> {
+    return accessLib().symbols
+      .tguiDualScrollbarChildInterface_getVerticalScrollbar(widget);
+  }
+
+  /**
+   * @original ```c
+   * tguiScrollbarAccessor * tguiDualScrollbarChildInterface_getHorizontalScrollbar(tguiWidget * widget);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @returns `ScrollbarAccessor *`
+   */
+  getHorizontalScrollbar(
+    widget: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiDualScrollbarChildInterface_getHorizontalScrollbar"> {
+    return accessLib().symbols
+      .tguiDualScrollbarChildInterface_getHorizontalScrollbar(widget);
+  }
+}
+
 export class ChildWindow extends Container {
   /**
    * @original ```c
@@ -2886,55 +3057,19 @@ export class GroupRenderer {
   }
 }
 
-export class BoxLayout extends Group {
+export class ScrollbarChildInterface {
   /**
    * @original ```c
-   * void tguiBoxLayout_insert(tguiWidget * thisWidget, size_t index, tguiWidget * widgetToAdd, tguiUtf32 widgetName);
+   * tguiScrollbarAccessor * tguiScrollbarChildInterface_getScrollbar(tguiWidget * widget);
    * ```
    *
-   * @param thisWidget `Widget *`
-   * @param index `size_t`
-   * @param widgetToAdd `Widget *`
-   * @param widgetName `Utf32`
-   * @returns `void`
+   * @param widget `Widget *`
+   * @returns `ScrollbarAccessor *`
    */
-  insert(
-    index: bigint,
-    widgetToAdd: Deno.PointerValue<unknown>,
-    widgetName: BufferSource,
-  ): ResultType<"tguiBoxLayout_insert"> {
-    return accessLib().symbols.tguiBoxLayout_insert(
-      this.pointer,
-      index,
-      widgetToAdd,
-      widgetName,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiBool tguiBoxLayout_removeAtIndex(tguiWidget * thisWidget, size_t index);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param index `size_t`
-   * @returns `Bool`
-   */
-  removeAtIndex(index: bigint): ResultType<"tguiBoxLayout_removeAtIndex"> {
-    return accessLib().symbols.tguiBoxLayout_removeAtIndex(this.pointer, index);
-  }
-
-  /**
-   * @original ```c
-   * tguiWidget * tguiBoxLayout_getAtIndex(const tguiWidget * thisWidget, size_t index);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @param index `size_t`
-   * @returns `Widget *`
-   */
-  getAtIndex(index: bigint): ResultType<"tguiBoxLayout_getAtIndex"> {
-    return accessLib().symbols.tguiBoxLayout_getAtIndex(this.pointer, index);
+  getScrollbar(
+    widget: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiScrollbarChildInterface_getScrollbar"> {
+    return accessLib().symbols.tguiScrollbarChildInterface_getScrollbar(widget);
   }
 }
 
@@ -3758,6 +3893,1207 @@ export class PanelRenderer extends GroupRenderer {
     "tguiPanelRenderer_getRoundedBorderRadius"
   > {
     return accessLib().symbols.tguiPanelRenderer_getRoundedBorderRadius(
+      this.pointer,
+    );
+  }
+}
+
+export class RadioButtonRenderer {
+  protected ptr: Deno.PointerValue<unknown>;
+
+  get pointer(): Deno.PointerValue<unknown> {
+    return this.ptr;
+  }
+
+  /**
+   * @original ```c
+   * tguiRenderer * tguiRadioButtonRenderer_create();
+   * ```
+   *
+   * @param
+   * @returns `Renderer *`
+   */
+  constructor(other?: Deno.PointerValue<unknown>) {
+    if (typeof other === "undefined") {
+      this.ptr = accessLib().symbols.tguiRadioButtonRenderer_create();
+    } else {
+      this.ptr = this.copy(other); // to make TS happy about uninitialized field
+    }
+  }
+
+  /**
+   * @original ```c
+   * tguiRenderer * tguiRadioButtonRenderer_copy(const tguiRenderer * other);
+   * ```
+   *
+   * @param other `const Renderer *`
+   * @returns `Renderer *`
+   */
+  copy(other: Deno.PointerValue<unknown>): Deno.PointerValue<unknown> {
+    return this.ptr = accessLib().symbols.tguiRadioButtonRenderer_copy(other);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextDistanceRatio(tguiRenderer * thisRenderer, float value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `float`
+   * @returns `void`
+   */
+  setTextDistanceRatio(
+    value: number,
+  ): ResultType<"tguiRadioButtonRenderer_setTextDistanceRatio"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setTextDistanceRatio(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * float tguiRadioButtonRenderer_getTextDistanceRatio(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `float`
+   */
+  getTextDistanceRatio(): ResultType<
+    "tguiRadioButtonRenderer_getTextDistanceRatio"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getTextDistanceRatio(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBorders(tguiRenderer * thisRenderer, const tguiOutline * value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `const Outline *`
+   * @returns `void`
+   */
+  setBorders(
+    value: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiRadioButtonRenderer_setBorders"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setBorders(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * const tguiOutline * tguiRadioButtonRenderer_getBorders(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `const Outline *`
+   */
+  getBorders(): ResultType<"tguiRadioButtonRenderer_getBorders"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_getBorders(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextColor(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setTextColor(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setTextColor"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setTextColor(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getTextColor(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getTextColor(): ResultType<"tguiRadioButtonRenderer_getTextColor"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_getTextColor(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextColorHover(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setTextColorHover(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setTextColorHover"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setTextColorHover(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getTextColorHover(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getTextColorHover(): ResultType<"tguiRadioButtonRenderer_getTextColorHover"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_getTextColorHover(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextColorDisabled(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setTextColorDisabled(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setTextColorDisabled"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setTextColorDisabled(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getTextColorDisabled(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getTextColorDisabled(): ResultType<
+    "tguiRadioButtonRenderer_getTextColorDisabled"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getTextColorDisabled(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextColorChecked(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setTextColorChecked(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setTextColorChecked"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setTextColorChecked(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getTextColorChecked(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getTextColorChecked(): ResultType<
+    "tguiRadioButtonRenderer_getTextColorChecked"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getTextColorChecked(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextColorCheckedHover(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setTextColorCheckedHover(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setTextColorCheckedHover"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setTextColorCheckedHover(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getTextColorCheckedHover(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getTextColorCheckedHover(): ResultType<
+    "tguiRadioButtonRenderer_getTextColorCheckedHover"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getTextColorCheckedHover(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextColorCheckedDisabled(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setTextColorCheckedDisabled(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setTextColorCheckedDisabled"> {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_setTextColorCheckedDisabled(
+        this.pointer,
+        value.buffer,
+      );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getTextColorCheckedDisabled(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getTextColorCheckedDisabled(): ResultType<
+    "tguiRadioButtonRenderer_getTextColorCheckedDisabled"
+  > {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_getTextColorCheckedDisabled(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBackgroundColor(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBackgroundColor(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBackgroundColor"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setBackgroundColor(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBackgroundColor(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBackgroundColor(): ResultType<
+    "tguiRadioButtonRenderer_getBackgroundColor"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getBackgroundColor(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBackgroundColorHover(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBackgroundColorHover(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorHover"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setBackgroundColorHover(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBackgroundColorHover(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBackgroundColorHover(): ResultType<
+    "tguiRadioButtonRenderer_getBackgroundColorHover"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getBackgroundColorHover(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBackgroundColorDisabled(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBackgroundColorDisabled(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorDisabled"> {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_setBackgroundColorDisabled(
+        this.pointer,
+        value.buffer,
+      );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBackgroundColorDisabled(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBackgroundColorDisabled(): ResultType<
+    "tguiRadioButtonRenderer_getBackgroundColorDisabled"
+  > {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_getBackgroundColorDisabled(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBackgroundColorChecked(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBackgroundColorChecked(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorChecked"> {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_setBackgroundColorChecked(
+        this.pointer,
+        value.buffer,
+      );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBackgroundColorChecked(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBackgroundColorChecked(): ResultType<
+    "tguiRadioButtonRenderer_getBackgroundColorChecked"
+  > {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_getBackgroundColorChecked(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBackgroundColorCheckedHover(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBackgroundColorCheckedHover(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorCheckedHover"> {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_setBackgroundColorCheckedHover(
+        this.pointer,
+        value.buffer,
+      );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBackgroundColorCheckedHover(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBackgroundColorCheckedHover(): ResultType<
+    "tguiRadioButtonRenderer_getBackgroundColorCheckedHover"
+  > {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_getBackgroundColorCheckedHover(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBackgroundColorCheckedDisabled(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBackgroundColorCheckedDisabled(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorCheckedDisabled"> {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_setBackgroundColorCheckedDisabled(
+        this.pointer,
+        value.buffer,
+      );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBackgroundColorCheckedDisabled(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBackgroundColorCheckedDisabled(): ResultType<
+    "tguiRadioButtonRenderer_getBackgroundColorCheckedDisabled"
+  > {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_getBackgroundColorCheckedDisabled(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBorderColor(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBorderColor(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBorderColor"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setBorderColor(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBorderColor(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBorderColor(): ResultType<"tguiRadioButtonRenderer_getBorderColor"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_getBorderColor(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBorderColorHover(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBorderColorHover(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBorderColorHover"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setBorderColorHover(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBorderColorHover(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBorderColorHover(): ResultType<
+    "tguiRadioButtonRenderer_getBorderColorHover"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getBorderColorHover(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBorderColorFocused(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBorderColorFocused(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBorderColorFocused"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setBorderColorFocused(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBorderColorFocused(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBorderColorFocused(): ResultType<
+    "tguiRadioButtonRenderer_getBorderColorFocused"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getBorderColorFocused(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBorderColorDisabled(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBorderColorDisabled(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBorderColorDisabled"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setBorderColorDisabled(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBorderColorDisabled(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBorderColorDisabled(): ResultType<
+    "tguiRadioButtonRenderer_getBorderColorDisabled"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getBorderColorDisabled(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBorderColorChecked(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBorderColorChecked(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBorderColorChecked"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setBorderColorChecked(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBorderColorChecked(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBorderColorChecked(): ResultType<
+    "tguiRadioButtonRenderer_getBorderColorChecked"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getBorderColorChecked(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBorderColorCheckedHover(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBorderColorCheckedHover(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBorderColorCheckedHover"> {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_setBorderColorCheckedHover(
+        this.pointer,
+        value.buffer,
+      );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBorderColorCheckedHover(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBorderColorCheckedHover(): ResultType<
+    "tguiRadioButtonRenderer_getBorderColorCheckedHover"
+  > {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_getBorderColorCheckedHover(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBorderColorCheckedFocused(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBorderColorCheckedFocused(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBorderColorCheckedFocused"> {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_setBorderColorCheckedFocused(
+        this.pointer,
+        value.buffer,
+      );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBorderColorCheckedFocused(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBorderColorCheckedFocused(): ResultType<
+    "tguiRadioButtonRenderer_getBorderColorCheckedFocused"
+  > {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_getBorderColorCheckedFocused(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setBorderColorCheckedDisabled(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setBorderColorCheckedDisabled(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setBorderColorCheckedDisabled"> {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_setBorderColorCheckedDisabled(
+        this.pointer,
+        value.buffer,
+      );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getBorderColorCheckedDisabled(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getBorderColorCheckedDisabled(): ResultType<
+    "tguiRadioButtonRenderer_getBorderColorCheckedDisabled"
+  > {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_getBorderColorCheckedDisabled(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setCheckColor(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setCheckColor(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setCheckColor"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setCheckColor(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getCheckColor(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getCheckColor(): ResultType<"tguiRadioButtonRenderer_getCheckColor"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_getCheckColor(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setCheckColorHover(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setCheckColorHover(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setCheckColorHover"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setCheckColorHover(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getCheckColorHover(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getCheckColorHover(): ResultType<
+    "tguiRadioButtonRenderer_getCheckColorHover"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getCheckColorHover(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setCheckColorDisabled(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setCheckColorDisabled(
+    value: Color,
+  ): ResultType<"tguiRadioButtonRenderer_setCheckColorDisabled"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setCheckColorDisabled(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiRadioButtonRenderer_getCheckColorDisabled(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getCheckColorDisabled(): ResultType<
+    "tguiRadioButtonRenderer_getCheckColorDisabled"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getCheckColorDisabled(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextureUnchecked(tguiRenderer * thisRenderer, const tguiTexture * value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `const Texture *`
+   * @returns `void`
+   */
+  setTextureUnchecked(
+    value: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiRadioButtonRenderer_setTextureUnchecked"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setTextureUnchecked(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * const tguiTexture * tguiRadioButtonRenderer_getTextureUnchecked(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `const Texture *`
+   */
+  getTextureUnchecked(): ResultType<
+    "tguiRadioButtonRenderer_getTextureUnchecked"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getTextureUnchecked(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextureChecked(tguiRenderer * thisRenderer, const tguiTexture * value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `const Texture *`
+   * @returns `void`
+   */
+  setTextureChecked(
+    value: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiRadioButtonRenderer_setTextureChecked"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setTextureChecked(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * const tguiTexture * tguiRadioButtonRenderer_getTextureChecked(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `const Texture *`
+   */
+  getTextureChecked(): ResultType<"tguiRadioButtonRenderer_getTextureChecked"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_getTextureChecked(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextureUncheckedHover(tguiRenderer * thisRenderer, const tguiTexture * value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `const Texture *`
+   * @returns `void`
+   */
+  setTextureUncheckedHover(
+    value: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiRadioButtonRenderer_setTextureUncheckedHover"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setTextureUncheckedHover(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * const tguiTexture * tguiRadioButtonRenderer_getTextureUncheckedHover(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `const Texture *`
+   */
+  getTextureUncheckedHover(): ResultType<
+    "tguiRadioButtonRenderer_getTextureUncheckedHover"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getTextureUncheckedHover(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextureCheckedHover(tguiRenderer * thisRenderer, const tguiTexture * value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `const Texture *`
+   * @returns `void`
+   */
+  setTextureCheckedHover(
+    value: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiRadioButtonRenderer_setTextureCheckedHover"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setTextureCheckedHover(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * const tguiTexture * tguiRadioButtonRenderer_getTextureCheckedHover(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `const Texture *`
+   */
+  getTextureCheckedHover(): ResultType<
+    "tguiRadioButtonRenderer_getTextureCheckedHover"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getTextureCheckedHover(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextureUncheckedFocused(tguiRenderer * thisRenderer, const tguiTexture * value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `const Texture *`
+   * @returns `void`
+   */
+  setTextureUncheckedFocused(
+    value: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiRadioButtonRenderer_setTextureUncheckedFocused"> {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_setTextureUncheckedFocused(this.pointer, value);
+  }
+
+  /**
+   * @original ```c
+   * const tguiTexture * tguiRadioButtonRenderer_getTextureUncheckedFocused(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `const Texture *`
+   */
+  getTextureUncheckedFocused(): ResultType<
+    "tguiRadioButtonRenderer_getTextureUncheckedFocused"
+  > {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_getTextureUncheckedFocused(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextureCheckedFocused(tguiRenderer * thisRenderer, const tguiTexture * value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `const Texture *`
+   * @returns `void`
+   */
+  setTextureCheckedFocused(
+    value: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiRadioButtonRenderer_setTextureCheckedFocused"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setTextureCheckedFocused(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * const tguiTexture * tguiRadioButtonRenderer_getTextureCheckedFocused(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `const Texture *`
+   */
+  getTextureCheckedFocused(): ResultType<
+    "tguiRadioButtonRenderer_getTextureCheckedFocused"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getTextureCheckedFocused(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextureUncheckedDisabled(tguiRenderer * thisRenderer, const tguiTexture * value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `const Texture *`
+   * @returns `void`
+   */
+  setTextureUncheckedDisabled(
+    value: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiRadioButtonRenderer_setTextureUncheckedDisabled"> {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_setTextureUncheckedDisabled(this.pointer, value);
+  }
+
+  /**
+   * @original ```c
+   * const tguiTexture * tguiRadioButtonRenderer_getTextureUncheckedDisabled(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `const Texture *`
+   */
+  getTextureUncheckedDisabled(): ResultType<
+    "tguiRadioButtonRenderer_getTextureUncheckedDisabled"
+  > {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_getTextureUncheckedDisabled(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextureCheckedDisabled(tguiRenderer * thisRenderer, const tguiTexture * value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `const Texture *`
+   * @returns `void`
+   */
+  setTextureCheckedDisabled(
+    value: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiRadioButtonRenderer_setTextureCheckedDisabled"> {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_setTextureCheckedDisabled(this.pointer, value);
+  }
+
+  /**
+   * @original ```c
+   * const tguiTexture * tguiRadioButtonRenderer_getTextureCheckedDisabled(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `const Texture *`
+   */
+  getTextureCheckedDisabled(): ResultType<
+    "tguiRadioButtonRenderer_getTextureCheckedDisabled"
+  > {
+    return accessLib().symbols
+      .tguiRadioButtonRenderer_getTextureCheckedDisabled(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextStyle(tguiRenderer * thisRenderer, tguiUint32 value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Uint32`
+   * @returns `void`
+   */
+  setTextStyle(
+    value: number,
+  ): ResultType<"tguiRadioButtonRenderer_setTextStyle"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setTextStyle(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiUint32 tguiRadioButtonRenderer_getTextStyle(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Uint32`
+   */
+  getTextStyle(): ResultType<"tguiRadioButtonRenderer_getTextStyle"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_getTextStyle(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButtonRenderer_setTextStyleChecked(tguiRenderer * thisRenderer, tguiUint32 value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Uint32`
+   * @returns `void`
+   */
+  setTextStyleChecked(
+    value: number,
+  ): ResultType<"tguiRadioButtonRenderer_setTextStyleChecked"> {
+    return accessLib().symbols.tguiRadioButtonRenderer_setTextStyleChecked(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiUint32 tguiRadioButtonRenderer_getTextStyleChecked(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Uint32`
+   */
+  getTextStyleChecked(): ResultType<
+    "tguiRadioButtonRenderer_getTextStyleChecked"
+  > {
+    return accessLib().symbols.tguiRadioButtonRenderer_getTextStyleChecked(
       this.pointer,
     );
   }
@@ -5647,6 +6983,18 @@ export class tgui {
 
   /**
    * @original ```c
+   * tguiUtf32 tgui_getResourcePath();
+   * ```
+   *
+   * @param
+   * @returns `Utf32`
+   */
+  getResourcePath(): ResultType<"tgui_getResourcePath"> {
+    return accessLib().symbols.tgui_getResourcePath();
+  }
+
+  /**
+   * @original ```c
    * void tgui_setEditCursorBlinkRate(tguiDuration blinkRate);
    * ```
    *
@@ -5719,11 +7067,11 @@ export class tgui {
 
   /**
    * @original ```c
-   * const char * tgui_getLastError();
+   * tguiUtf32 tgui_getLastError();
    * ```
    *
    * @param
-   * @returns `const char *`
+   * @returns `Utf32`
    */
   getLastError(): ResultType<"tgui_getLastError"> {
     return accessLib().symbols.tgui_getLastError();
@@ -5818,6 +7166,192 @@ export class Cursor {
 export class Gui {
   /**
    * @original ```c
+   * tguiBool tguiGui_handleEventLostFocus(tguiGui * gui);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @returns `Bool`
+   */
+  handleEventLostFocus(): ResultType<"tguiGui_handleEventLostFocus"> {
+    return accessLib().symbols.tguiGui_handleEventLostFocus(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiGui_handleEventGainedFocus(tguiGui * gui);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @returns `Bool`
+   */
+  handleEventGainedFocus(): ResultType<"tguiGui_handleEventGainedFocus"> {
+    return accessLib().symbols.tguiGui_handleEventGainedFocus(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiGui_handleEventTextEntered(tguiGui * gui, tguiTextEvent textEvent);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @param textEvent `TextEvent`
+   * @returns `Bool`
+   */
+  handleEventTextEntered(
+    textEvent: TextEvent,
+  ): ResultType<"tguiGui_handleEventTextEntered"> {
+    return accessLib().symbols.tguiGui_handleEventTextEntered(
+      this.pointer,
+      textEvent.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiGui_handleEventKeyPressed(tguiGui * gui, tguiKeyEvent keyEvent);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @param keyEvent `KeyEvent`
+   * @returns `Bool`
+   */
+  handleEventKeyPressed(
+    keyEvent: KeyEvent,
+  ): ResultType<"tguiGui_handleEventKeyPressed"> {
+    return accessLib().symbols.tguiGui_handleEventKeyPressed(
+      this.pointer,
+      keyEvent.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiGui_handleEventMouseWheelScrolled(tguiGui * gui, tguiMouseWheelEvent mouseWheelEvent);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @param mouseWheelEvent `MouseWheelEvent`
+   * @returns `Bool`
+   */
+  handleEventMouseWheelScrolled(
+    mouseWheelEvent: MouseWheelEvent,
+  ): ResultType<"tguiGui_handleEventMouseWheelScrolled"> {
+    return accessLib().symbols.tguiGui_handleEventMouseWheelScrolled(
+      this.pointer,
+      mouseWheelEvent.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiGui_handleEventMouseButtonPressed(tguiGui * gui, tguiMouseButtonEvent mouseButtonEvent);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @param mouseButtonEvent `MouseButtonEvent`
+   * @returns `Bool`
+   */
+  handleEventMouseButtonPressed(
+    mouseButtonEvent: MouseButtonEvent,
+  ): ResultType<"tguiGui_handleEventMouseButtonPressed"> {
+    return accessLib().symbols.tguiGui_handleEventMouseButtonPressed(
+      this.pointer,
+      mouseButtonEvent.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiGui_handleEventMouseButtonReleased(tguiGui * gui, tguiMouseButtonEvent mouseButtonEvent);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @param mouseButtonEvent `MouseButtonEvent`
+   * @returns `Bool`
+   */
+  handleEventMouseButtonReleased(
+    mouseButtonEvent: MouseButtonEvent,
+  ): ResultType<"tguiGui_handleEventMouseButtonReleased"> {
+    return accessLib().symbols.tguiGui_handleEventMouseButtonReleased(
+      this.pointer,
+      mouseButtonEvent.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiGui_handleEventMouseMoved(tguiGui * gui, tguiMouseMoveEvent mouseMoveEvent);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @param mouseMoveEvent `MouseMoveEvent`
+   * @returns `Bool`
+   */
+  handleEventMouseMoved(
+    mouseMoveEvent: MouseMoveEvent,
+  ): ResultType<"tguiGui_handleEventMouseMoved"> {
+    return accessLib().symbols.tguiGui_handleEventMouseMoved(
+      this.pointer,
+      mouseMoveEvent.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiGui_handleEventMouseEntered(tguiGui * gui);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @returns `Bool`
+   */
+  handleEventMouseEntered(): ResultType<"tguiGui_handleEventMouseEntered"> {
+    return accessLib().symbols.tguiGui_handleEventMouseEntered(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiGui_handleEventMouseLeft(tguiGui * gui);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @returns `Bool`
+   */
+  handleEventMouseLeft(): ResultType<"tguiGui_handleEventMouseLeft"> {
+    return accessLib().symbols.tguiGui_handleEventMouseLeft(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiGui_handleEventResized(tguiGui * gui, tguiSizeEvent sizeEvent);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @param sizeEvent `SizeEvent`
+   * @returns `Bool`
+   */
+  handleEventResized(
+    sizeEvent: SizeEvent,
+  ): ResultType<"tguiGui_handleEventResized"> {
+    return accessLib().symbols.tguiGui_handleEventResized(
+      this.pointer,
+      sizeEvent.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiGui_handleEventClosed(tguiGui * gui);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @returns `Bool`
+   */
+  handleEventClosed(): ResultType<"tguiGui_handleEventClosed"> {
+    return accessLib().symbols.tguiGui_handleEventClosed(this.pointer);
+  }
+
+  /**
+   * @original ```c
    * void tguiGui_draw(tguiGui * gui);
    * ```
    *
@@ -5830,11 +7364,11 @@ export class Gui {
 
   /**
    * @original ```c
-   * tguiBool tguiGui_loadWidgetsFromFile(tguiGui * gui, const char * filename, tguiBool replaceExisting);
+   * tguiBool tguiGui_loadWidgetsFromFile(tguiGui * gui, tguiUtf32 filename, tguiBool replaceExisting);
    * ```
    *
    * @param gui `Gui *`
-   * @param filename `const char *`
+   * @param filename `Utf32`
    * @param replaceExisting `Bool`
    * @returns `Bool`
    */
@@ -5851,11 +7385,11 @@ export class Gui {
 
   /**
    * @original ```c
-   * tguiBool tguiGui_saveWidgetsToFile(tguiGui * gui, const char * filename);
+   * tguiBool tguiGui_saveWidgetsToFile(tguiGui * gui, tguiUtf32 filename);
    * ```
    *
    * @param gui `Gui *`
-   * @param filename `const char *`
+   * @param filename `Utf32`
    * @returns `Bool`
    */
   saveWidgetsToFile(
@@ -5864,6 +7398,60 @@ export class Gui {
     return accessLib().symbols.tguiGui_saveWidgetsToFile(
       this.pointer,
       filename,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiGui_setViewChangeCallback(tguiGui * gui, void (*)(tguiGui *) function);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @param function `void (*)(Gui *)`
+   * @returns `void`
+   */
+  setViewChangeCallback(
+    callback: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiGui_setViewChangeCallback"> {
+    return accessLib().symbols.tguiGui_setViewChangeCallback(
+      this.pointer,
+      callback,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiGui_setWindowFocusCallback(tguiGui * gui, void (*)(tguiGui *) function);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @param function `void (*)(Gui *)`
+   * @returns `void`
+   */
+  setWindowFocusCallback(
+    callback: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiGui_setWindowFocusCallback"> {
+    return accessLib().symbols.tguiGui_setWindowFocusCallback(
+      this.pointer,
+      callback,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiGui_setWindowUnfocusCallback(tguiGui * gui, void (*)(tguiGui *) function);
+   * ```
+   *
+   * @param gui `Gui *`
+   * @param function `void (*)(Gui *)`
+   * @returns `void`
+   */
+  setWindowUnfocusCallback(
+    callback: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiGui_setWindowUnfocusCallback"> {
+    return accessLib().symbols.tguiGui_setWindowUnfocusCallback(
+      this.pointer,
+      callback,
     );
   }
 
@@ -6528,12 +8116,12 @@ export class Gui {
 
   /**
    * @original ```c
-   * void tguiGuiCSFMLGraphics_handleEvent(tguiGui * gui, const sfEvent * event);
+   * tguiBool tguiGuiCSFMLGraphics_handleEvent(tguiGui * gui, const sfEvent * event);
    * ```
    *
    * @param gui `Gui *`
    * @param event `const sfEvent *`
-   * @returns `void`
+   * @returns `Bool`
    */
   handleEvent(
     event: Deno.PointerValue<unknown>,
@@ -7495,16 +9083,16 @@ export class Font {
 
   /**
    * @original ```c
-   * void tguiFont_setGlobalFont(const tguiFont * font);
+   * void tguiFont_setGlobalFont(const tguiFont * value);
    * ```
    *
-   * @param font `const Font *`
+   * @param value `const Font *`
    * @returns `void`
    */
   setGlobalFont(
-    font: Deno.PointerValue<unknown>,
+    value: Deno.PointerValue<unknown>,
   ): ResultType<"tguiFont_setGlobalFont"> {
-    return accessLib().symbols.tguiFont_setGlobalFont(font);
+    return accessLib().symbols.tguiFont_setGlobalFont(value);
   }
 
   /**
@@ -8023,20 +9611,6 @@ export class Sprite {
 
   /**
    * @original ```c
-   * tguiSpriteScalingType tguiSprite_getScalingType(const tguiSprite * sprite);
-   * ```
-   *
-   * @param sprite `const Sprite *`
-   * @returns `SpriteScalingType`
-   */
-  getScalingType(
-    sprite: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiSprite_getScalingType"> {
-    return accessLib().symbols.tguiSprite_getScalingType(sprite);
-  }
-
-  /**
-   * @original ```c
    * tguiBool tguiSprite_isSet(const tguiSprite * thisSprite);
    * ```
    *
@@ -8250,9 +9824,53 @@ export class Sprite {
       pos.buffer,
     );
   }
+
+  /**
+   * @original ```c
+   * tguiSpriteScalingType tguiSprite_getScalingType(const tguiSprite * thisSprite);
+   * ```
+   *
+   * @param thisSprite `const Sprite *`
+   * @returns `SpriteScalingType`
+   */
+  getScalingType(
+    thisSprite: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiSprite_getScalingType"> {
+    return accessLib().symbols.tguiSprite_getScalingType(thisSprite);
+  }
 }
 
 export class Text {
+  protected ptr: Deno.PointerValue<unknown>;
+
+  get pointer(): Deno.PointerValue<unknown> {
+    return this.ptr;
+  }
+
+  /**
+   * @original ```c
+   * tguiText * tguiText_create();
+   * ```
+   *
+   * @param
+   * @returns `Text *`
+   */
+  constructor() {
+    this.ptr = accessLib().symbols.tguiText_create();
+  }
+
+  /**
+   * @original ```c
+   * void tguiText_destroy(tguiText * text);
+   * ```
+   *
+   * @param text `Text *`
+   * @returns `void`
+   */
+  destroy(text: Deno.PointerValue<unknown>): ResultType<"tguiText_destroy"> {
+    return accessLib().symbols.tguiText_destroy(text);
+  }
+
   /**
    * @original ```c
    * float tguiText_getStaticExtraHorizontalPadding(const tguiFont * font, unsigned int characterSize);
@@ -8349,36 +9967,6 @@ export class Text {
       characterSize,
       style,
     );
-  }
-
-  protected ptr: Deno.PointerValue<unknown>;
-
-  get pointer(): Deno.PointerValue<unknown> {
-    return this.ptr;
-  }
-
-  /**
-   * @original ```c
-   * tguiText * tguiText_create();
-   * ```
-   *
-   * @param
-   * @returns `Text *`
-   */
-  constructor() {
-    this.ptr = accessLib().symbols.tguiText_create();
-  }
-
-  /**
-   * @original ```c
-   * void tguiText_destroy(tguiText * text);
-   * ```
-   *
-   * @param text `Text *`
-   * @returns `void`
-   */
-  destroy(text: Deno.PointerValue<unknown>): ResultType<"tguiText_destroy"> {
-    return accessLib().symbols.tguiText_destroy(text);
   }
 
   /**
@@ -9175,11 +10763,11 @@ export class Theme {
 
   /**
    * @original ```c
-   * tguiBool tguiTheme_load(tguiTheme * theme, const char * filename);
+   * tguiBool tguiTheme_load(tguiTheme * theme, tguiUtf32 filename);
    * ```
    *
    * @param theme `Theme *`
-   * @param filename `const char *`
+   * @param filename `Utf32`
    * @returns `Bool`
    */
   load(
@@ -9207,11 +10795,11 @@ export class Theme {
 
   /**
    * @original ```c
-   * tguiRendererData * tguiTheme_getRenderer(tguiTheme * theme, const char * id);
+   * tguiRendererData * tguiTheme_getRenderer(tguiTheme * theme, tguiUtf32 id);
    * ```
    *
    * @param theme `Theme *`
-   * @param id `const char *`
+   * @param id `Utf32`
    * @returns `RendererData *`
    */
   getRenderer(
@@ -9265,166 +10853,199 @@ export class Theme {
 
   /**
    * @original ```c
-   * tguiBool tguiTheme_getGlobalPropertyBool(const tguiTheme * theme, tguiUtf32 property);
+   * tguiBool tguiTheme_getGlobalPropertyBool(const tguiTheme * theme, tguiUtf32 property, tguiBool * value);
    * ```
    *
    * @param theme `const Theme *`
    * @param property `Utf32`
+   * @param value `Bool *`
    * @returns `Bool`
    */
   getGlobalPropertyBool(
     theme: Deno.PointerValue<unknown>,
     property: BufferSource,
+    value: Deno.PointerValue<unknown>,
   ): ResultType<"tguiTheme_getGlobalPropertyBool"> {
-    return accessLib().symbols.tguiTheme_getGlobalPropertyBool(theme, property);
+    return accessLib().symbols.tguiTheme_getGlobalPropertyBool(
+      theme,
+      property,
+      value,
+    );
   }
 
   /**
    * @original ```c
-   * tguiFont * tguiTheme_getGlobalPropertyFont(const tguiTheme * theme, tguiUtf32 property);
+   * tguiBool tguiTheme_getGlobalPropertyFont(const tguiTheme * theme, tguiUtf32 property, tguiFont ** value);
    * ```
    *
    * @param theme `const Theme *`
    * @param property `Utf32`
-   * @returns `Font *`
+   * @param value `Font **`
+   * @returns `Bool`
    */
   getGlobalPropertyFont(
     theme: Deno.PointerValue<unknown>,
     property: BufferSource,
+    value: Deno.PointerValue<unknown>,
   ): ResultType<"tguiTheme_getGlobalPropertyFont"> {
-    return accessLib().symbols.tguiTheme_getGlobalPropertyFont(theme, property);
+    return accessLib().symbols.tguiTheme_getGlobalPropertyFont(
+      theme,
+      property,
+      value,
+    );
   }
 
   /**
    * @original ```c
-   * tguiColor tguiTheme_getGlobalPropertyColor(const tguiTheme * theme, tguiUtf32 property);
+   * tguiBool tguiTheme_getGlobalPropertyColor(const tguiTheme * theme, tguiUtf32 property, tguiColor * value);
    * ```
    *
    * @param theme `const Theme *`
    * @param property `Utf32`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @param value `Color *`
+   * @returns `Bool`
    */
   getGlobalPropertyColor(
     theme: Deno.PointerValue<unknown>,
     property: BufferSource,
+    value: Deno.PointerValue<unknown>,
   ): ResultType<"tguiTheme_getGlobalPropertyColor"> {
     return accessLib().symbols.tguiTheme_getGlobalPropertyColor(
       theme,
       property,
+      value,
     );
   }
 
   /**
    * @original ```c
-   * tguiUtf32 tguiTheme_getGlobalPropertyString(const tguiTheme * theme, tguiUtf32 property);
+   * tguiBool tguiTheme_getGlobalPropertyString(const tguiTheme * theme, tguiUtf32 property, tguiUtf32 * value);
    * ```
    *
    * @param theme `const Theme *`
    * @param property `Utf32`
-   * @returns `Utf32`
+   * @param value `Utf32 *`
+   * @returns `Bool`
    */
   getGlobalPropertyString(
     theme: Deno.PointerValue<unknown>,
     property: BufferSource,
+    value: Deno.PointerValue<unknown>,
   ): ResultType<"tguiTheme_getGlobalPropertyString"> {
     return accessLib().symbols.tguiTheme_getGlobalPropertyString(
       theme,
       property,
+      value,
     );
   }
 
   /**
    * @original ```c
-   * float tguiTheme_getGlobalPropertyNumber(const tguiTheme * theme, tguiUtf32 property);
+   * tguiBool tguiTheme_getGlobalPropertyNumber(const tguiTheme * theme, tguiUtf32 property, float * value);
    * ```
    *
    * @param theme `const Theme *`
    * @param property `Utf32`
-   * @returns `float`
+   * @param value `float *`
+   * @returns `Bool`
    */
   getGlobalPropertyNumber(
     theme: Deno.PointerValue<unknown>,
     property: BufferSource,
+    value: Deno.PointerValue<unknown>,
   ): ResultType<"tguiTheme_getGlobalPropertyNumber"> {
     return accessLib().symbols.tguiTheme_getGlobalPropertyNumber(
       theme,
       property,
+      value,
     );
   }
 
   /**
    * @original ```c
-   * tguiOutline * tguiTheme_getGlobalPropertyOutline(const tguiTheme * theme, tguiUtf32 property);
+   * tguiBool tguiTheme_getGlobalPropertyOutline(const tguiTheme * theme, tguiUtf32 property, tguiOutline ** value);
    * ```
    *
    * @param theme `const Theme *`
    * @param property `Utf32`
-   * @returns `Outline *`
+   * @param value `Outline **`
+   * @returns `Bool`
    */
   getGlobalPropertyOutline(
     theme: Deno.PointerValue<unknown>,
     property: BufferSource,
+    value: Deno.PointerValue<unknown>,
   ): ResultType<"tguiTheme_getGlobalPropertyOutline"> {
     return accessLib().symbols.tguiTheme_getGlobalPropertyOutline(
       theme,
       property,
+      value,
     );
   }
 
   /**
    * @original ```c
-   * tguiTexture * tguiTheme_getGlobalPropertyTexture(const tguiTheme * theme, tguiUtf32 property);
+   * tguiBool tguiTheme_getGlobalPropertyTexture(const tguiTheme * theme, tguiUtf32 property, tguiTexture ** value);
    * ```
    *
    * @param theme `const Theme *`
    * @param property `Utf32`
-   * @returns `Texture *`
+   * @param value `Texture **`
+   * @returns `Bool`
    */
   getGlobalPropertyTexture(
     theme: Deno.PointerValue<unknown>,
     property: BufferSource,
+    value: Deno.PointerValue<unknown>,
   ): ResultType<"tguiTheme_getGlobalPropertyTexture"> {
     return accessLib().symbols.tguiTheme_getGlobalPropertyTexture(
       theme,
       property,
+      value,
     );
   }
 
   /**
    * @original ```c
-   * tguiUint32 tguiTheme_getGlobalPropertyTextStyle(const tguiTheme * theme, tguiUtf32 property);
+   * tguiBool tguiTheme_getGlobalPropertyTextStyle(const tguiTheme * theme, tguiUtf32 property, tguiUint32 * value);
    * ```
    *
    * @param theme `const Theme *`
    * @param property `Utf32`
-   * @returns `Uint32`
+   * @param value `Uint32 *`
+   * @returns `Bool`
    */
   getGlobalPropertyTextStyle(
     theme: Deno.PointerValue<unknown>,
     property: BufferSource,
+    value: Deno.PointerValue<unknown>,
   ): ResultType<"tguiTheme_getGlobalPropertyTextStyle"> {
     return accessLib().symbols.tguiTheme_getGlobalPropertyTextStyle(
       theme,
       property,
+      value,
     );
   }
 
   /**
    * @original ```c
-   * tguiRendererData * tguiTheme_getGlobalPropertyRendererData(const tguiTheme * theme, tguiUtf32 property);
+   * tguiBool tguiTheme_getGlobalPropertyRendererData(const tguiTheme * theme, tguiUtf32 property, tguiRendererData ** value);
    * ```
    *
    * @param theme `const Theme *`
    * @param property `Utf32`
-   * @returns `RendererData *`
+   * @param value `RendererData **`
+   * @returns `Bool`
    */
   getGlobalPropertyRendererData(
     theme: Deno.PointerValue<unknown>,
     property: BufferSource,
+    value: Deno.PointerValue<unknown>,
   ): ResultType<"tguiTheme_getGlobalPropertyRendererData"> {
     return accessLib().symbols.tguiTheme_getGlobalPropertyRendererData(
       theme,
       property,
+      value,
     );
   }
 
@@ -9744,14 +11365,14 @@ export class Timer {
 export class ToolTip {
   /**
    * @original ```c
-   * void tguiToolTip_setInitialDelay(tguiDuration delay);
+   * void tguiToolTip_setInitialDelay(tguiDuration value);
    * ```
    *
-   * @param delay `Duration { nanoseconds: long long }`
+   * @param value `Duration { nanoseconds: long long }`
    * @returns `void`
    */
-  setInitialDelay(delay: Duration): ResultType<"tguiToolTip_setInitialDelay"> {
-    return accessLib().symbols.tguiToolTip_setInitialDelay(delay.buffer);
+  setInitialDelay(value: Duration): ResultType<"tguiToolTip_setInitialDelay"> {
+    return accessLib().symbols.tguiToolTip_setInitialDelay(value.buffer);
   }
 
   /**
@@ -9768,16 +11389,16 @@ export class ToolTip {
 
   /**
    * @original ```c
-   * void tguiToolTip_setDistanceToMouse(tguiVector2f distance);
+   * void tguiToolTip_setDistanceToMouse(tguiVector2f value);
    * ```
    *
-   * @param distance `Vector2f { x: float; y: float }`
+   * @param value `Vector2f { x: float; y: float }`
    * @returns `void`
    */
   setDistanceToMouse(
-    distance: Vector2f,
+    value: Vector2f,
   ): ResultType<"tguiToolTip_setDistanceToMouse"> {
-    return accessLib().symbols.tguiToolTip_setDistanceToMouse(distance.buffer);
+    return accessLib().symbols.tguiToolTip_setDistanceToMouse(value.buffer);
   }
 
   /**
@@ -9794,16 +11415,16 @@ export class ToolTip {
 
   /**
    * @original ```c
-   * void tguiToolTip_setShowOnDisabledWidget(tguiBool show);
+   * void tguiToolTip_setShowOnDisabledWidget(tguiBool value);
    * ```
    *
-   * @param show `Bool`
+   * @param value `Bool`
    * @returns `void`
    */
   setShowOnDisabledWidget(
-    show: number,
+    value: number,
   ): ResultType<"tguiToolTip_setShowOnDisabledWidget"> {
-    return accessLib().symbols.tguiToolTip_setShowOnDisabledWidget(show);
+    return accessLib().symbols.tguiToolTip_setShowOnDisabledWidget(value);
   }
 
   /**
@@ -11566,22 +13187,6 @@ export class FileDialog extends ChildWindow {
 
   /**
    * @original ```c
-   * size_t tguiFileDialog_getFileTypeFiltersIndex(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `size_t`
-   */
-  getFileTypeFiltersIndex(): ResultType<
-    "tguiFileDialog_getFileTypeFiltersIndex"
-  > {
-    return accessLib().symbols.tguiFileDialog_getFileTypeFiltersIndex(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
    * void tguiFileDialog_setConfirmButtonText(tguiWidget * thisWidget, tguiUtf32 value);
    * ```
    *
@@ -11875,11 +13480,11 @@ export class FileDialog extends ChildWindow {
 
   /**
    * @original ```c
-   * void tguiFileDialog_setFileTypeFilters(tguiWidget * widget, const tguiFileDialogFilter * filters, size_t filterCount, size_t defaultFilterIndex);
+   * void tguiFileDialog_setFileTypeFilters(tguiWidget * widget, const tguiFileDialogFilter ** filters, size_t filterCount, size_t defaultFilterIndex);
    * ```
    *
    * @param widget `Widget *`
-   * @param filters `const FileDialogFilter *`
+   * @param filters `const FileDialogFilter **`
    * @param filterCount `size_t`
    * @param defaultFilterIndex `size_t`
    * @returns `void`
@@ -11912,6 +13517,22 @@ export class FileDialog extends ChildWindow {
     return accessLib().symbols.tguiFileDialog_getFileTypeFilters(
       this.pointer,
       count,
+    );
+  }
+
+  /**
+   * @original ```c
+   * size_t tguiFileDialog_getFileTypeFiltersIndex(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `size_t`
+   */
+  getFileTypeFiltersIndex(): ResultType<
+    "tguiFileDialog_getFileTypeFiltersIndex"
+  > {
+    return accessLib().symbols.tguiFileDialog_getFileTypeFiltersIndex(
+      this.pointer,
     );
   }
 
@@ -12019,6 +13640,20 @@ export class FileDialogFilter {
     filter: Deno.PointerValue<unknown>,
   ): ResultType<"tguiFileDialogFilter_destroy"> {
     return accessLib().symbols.tguiFileDialogFilter_destroy(filter);
+  }
+
+  /**
+   * @original ```c
+   * tguiUtf32 tguiFileDialogFilter_getName(const tguiFileDialogFilter * filter);
+   * ```
+   *
+   * @param filter `const FileDialogFilter *`
+   * @returns `Utf32`
+   */
+  getName(
+    filter: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiFileDialogFilter_getName"> {
+    return accessLib().symbols.tguiFileDialogFilter_getName(filter);
   }
 
   /**
@@ -14934,6 +16569,22 @@ export class RadioButtonGroup extends Container {
       this.pointer,
     );
   }
+
+  /**
+   * @original ```c
+   * tguiWidget * tguiRadioButtonGroup_getCheckedRadioButton(tguiWidget * widget);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @returns `Widget *`
+   */
+  getCheckedRadioButton(
+    widget: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiRadioButtonGroup_getCheckedRadioButton"> {
+    return accessLib().symbols.tguiRadioButtonGroup_getCheckedRadioButton(
+      widget,
+    );
+  }
 }
 
 export class RangeSlider extends Widget {
@@ -17205,17 +18856,17 @@ export class TreeView extends Widget {
 
   /**
    * @original ```c
-   * const tguiTreeViewConstNode * tguiTreeView_getNode(const tguiWidget * widget, const tguiUtf32 * hierarchy, unsigned int hierarchyLength);
+   * const tguiTreeViewConstNode * tguiTreeView_getNode(const tguiWidget * widget, const tguiUtf32 * hierarchy, size_t hierarchyLength);
    * ```
    *
    * @param widget `const Widget *`
    * @param hierarchy `const Utf32 *`
-   * @param hierarchyLength `unsigned int`
+   * @param hierarchyLength `size_t`
    * @returns `const TreeViewConstNode *`
    */
   getNode(
     hierarchy: Deno.PointerValue<unknown>,
-    hierarchyLength: number,
+    hierarchyLength: bigint,
   ): ResultType<"tguiTreeView_getNode"> {
     return accessLib().symbols.tguiTreeView_getNode(
       this.pointer,
@@ -19171,6 +20822,36 @@ export class ColorPickerRenderer extends ChildWindowRenderer {
    */
   getSlider(): ResultType<"tguiColorPickerRenderer_getSlider"> {
     return accessLib().symbols.tguiColorPickerRenderer_getSlider(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiColorPickerRenderer_setEditBox(tguiRenderer * thisRenderer, const tguiRendererData * value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `const RendererData *`
+   * @returns `void`
+   */
+  setEditBox(
+    value: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiColorPickerRenderer_setEditBox"> {
+    return accessLib().symbols.tguiColorPickerRenderer_setEditBox(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * const tguiRendererData * tguiColorPickerRenderer_getEditBox(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `const RendererData *`
+   */
+  getEditBox(): ResultType<"tguiColorPickerRenderer_getEditBox"> {
+    return accessLib().symbols.tguiColorPickerRenderer_getEditBox(this.pointer);
   }
 }
 
@@ -23888,1207 +25569,6 @@ export class ProgressBarRenderer {
   }
 }
 
-export class RadioButtonRenderer {
-  protected ptr: Deno.PointerValue<unknown>;
-
-  get pointer(): Deno.PointerValue<unknown> {
-    return this.ptr;
-  }
-
-  /**
-   * @original ```c
-   * tguiRenderer * tguiRadioButtonRenderer_create();
-   * ```
-   *
-   * @param
-   * @returns `Renderer *`
-   */
-  constructor(other?: Deno.PointerValue<unknown>) {
-    if (typeof other === "undefined") {
-      this.ptr = accessLib().symbols.tguiRadioButtonRenderer_create();
-    } else {
-      this.ptr = this.copy(other); // to make TS happy about uninitialized field
-    }
-  }
-
-  /**
-   * @original ```c
-   * tguiRenderer * tguiRadioButtonRenderer_copy(const tguiRenderer * other);
-   * ```
-   *
-   * @param other `const Renderer *`
-   * @returns `Renderer *`
-   */
-  copy(other: Deno.PointerValue<unknown>): Deno.PointerValue<unknown> {
-    return this.ptr = accessLib().symbols.tguiRadioButtonRenderer_copy(other);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextDistanceRatio(tguiRenderer * thisRenderer, float value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `float`
-   * @returns `void`
-   */
-  setTextDistanceRatio(
-    value: number,
-  ): ResultType<"tguiRadioButtonRenderer_setTextDistanceRatio"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setTextDistanceRatio(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * float tguiRadioButtonRenderer_getTextDistanceRatio(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `float`
-   */
-  getTextDistanceRatio(): ResultType<
-    "tguiRadioButtonRenderer_getTextDistanceRatio"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getTextDistanceRatio(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBorders(tguiRenderer * thisRenderer, const tguiOutline * value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `const Outline *`
-   * @returns `void`
-   */
-  setBorders(
-    value: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiRadioButtonRenderer_setBorders"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setBorders(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * const tguiOutline * tguiRadioButtonRenderer_getBorders(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `const Outline *`
-   */
-  getBorders(): ResultType<"tguiRadioButtonRenderer_getBorders"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_getBorders(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextColor(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setTextColor(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setTextColor"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setTextColor(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getTextColor(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getTextColor(): ResultType<"tguiRadioButtonRenderer_getTextColor"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_getTextColor(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextColorHover(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setTextColorHover(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setTextColorHover"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setTextColorHover(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getTextColorHover(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getTextColorHover(): ResultType<"tguiRadioButtonRenderer_getTextColorHover"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_getTextColorHover(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextColorDisabled(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setTextColorDisabled(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setTextColorDisabled"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setTextColorDisabled(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getTextColorDisabled(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getTextColorDisabled(): ResultType<
-    "tguiRadioButtonRenderer_getTextColorDisabled"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getTextColorDisabled(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextColorChecked(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setTextColorChecked(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setTextColorChecked"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setTextColorChecked(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getTextColorChecked(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getTextColorChecked(): ResultType<
-    "tguiRadioButtonRenderer_getTextColorChecked"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getTextColorChecked(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextColorCheckedHover(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setTextColorCheckedHover(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setTextColorCheckedHover"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setTextColorCheckedHover(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getTextColorCheckedHover(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getTextColorCheckedHover(): ResultType<
-    "tguiRadioButtonRenderer_getTextColorCheckedHover"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getTextColorCheckedHover(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextColorCheckedDisabled(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setTextColorCheckedDisabled(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setTextColorCheckedDisabled"> {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_setTextColorCheckedDisabled(
-        this.pointer,
-        value.buffer,
-      );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getTextColorCheckedDisabled(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getTextColorCheckedDisabled(): ResultType<
-    "tguiRadioButtonRenderer_getTextColorCheckedDisabled"
-  > {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_getTextColorCheckedDisabled(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBackgroundColor(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBackgroundColor(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBackgroundColor"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setBackgroundColor(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBackgroundColor(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBackgroundColor(): ResultType<
-    "tguiRadioButtonRenderer_getBackgroundColor"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getBackgroundColor(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBackgroundColorHover(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBackgroundColorHover(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorHover"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setBackgroundColorHover(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBackgroundColorHover(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBackgroundColorHover(): ResultType<
-    "tguiRadioButtonRenderer_getBackgroundColorHover"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getBackgroundColorHover(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBackgroundColorDisabled(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBackgroundColorDisabled(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorDisabled"> {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_setBackgroundColorDisabled(
-        this.pointer,
-        value.buffer,
-      );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBackgroundColorDisabled(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBackgroundColorDisabled(): ResultType<
-    "tguiRadioButtonRenderer_getBackgroundColorDisabled"
-  > {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_getBackgroundColorDisabled(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBackgroundColorChecked(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBackgroundColorChecked(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorChecked"> {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_setBackgroundColorChecked(
-        this.pointer,
-        value.buffer,
-      );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBackgroundColorChecked(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBackgroundColorChecked(): ResultType<
-    "tguiRadioButtonRenderer_getBackgroundColorChecked"
-  > {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_getBackgroundColorChecked(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBackgroundColorCheckedHover(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBackgroundColorCheckedHover(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorCheckedHover"> {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_setBackgroundColorCheckedHover(
-        this.pointer,
-        value.buffer,
-      );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBackgroundColorCheckedHover(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBackgroundColorCheckedHover(): ResultType<
-    "tguiRadioButtonRenderer_getBackgroundColorCheckedHover"
-  > {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_getBackgroundColorCheckedHover(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBackgroundColorCheckedDisabled(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBackgroundColorCheckedDisabled(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBackgroundColorCheckedDisabled"> {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_setBackgroundColorCheckedDisabled(
-        this.pointer,
-        value.buffer,
-      );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBackgroundColorCheckedDisabled(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBackgroundColorCheckedDisabled(): ResultType<
-    "tguiRadioButtonRenderer_getBackgroundColorCheckedDisabled"
-  > {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_getBackgroundColorCheckedDisabled(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBorderColor(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBorderColor(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBorderColor"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setBorderColor(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBorderColor(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBorderColor(): ResultType<"tguiRadioButtonRenderer_getBorderColor"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_getBorderColor(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBorderColorHover(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBorderColorHover(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBorderColorHover"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setBorderColorHover(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBorderColorHover(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBorderColorHover(): ResultType<
-    "tguiRadioButtonRenderer_getBorderColorHover"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getBorderColorHover(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBorderColorFocused(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBorderColorFocused(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBorderColorFocused"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setBorderColorFocused(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBorderColorFocused(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBorderColorFocused(): ResultType<
-    "tguiRadioButtonRenderer_getBorderColorFocused"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getBorderColorFocused(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBorderColorDisabled(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBorderColorDisabled(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBorderColorDisabled"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setBorderColorDisabled(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBorderColorDisabled(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBorderColorDisabled(): ResultType<
-    "tguiRadioButtonRenderer_getBorderColorDisabled"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getBorderColorDisabled(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBorderColorChecked(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBorderColorChecked(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBorderColorChecked"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setBorderColorChecked(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBorderColorChecked(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBorderColorChecked(): ResultType<
-    "tguiRadioButtonRenderer_getBorderColorChecked"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getBorderColorChecked(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBorderColorCheckedHover(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBorderColorCheckedHover(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBorderColorCheckedHover"> {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_setBorderColorCheckedHover(
-        this.pointer,
-        value.buffer,
-      );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBorderColorCheckedHover(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBorderColorCheckedHover(): ResultType<
-    "tguiRadioButtonRenderer_getBorderColorCheckedHover"
-  > {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_getBorderColorCheckedHover(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBorderColorCheckedFocused(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBorderColorCheckedFocused(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBorderColorCheckedFocused"> {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_setBorderColorCheckedFocused(
-        this.pointer,
-        value.buffer,
-      );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBorderColorCheckedFocused(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBorderColorCheckedFocused(): ResultType<
-    "tguiRadioButtonRenderer_getBorderColorCheckedFocused"
-  > {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_getBorderColorCheckedFocused(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setBorderColorCheckedDisabled(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setBorderColorCheckedDisabled(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setBorderColorCheckedDisabled"> {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_setBorderColorCheckedDisabled(
-        this.pointer,
-        value.buffer,
-      );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getBorderColorCheckedDisabled(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getBorderColorCheckedDisabled(): ResultType<
-    "tguiRadioButtonRenderer_getBorderColorCheckedDisabled"
-  > {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_getBorderColorCheckedDisabled(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setCheckColor(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setCheckColor(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setCheckColor"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setCheckColor(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getCheckColor(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getCheckColor(): ResultType<"tguiRadioButtonRenderer_getCheckColor"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_getCheckColor(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setCheckColorHover(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setCheckColorHover(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setCheckColorHover"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setCheckColorHover(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getCheckColorHover(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getCheckColorHover(): ResultType<
-    "tguiRadioButtonRenderer_getCheckColorHover"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getCheckColorHover(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setCheckColorDisabled(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setCheckColorDisabled(
-    value: Color,
-  ): ResultType<"tguiRadioButtonRenderer_setCheckColorDisabled"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setCheckColorDisabled(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiRadioButtonRenderer_getCheckColorDisabled(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getCheckColorDisabled(): ResultType<
-    "tguiRadioButtonRenderer_getCheckColorDisabled"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getCheckColorDisabled(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextureUnchecked(tguiRenderer * thisRenderer, const tguiTexture * value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `const Texture *`
-   * @returns `void`
-   */
-  setTextureUnchecked(
-    value: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiRadioButtonRenderer_setTextureUnchecked"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setTextureUnchecked(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * const tguiTexture * tguiRadioButtonRenderer_getTextureUnchecked(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `const Texture *`
-   */
-  getTextureUnchecked(): ResultType<
-    "tguiRadioButtonRenderer_getTextureUnchecked"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getTextureUnchecked(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextureChecked(tguiRenderer * thisRenderer, const tguiTexture * value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `const Texture *`
-   * @returns `void`
-   */
-  setTextureChecked(
-    value: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiRadioButtonRenderer_setTextureChecked"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setTextureChecked(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * const tguiTexture * tguiRadioButtonRenderer_getTextureChecked(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `const Texture *`
-   */
-  getTextureChecked(): ResultType<"tguiRadioButtonRenderer_getTextureChecked"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_getTextureChecked(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextureUncheckedHover(tguiRenderer * thisRenderer, const tguiTexture * value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `const Texture *`
-   * @returns `void`
-   */
-  setTextureUncheckedHover(
-    value: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiRadioButtonRenderer_setTextureUncheckedHover"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setTextureUncheckedHover(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * const tguiTexture * tguiRadioButtonRenderer_getTextureUncheckedHover(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `const Texture *`
-   */
-  getTextureUncheckedHover(): ResultType<
-    "tguiRadioButtonRenderer_getTextureUncheckedHover"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getTextureUncheckedHover(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextureCheckedHover(tguiRenderer * thisRenderer, const tguiTexture * value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `const Texture *`
-   * @returns `void`
-   */
-  setTextureCheckedHover(
-    value: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiRadioButtonRenderer_setTextureCheckedHover"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setTextureCheckedHover(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * const tguiTexture * tguiRadioButtonRenderer_getTextureCheckedHover(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `const Texture *`
-   */
-  getTextureCheckedHover(): ResultType<
-    "tguiRadioButtonRenderer_getTextureCheckedHover"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getTextureCheckedHover(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextureUncheckedFocused(tguiRenderer * thisRenderer, const tguiTexture * value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `const Texture *`
-   * @returns `void`
-   */
-  setTextureUncheckedFocused(
-    value: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiRadioButtonRenderer_setTextureUncheckedFocused"> {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_setTextureUncheckedFocused(this.pointer, value);
-  }
-
-  /**
-   * @original ```c
-   * const tguiTexture * tguiRadioButtonRenderer_getTextureUncheckedFocused(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `const Texture *`
-   */
-  getTextureUncheckedFocused(): ResultType<
-    "tguiRadioButtonRenderer_getTextureUncheckedFocused"
-  > {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_getTextureUncheckedFocused(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextureCheckedFocused(tguiRenderer * thisRenderer, const tguiTexture * value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `const Texture *`
-   * @returns `void`
-   */
-  setTextureCheckedFocused(
-    value: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiRadioButtonRenderer_setTextureCheckedFocused"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setTextureCheckedFocused(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * const tguiTexture * tguiRadioButtonRenderer_getTextureCheckedFocused(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `const Texture *`
-   */
-  getTextureCheckedFocused(): ResultType<
-    "tguiRadioButtonRenderer_getTextureCheckedFocused"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getTextureCheckedFocused(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextureUncheckedDisabled(tguiRenderer * thisRenderer, const tguiTexture * value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `const Texture *`
-   * @returns `void`
-   */
-  setTextureUncheckedDisabled(
-    value: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiRadioButtonRenderer_setTextureUncheckedDisabled"> {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_setTextureUncheckedDisabled(this.pointer, value);
-  }
-
-  /**
-   * @original ```c
-   * const tguiTexture * tguiRadioButtonRenderer_getTextureUncheckedDisabled(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `const Texture *`
-   */
-  getTextureUncheckedDisabled(): ResultType<
-    "tguiRadioButtonRenderer_getTextureUncheckedDisabled"
-  > {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_getTextureUncheckedDisabled(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextureCheckedDisabled(tguiRenderer * thisRenderer, const tguiTexture * value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `const Texture *`
-   * @returns `void`
-   */
-  setTextureCheckedDisabled(
-    value: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiRadioButtonRenderer_setTextureCheckedDisabled"> {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_setTextureCheckedDisabled(this.pointer, value);
-  }
-
-  /**
-   * @original ```c
-   * const tguiTexture * tguiRadioButtonRenderer_getTextureCheckedDisabled(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `const Texture *`
-   */
-  getTextureCheckedDisabled(): ResultType<
-    "tguiRadioButtonRenderer_getTextureCheckedDisabled"
-  > {
-    return accessLib().symbols
-      .tguiRadioButtonRenderer_getTextureCheckedDisabled(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextStyle(tguiRenderer * thisRenderer, tguiUint32 value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Uint32`
-   * @returns `void`
-   */
-  setTextStyle(
-    value: number,
-  ): ResultType<"tguiRadioButtonRenderer_setTextStyle"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setTextStyle(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiUint32 tguiRadioButtonRenderer_getTextStyle(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Uint32`
-   */
-  getTextStyle(): ResultType<"tguiRadioButtonRenderer_getTextStyle"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_getTextStyle(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButtonRenderer_setTextStyleChecked(tguiRenderer * thisRenderer, tguiUint32 value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Uint32`
-   * @returns `void`
-   */
-  setTextStyleChecked(
-    value: number,
-  ): ResultType<"tguiRadioButtonRenderer_setTextStyleChecked"> {
-    return accessLib().symbols.tguiRadioButtonRenderer_setTextStyleChecked(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiUint32 tguiRadioButtonRenderer_getTextStyleChecked(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Uint32`
-   */
-  getTextStyleChecked(): ResultType<
-    "tguiRadioButtonRenderer_getTextStyleChecked"
-  > {
-    return accessLib().symbols.tguiRadioButtonRenderer_getTextStyleChecked(
-      this.pointer,
-    );
-  }
-}
-
 export class RangeSliderRenderer extends SliderRenderer {
   /**
    * @original ```c
@@ -28556,5 +29036,1268 @@ export class WidgetRenderer {
     renderer: Deno.PointerValue<unknown>,
   ): ResultType<"tguiWidgetRenderer_destroy"> {
     return accessLib().symbols.tguiWidgetRenderer_destroy(renderer);
+  }
+}
+
+export class CheckBoxRenderer extends RadioButtonRenderer {
+  /**
+   * @original ```c
+   * tguiRenderer * tguiCheckBoxRenderer_create();
+   * ```
+   *
+   * @param
+   * @returns `Renderer *`
+   */
+  constructor() {
+    super(accessLib().symbols.tguiCheckBoxRenderer_create());
+  }
+
+  /**
+   * @original ```c
+   * tguiRenderer * tguiCheckBoxRenderer_copy(const tguiRenderer * other);
+   * ```
+   *
+   * @param other `const Renderer *`
+   * @returns `Renderer *`
+   */
+  override copy(other: Deno.PointerValue<unknown>): Deno.PointerValue<unknown> {
+    return this.ptr = accessLib().symbols.tguiCheckBoxRenderer_copy(other);
+  }
+}
+
+export class PanelListBoxRenderer extends ScrollablePanelRenderer {
+  /**
+   * @original ```c
+   * tguiRenderer * tguiPanelListBoxRenderer_create();
+   * ```
+   *
+   * @param
+   * @returns `Renderer *`
+   */
+  constructor() {
+    super(accessLib().symbols.tguiPanelListBoxRenderer_create());
+  }
+
+  /**
+   * @original ```c
+   * tguiRenderer * tguiPanelListBoxRenderer_copy(const tguiRenderer * other);
+   * ```
+   *
+   * @param other `const Renderer *`
+   * @returns `Renderer *`
+   */
+  override copy(other: Deno.PointerValue<unknown>): Deno.PointerValue<unknown> {
+    return this.ptr = accessLib().symbols.tguiPanelListBoxRenderer_copy(other);
+  }
+
+  /**
+   * @original ```c
+   * void tguiPanelListBoxRenderer_setItemsBackgroundColor(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setItemsBackgroundColor(
+    value: Color,
+  ): ResultType<"tguiPanelListBoxRenderer_setItemsBackgroundColor"> {
+    return accessLib().symbols.tguiPanelListBoxRenderer_setItemsBackgroundColor(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiPanelListBoxRenderer_getItemsBackgroundColor(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getItemsBackgroundColor(): ResultType<
+    "tguiPanelListBoxRenderer_getItemsBackgroundColor"
+  > {
+    return accessLib().symbols.tguiPanelListBoxRenderer_getItemsBackgroundColor(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiPanelListBoxRenderer_setItemsBackgroundColorHover(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setItemsBackgroundColorHover(
+    value: Color,
+  ): ResultType<"tguiPanelListBoxRenderer_setItemsBackgroundColorHover"> {
+    return accessLib().symbols
+      .tguiPanelListBoxRenderer_setItemsBackgroundColorHover(
+        this.pointer,
+        value.buffer,
+      );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiPanelListBoxRenderer_getItemsBackgroundColorHover(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getItemsBackgroundColorHover(): ResultType<
+    "tguiPanelListBoxRenderer_getItemsBackgroundColorHover"
+  > {
+    return accessLib().symbols
+      .tguiPanelListBoxRenderer_getItemsBackgroundColorHover(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiPanelListBoxRenderer_setSelectedItemsBackgroundColor(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setSelectedItemsBackgroundColor(
+    value: Color,
+  ): ResultType<"tguiPanelListBoxRenderer_setSelectedItemsBackgroundColor"> {
+    return accessLib().symbols
+      .tguiPanelListBoxRenderer_setSelectedItemsBackgroundColor(
+        this.pointer,
+        value.buffer,
+      );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiPanelListBoxRenderer_getSelectedItemsBackgroundColor(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getSelectedItemsBackgroundColor(): ResultType<
+    "tguiPanelListBoxRenderer_getSelectedItemsBackgroundColor"
+  > {
+    return accessLib().symbols
+      .tguiPanelListBoxRenderer_getSelectedItemsBackgroundColor(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiPanelListBoxRenderer_setSelectedItemsBackgroundColorHover(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setSelectedItemsBackgroundColorHover(
+    value: Color,
+  ): ResultType<
+    "tguiPanelListBoxRenderer_setSelectedItemsBackgroundColorHover"
+  > {
+    return accessLib().symbols
+      .tguiPanelListBoxRenderer_setSelectedItemsBackgroundColorHover(
+        this.pointer,
+        value.buffer,
+      );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiPanelListBoxRenderer_getSelectedItemsBackgroundColorHover(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getSelectedItemsBackgroundColorHover(): ResultType<
+    "tguiPanelListBoxRenderer_getSelectedItemsBackgroundColorHover"
+  > {
+    return accessLib().symbols
+      .tguiPanelListBoxRenderer_getSelectedItemsBackgroundColorHover(
+        this.pointer,
+      );
+  }
+}
+
+export class SeparatorLineRenderer {
+  protected ptr: Deno.PointerValue<unknown>;
+
+  get pointer(): Deno.PointerValue<unknown> {
+    return this.ptr;
+  }
+
+  /**
+   * @original ```c
+   * tguiRenderer * tguiSeparatorLineRenderer_create();
+   * ```
+   *
+   * @param
+   * @returns `Renderer *`
+   */
+  constructor(other?: Deno.PointerValue<unknown>) {
+    if (typeof other === "undefined") {
+      this.ptr = accessLib().symbols.tguiSeparatorLineRenderer_create();
+    } else {
+      this.ptr = this.copy(other); // to make TS happy about uninitialized field
+    }
+  }
+
+  /**
+   * @original ```c
+   * tguiRenderer * tguiSeparatorLineRenderer_copy(const tguiRenderer * other);
+   * ```
+   *
+   * @param other `const Renderer *`
+   * @returns `Renderer *`
+   */
+  copy(other: Deno.PointerValue<unknown>): Deno.PointerValue<unknown> {
+    return this.ptr = accessLib().symbols.tguiSeparatorLineRenderer_copy(other);
+  }
+
+  /**
+   * @original ```c
+   * void tguiSeparatorLineRenderer_setColor(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setColor(value: Color): ResultType<"tguiSeparatorLineRenderer_setColor"> {
+    return accessLib().symbols.tguiSeparatorLineRenderer_setColor(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiSeparatorLineRenderer_getColor(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getColor(): ResultType<"tguiSeparatorLineRenderer_getColor"> {
+    return accessLib().symbols.tguiSeparatorLineRenderer_getColor(this.pointer);
+  }
+}
+
+export class SplitContainerRenderer extends GroupRenderer {
+  /**
+   * @original ```c
+   * tguiRenderer * tguiSplitContainerRenderer_create();
+   * ```
+   *
+   * @param
+   * @returns `Renderer *`
+   */
+  constructor() {
+    super(accessLib().symbols.tguiSplitContainerRenderer_create());
+  }
+
+  /**
+   * @original ```c
+   * tguiRenderer * tguiSplitContainerRenderer_copy(const tguiRenderer * other);
+   * ```
+   *
+   * @param other `const Renderer *`
+   * @returns `Renderer *`
+   */
+  override copy(other: Deno.PointerValue<unknown>): Deno.PointerValue<unknown> {
+    return this.ptr = accessLib().symbols.tguiSplitContainerRenderer_copy(
+      other,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiSplitContainerRenderer_setSplitterColor(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setSplitterColor(
+    value: Color,
+  ): ResultType<"tguiSplitContainerRenderer_setSplitterColor"> {
+    return accessLib().symbols.tguiSplitContainerRenderer_setSplitterColor(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiSplitContainerRenderer_getSplitterColor(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getSplitterColor(): ResultType<
+    "tguiSplitContainerRenderer_getSplitterColor"
+  > {
+    return accessLib().symbols.tguiSplitContainerRenderer_getSplitterColor(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiSplitContainerRenderer_setSplitterColorHover(tguiRenderer * thisRenderer, tguiColor value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   * @returns `void`
+   */
+  setSplitterColorHover(
+    value: Color,
+  ): ResultType<"tguiSplitContainerRenderer_setSplitterColorHover"> {
+    return accessLib().symbols.tguiSplitContainerRenderer_setSplitterColorHover(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiColor tguiSplitContainerRenderer_getSplitterColorHover(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
+   */
+  getSplitterColorHover(): ResultType<
+    "tguiSplitContainerRenderer_getSplitterColorHover"
+  > {
+    return accessLib().symbols.tguiSplitContainerRenderer_getSplitterColorHover(
+      this.pointer,
+    );
+  }
+}
+
+export class ScrollbarAccessor {
+  /**
+   * @original ```c
+   * void tguiScrollbarAccessor_destroy(tguiScrollbarAccessor * accessor);
+   * ```
+   *
+   * @param accessor `ScrollbarAccessor *`
+   * @returns `void`
+   */
+  destroy(
+    accessor: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiScrollbarAccessor_destroy"> {
+    return accessLib().symbols.tguiScrollbarAccessor_destroy(accessor);
+  }
+
+  /**
+   * @original ```c
+   * void tguiScrollbarAccessor_setValue(tguiScrollbarAccessor * thisScrollbarAccessor, unsigned int value);
+   * ```
+   *
+   * @param thisScrollbarAccessor `ScrollbarAccessor *`
+   * @param value `unsigned int`
+   * @returns `void`
+   */
+  setValue(value: number): ResultType<"tguiScrollbarAccessor_setValue"> {
+    return accessLib().symbols.tguiScrollbarAccessor_setValue(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * unsigned int tguiScrollbarAccessor_getValue(const tguiScrollbarAccessor * thisScrollbarAccessor);
+   * ```
+   *
+   * @param thisScrollbarAccessor `const ScrollbarAccessor *`
+   * @returns `unsigned int`
+   */
+  getValue(): ResultType<"tguiScrollbarAccessor_getValue"> {
+    return accessLib().symbols.tguiScrollbarAccessor_getValue(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiScrollbarAccessor_setScrollAmount(tguiScrollbarAccessor * thisScrollbarAccessor, unsigned int value);
+   * ```
+   *
+   * @param thisScrollbarAccessor `ScrollbarAccessor *`
+   * @param value `unsigned int`
+   * @returns `void`
+   */
+  setScrollAmount(
+    value: number,
+  ): ResultType<"tguiScrollbarAccessor_setScrollAmount"> {
+    return accessLib().symbols.tguiScrollbarAccessor_setScrollAmount(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * unsigned int tguiScrollbarAccessor_getScrollAmount(const tguiScrollbarAccessor * thisScrollbarAccessor);
+   * ```
+   *
+   * @param thisScrollbarAccessor `const ScrollbarAccessor *`
+   * @returns `unsigned int`
+   */
+  getScrollAmount(): ResultType<"tguiScrollbarAccessor_getScrollAmount"> {
+    return accessLib().symbols.tguiScrollbarAccessor_getScrollAmount(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiScrollbarAccessor_setPolicy(tguiScrollbarAccessor * thisScrollbarAccessor, tguiScrollbarPolicy value);
+   * ```
+   *
+   * @param thisScrollbarAccessor `ScrollbarAccessor *`
+   * @param value `ScrollbarPolicy`
+   * @returns `void`
+   */
+  setPolicy(value: number): ResultType<"tguiScrollbarAccessor_setPolicy"> {
+    return accessLib().symbols.tguiScrollbarAccessor_setPolicy(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiScrollbarPolicy tguiScrollbarAccessor_getPolicy(const tguiScrollbarAccessor * thisScrollbarAccessor);
+   * ```
+   *
+   * @param thisScrollbarAccessor `const ScrollbarAccessor *`
+   * @returns `ScrollbarPolicy`
+   */
+  getPolicy(): ResultType<"tguiScrollbarAccessor_getPolicy"> {
+    return accessLib().symbols.tguiScrollbarAccessor_getPolicy(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * unsigned int tguiScrollbarAccessor_getMaximum(const tguiScrollbarAccessor * thisScrollbarAccessor);
+   * ```
+   *
+   * @param thisScrollbarAccessor `const ScrollbarAccessor *`
+   * @returns `unsigned int`
+   */
+  getMaximum(): ResultType<"tguiScrollbarAccessor_getMaximum"> {
+    return accessLib().symbols.tguiScrollbarAccessor_getMaximum(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * unsigned int tguiScrollbarAccessor_getViewportSize(const tguiScrollbarAccessor * thisScrollbarAccessor);
+   * ```
+   *
+   * @param thisScrollbarAccessor `const ScrollbarAccessor *`
+   * @returns `unsigned int`
+   */
+  getViewportSize(): ResultType<"tguiScrollbarAccessor_getViewportSize"> {
+    return accessLib().symbols.tguiScrollbarAccessor_getViewportSize(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * unsigned int tguiScrollbarAccessor_getMaxValue(const tguiScrollbarAccessor * thisScrollbarAccessor);
+   * ```
+   *
+   * @param thisScrollbarAccessor `const ScrollbarAccessor *`
+   * @returns `unsigned int`
+   */
+  getMaxValue(): ResultType<"tguiScrollbarAccessor_getMaxValue"> {
+    return accessLib().symbols.tguiScrollbarAccessor_getMaxValue(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiScrollbarAccessor_isShown(const tguiScrollbarAccessor * thisScrollbarAccessor);
+   * ```
+   *
+   * @param thisScrollbarAccessor `const ScrollbarAccessor *`
+   * @returns `Bool`
+   */
+  isShown(): ResultType<"tguiScrollbarAccessor_isShown"> {
+    return accessLib().symbols.tguiScrollbarAccessor_isShown(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * float tguiScrollbarAccessor_getWidth(const tguiScrollbarAccessor * thisScrollbarAccessor);
+   * ```
+   *
+   * @param thisScrollbarAccessor `const ScrollbarAccessor *`
+   * @returns `float`
+   */
+  getWidth(): ResultType<"tguiScrollbarAccessor_getWidth"> {
+    return accessLib().symbols.tguiScrollbarAccessor_getWidth(this.pointer);
+  }
+}
+
+export class GrowHorizontalLayout extends BoxLayout {
+  /**
+   * @original ```c
+   * tguiWidget * tguiGrowHorizontalLayout_create();
+   * ```
+   *
+   * @param
+   * @returns `Widget *`
+   */
+  constructor() {
+    super(accessLib().symbols.tguiGrowHorizontalLayout_create());
+  }
+}
+
+export class GrowVerticalLayout extends BoxLayout {
+  /**
+   * @original ```c
+   * tguiWidget * tguiGrowVerticalLayout_create();
+   * ```
+   *
+   * @param
+   * @returns `Widget *`
+   */
+  constructor() {
+    super(accessLib().symbols.tguiGrowVerticalLayout_create());
+  }
+}
+
+export class PanelListBox extends ScrollablePanel {
+  /**
+   * @original ```c
+   * tguiWidget * tguiPanelListBox_create();
+   * ```
+   *
+   * @param
+   * @returns `Widget *`
+   */
+  constructor() {
+    super(accessLib().symbols.tguiPanelListBox_create());
+  }
+
+  /**
+   * @original ```c
+   * void tguiPanelListBox_deselectItem(tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @returns `void`
+   */
+  deselectItem(): ResultType<"tguiPanelListBox_deselectItem"> {
+    return accessLib().symbols.tguiPanelListBox_deselectItem(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiPanelListBox_removeAllItems(tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @returns `void`
+   */
+  removeAllItems(): ResultType<"tguiPanelListBox_removeAllItems"> {
+    return accessLib().symbols.tguiPanelListBox_removeAllItems(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiPanelListBox_setSelectedItemById(tguiWidget * thisWidget, tguiUtf32 id);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param id `Utf32`
+   * @returns `Bool`
+   */
+  setSelectedItemById(
+    id: BufferSource,
+  ): ResultType<"tguiPanelListBox_setSelectedItemById"> {
+    return accessLib().symbols.tguiPanelListBox_setSelectedItemById(
+      this.pointer,
+      id,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiPanelListBox_setSelectedItemByIndex(tguiWidget * thisWidget, size_t index);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param index `size_t`
+   * @returns `Bool`
+   */
+  setSelectedItemByIndex(
+    index: bigint,
+  ): ResultType<"tguiPanelListBox_setSelectedItemByIndex"> {
+    return accessLib().symbols.tguiPanelListBox_setSelectedItemByIndex(
+      this.pointer,
+      index,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiPanelListBox_removeItemById(tguiWidget * thisWidget, tguiUtf32 id);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param id `Utf32`
+   * @returns `Bool`
+   */
+  removeItemById(
+    id: BufferSource,
+  ): ResultType<"tguiPanelListBox_removeItemById"> {
+    return accessLib().symbols.tguiPanelListBox_removeItemById(
+      this.pointer,
+      id,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiPanelListBox_removeItemByIndex(tguiWidget * thisWidget, size_t index);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param index `size_t`
+   * @returns `Bool`
+   */
+  removeItemByIndex(
+    index: bigint,
+  ): ResultType<"tguiPanelListBox_removeItemByIndex"> {
+    return accessLib().symbols.tguiPanelListBox_removeItemByIndex(
+      this.pointer,
+      index,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiUtf32 tguiPanelListBox_getSelectedItemId(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `Utf32`
+   */
+  getSelectedItemId(): ResultType<"tguiPanelListBox_getSelectedItemId"> {
+    return accessLib().symbols.tguiPanelListBox_getSelectedItemId(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * int tguiPanelListBox_getSelectedItemIndex(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `int`
+   */
+  getSelectedItemIndex(): ResultType<"tguiPanelListBox_getSelectedItemIndex"> {
+    return accessLib().symbols.tguiPanelListBox_getSelectedItemIndex(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * int tguiPanelListBox_getHoveredItemIndex(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `int`
+   */
+  getHoveredItemIndex(): ResultType<"tguiPanelListBox_getHoveredItemIndex"> {
+    return accessLib().symbols.tguiPanelListBox_getHoveredItemIndex(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * size_t tguiPanelListBox_getItemCount(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `size_t`
+   */
+  getItemCount(): ResultType<"tguiPanelListBox_getItemCount"> {
+    return accessLib().symbols.tguiPanelListBox_getItemCount(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * const tguiUtf32 * tguiPanelListBox_getItemIds(const tguiWidget * thisWidget, size_t * returnCount);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @param returnCount `size_t *`
+   * @returns `const Utf32 *`
+   */
+  getItemIds(
+    returnCount: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiPanelListBox_getItemIds"> {
+    return accessLib().symbols.tguiPanelListBox_getItemIds(
+      this.pointer,
+      returnCount,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiPanelListBox_setMaximumItems(tguiWidget * thisWidget, size_t value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `size_t`
+   * @returns `void`
+   */
+  setMaximumItems(
+    value: bigint,
+  ): ResultType<"tguiPanelListBox_setMaximumItems"> {
+    return accessLib().symbols.tguiPanelListBox_setMaximumItems(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * size_t tguiPanelListBox_getMaximumItems(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `size_t`
+   */
+  getMaximumItems(): ResultType<"tguiPanelListBox_getMaximumItems"> {
+    return accessLib().symbols.tguiPanelListBox_getMaximumItems(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiPanelListBox_containsId(const tguiWidget * thisWidget, tguiUtf32 id);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @param id `Utf32`
+   * @returns `Bool`
+   */
+  containsId(id: BufferSource): ResultType<"tguiPanelListBox_containsId"> {
+    return accessLib().symbols.tguiPanelListBox_containsId(this.pointer, id);
+  }
+
+  /**
+   * @original ```c
+   * const tguiLayout * tguiPanelListBox_getItemsWidth(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `const Layout *`
+   */
+  getItemsWidth(): ResultType<"tguiPanelListBox_getItemsWidth"> {
+    return accessLib().symbols.tguiPanelListBox_getItemsWidth(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiPanelListBox_setItemsHeight(tguiWidget * thisWidget, const tguiLayout * value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `const Layout *`
+   * @returns `void`
+   */
+  setItemsHeight(
+    value: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiPanelListBox_setItemsHeight"> {
+    return accessLib().symbols.tguiPanelListBox_setItemsHeight(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * const tguiLayout * tguiPanelListBox_getItemsHeight(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `const Layout *`
+   */
+  getItemsHeight(): ResultType<"tguiPanelListBox_getItemsHeight"> {
+    return accessLib().symbols.tguiPanelListBox_getItemsHeight(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * tguiWidget * tguiPanelListBox_addItem(tguiWidget * widget, tguiUtf32 id);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @param id `Utf32`
+   * @returns `Widget *`
+   */
+  addItem(
+    widget: Deno.PointerValue<unknown>,
+    id: BufferSource,
+  ): ResultType<"tguiPanelListBox_addItem"> {
+    return accessLib().symbols.tguiPanelListBox_addItem(widget, id);
+  }
+
+  /**
+   * @original ```c
+   * tguiWidget * tguiPanelListBox_addItemAtIndex(tguiWidget * widget, tguiUtf32 id, size_t index);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @param id `Utf32`
+   * @param index `size_t`
+   * @returns `Widget *`
+   */
+  addItemAtIndex(
+    widget: Deno.PointerValue<unknown>,
+    id: BufferSource,
+    index: bigint,
+  ): ResultType<"tguiPanelListBox_addItemAtIndex"> {
+    return accessLib().symbols.tguiPanelListBox_addItemAtIndex(
+      widget,
+      id,
+      index,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiWidget * tguiPanelListBox_getPanelTemplate(tguiWidget * widget);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @returns `Widget *`
+   */
+  getPanelTemplate(
+    widget: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiPanelListBox_getPanelTemplate"> {
+    return accessLib().symbols.tguiPanelListBox_getPanelTemplate(widget);
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiPanelListBox_setSelectedItem(tguiWidget * widget, const tguiWidget * panelPtr);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @param panelPtr `const Widget *`
+   * @returns `Bool`
+   */
+  setSelectedItem(
+    widget: Deno.PointerValue<unknown>,
+    panelPtr: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiPanelListBox_setSelectedItem"> {
+    return accessLib().symbols.tguiPanelListBox_setSelectedItem(
+      widget,
+      panelPtr,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiWidget * tguiPanelListBox_getSelectedItem(const tguiWidget * widget);
+   * ```
+   *
+   * @param widget `const Widget *`
+   * @returns `Widget *`
+   */
+  getSelectedItem(
+    widget: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiPanelListBox_getSelectedItem"> {
+    return accessLib().symbols.tguiPanelListBox_getSelectedItem(widget);
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiPanelListBox_removeItem(tguiWidget * widget, const tguiWidget * panelPtr);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @param panelPtr `const Widget *`
+   * @returns `Bool`
+   */
+  removeItem(
+    widget: Deno.PointerValue<unknown>,
+    panelPtr: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiPanelListBox_removeItem"> {
+    return accessLib().symbols.tguiPanelListBox_removeItem(widget, panelPtr);
+  }
+
+  /**
+   * @original ```c
+   * tguiWidget * tguiPanelListBox_getItemById(const tguiWidget * widget, tguiUtf32 id);
+   * ```
+   *
+   * @param widget `const Widget *`
+   * @param id `Utf32`
+   * @returns `Widget *`
+   */
+  getItemById(
+    widget: Deno.PointerValue<unknown>,
+    id: BufferSource,
+  ): ResultType<"tguiPanelListBox_getItemById"> {
+    return accessLib().symbols.tguiPanelListBox_getItemById(widget, id);
+  }
+
+  /**
+   * @original ```c
+   * tguiWidget * tguiPanelListBox_getItemByIndex(const tguiWidget * widget, size_t index);
+   * ```
+   *
+   * @param widget `const Widget *`
+   * @param index `size_t`
+   * @returns `Widget *`
+   */
+  getItemByIndex(
+    widget: Deno.PointerValue<unknown>,
+    index: bigint,
+  ): ResultType<"tguiPanelListBox_getItemByIndex"> {
+    return accessLib().symbols.tguiPanelListBox_getItemByIndex(widget, index);
+  }
+
+  /**
+   * @original ```c
+   * int tguiPanelListBox_getIndexById(const tguiWidget * widget, tguiUtf32 id);
+   * ```
+   *
+   * @param widget `const Widget *`
+   * @param id `Utf32`
+   * @returns `int`
+   */
+  getIndexById(
+    widget: Deno.PointerValue<unknown>,
+    id: BufferSource,
+  ): ResultType<"tguiPanelListBox_getIndexById"> {
+    return accessLib().symbols.tguiPanelListBox_getIndexById(widget, id);
+  }
+
+  /**
+   * @original ```c
+   * int tguiPanelListBox_getIndexByItem(const tguiWidget * widget, const tguiWidget * panelPtr);
+   * ```
+   *
+   * @param widget `const Widget *`
+   * @param panelPtr `const Widget *`
+   * @returns `int`
+   */
+  getIndexByItem(
+    widget: Deno.PointerValue<unknown>,
+    panelPtr: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiPanelListBox_getIndexByItem"> {
+    return accessLib().symbols.tguiPanelListBox_getIndexByItem(
+      widget,
+      panelPtr,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiUtf32 tguiPanelListBox_getIdByIndex(const tguiWidget * widget, size_t index);
+   * ```
+   *
+   * @param widget `const Widget *`
+   * @param index `size_t`
+   * @returns `Utf32`
+   */
+  getIdByIndex(
+    widget: Deno.PointerValue<unknown>,
+    index: bigint,
+  ): ResultType<"tguiPanelListBox_getIdByIndex"> {
+    return accessLib().symbols.tguiPanelListBox_getIdByIndex(widget, index);
+  }
+
+  /**
+   * @original ```c
+   * tguiWidget ** tguiPanelListBox_getItems(const tguiWidget * widget, size_t * count);
+   * ```
+   *
+   * @param widget `const Widget *`
+   * @param count `size_t *`
+   * @returns `Widget **`
+   */
+  getItems(
+    widget: Deno.PointerValue<unknown>,
+    count: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiPanelListBox_getItems"> {
+    return accessLib().symbols.tguiPanelListBox_getItems(widget, count);
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiPanelListBox_contains(const tguiWidget * widget, const tguiWidget * panelPtr);
+   * ```
+   *
+   * @param widget `const Widget *`
+   * @param panelPtr `const Widget *`
+   * @returns `Bool`
+   */
+  contains(
+    widget: Deno.PointerValue<unknown>,
+    panelPtr: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiPanelListBox_contains"> {
+    return accessLib().symbols.tguiPanelListBox_contains(widget, panelPtr);
+  }
+}
+
+export class RichTextLabel extends Label {
+  /**
+   * @original ```c
+   * tguiWidget * tguiRichTextLabel_create();
+   * ```
+   *
+   * @param
+   * @returns `Widget *`
+   */
+  constructor() {
+    super(accessLib().symbols.tguiRichTextLabel_create());
+  }
+}
+
+export class SeparatorLine extends ClickableWidget {
+  /**
+   * @original ```c
+   * tguiWidget * tguiSeparatorLine_create();
+   * ```
+   *
+   * @param
+   * @returns `Widget *`
+   */
+  constructor() {
+    super(accessLib().symbols.tguiSeparatorLine_create());
+  }
+}
+
+export class SplitContainer extends Group {
+  /**
+   * @original ```c
+   * tguiWidget * tguiSplitContainer_create();
+   * ```
+   *
+   * @param
+   * @returns `Widget *`
+   */
+  constructor() {
+    super(accessLib().symbols.tguiSplitContainer_create());
+  }
+
+  /**
+   * @original ```c
+   * void tguiSplitContainer_setOrientation(tguiWidget * thisWidget, tguiOrientation value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `Orientation`
+   * @returns `void`
+   */
+  setOrientation(
+    value: number,
+  ): ResultType<"tguiSplitContainer_setOrientation"> {
+    return accessLib().symbols.tguiSplitContainer_setOrientation(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiOrientation tguiSplitContainer_getOrientation(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `Orientation`
+   */
+  getOrientation(): ResultType<"tguiSplitContainer_getOrientation"> {
+    return accessLib().symbols.tguiSplitContainer_getOrientation(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiSplitContainer_setSplitterWidth(tguiWidget * thisWidget, float value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `float`
+   * @returns `void`
+   */
+  setSplitterWidth(
+    value: number,
+  ): ResultType<"tguiSplitContainer_setSplitterWidth"> {
+    return accessLib().symbols.tguiSplitContainer_setSplitterWidth(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * float tguiSplitContainer_getSplitterWidth(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `float`
+   */
+  getSplitterWidth(): ResultType<"tguiSplitContainer_getSplitterWidth"> {
+    return accessLib().symbols.tguiSplitContainer_getSplitterWidth(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiSplitContainer_setMinimumGrabWidth(tguiWidget * thisWidget, float value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `float`
+   * @returns `void`
+   */
+  setMinimumGrabWidth(
+    value: number,
+  ): ResultType<"tguiSplitContainer_setMinimumGrabWidth"> {
+    return accessLib().symbols.tguiSplitContainer_setMinimumGrabWidth(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * float tguiSplitContainer_getMinimumGrabWidth(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `float`
+   */
+  getMinimumGrabWidth(): ResultType<"tguiSplitContainer_getMinimumGrabWidth"> {
+    return accessLib().symbols.tguiSplitContainer_getMinimumGrabWidth(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiSplitContainer_setMinValidSplitterOffset(tguiWidget * thisWidget, float minOffset);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param minOffset `float`
+   * @returns `void`
+   */
+  setMinValidSplitterOffset(
+    minOffset: number,
+  ): ResultType<"tguiSplitContainer_setMinValidSplitterOffset"> {
+    return accessLib().symbols.tguiSplitContainer_setMinValidSplitterOffset(
+      this.pointer,
+      minOffset,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiSplitContainer_setMaxValidSplitterOffset(tguiWidget * thisWidget, float maxOffset);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param maxOffset `float`
+   * @returns `void`
+   */
+  setMaxValidSplitterOffset(
+    maxOffset: number,
+  ): ResultType<"tguiSplitContainer_setMaxValidSplitterOffset"> {
+    return accessLib().symbols.tguiSplitContainer_setMaxValidSplitterOffset(
+      this.pointer,
+      maxOffset,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiSplitContainer_setSplitterOffset(tguiWidget * thisWidget, float offset);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param offset `float`
+   * @returns `void`
+   */
+  setSplitterOffset(
+    offset: number,
+  ): ResultType<"tguiSplitContainer_setSplitterOffset"> {
+    return accessLib().symbols.tguiSplitContainer_setSplitterOffset(
+      this.pointer,
+      offset,
+    );
+  }
+
+  /**
+   * @original ```c
+   * float tguiSplitContainer_getMinValidSplitterOffset(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `float`
+   */
+  getMinValidSplitterOffset(): ResultType<
+    "tguiSplitContainer_getMinValidSplitterOffset"
+  > {
+    return accessLib().symbols.tguiSplitContainer_getMinValidSplitterOffset(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * float tguiSplitContainer_getMaxValidSplitterOffset(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `float`
+   */
+  getMaxValidSplitterOffset(): ResultType<
+    "tguiSplitContainer_getMaxValidSplitterOffset"
+  > {
+    return accessLib().symbols.tguiSplitContainer_getMaxValidSplitterOffset(
+      this.pointer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * float tguiSplitContainer_getSplitterOffset(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `float`
+   */
+  getSplitterOffset(): ResultType<"tguiSplitContainer_getSplitterOffset"> {
+    return accessLib().symbols.tguiSplitContainer_getSplitterOffset(
+      this.pointer,
+    );
   }
 }
