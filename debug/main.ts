@@ -1,14 +1,13 @@
 import {
-  Button,
-  CheckBox,
+  FloatRect,
   Gui,
+  HorizontalWrap,
   renderWindow,
   sfColor,
   SFMLEvent,
   sfVideoMode,
-  VerticalLayout,
 } from "../mod.ts";
-import { SFMLEventUnion } from "../src/lib.ts";
+import { Button, CheckBox, SFMLEventUnion } from "../src/lib.ts";
 import { CTGUI_LIB } from "./index.ts";
 
 export function encodeUTF32(str: string) {
@@ -24,12 +23,13 @@ export function encodeUTF32(str: string) {
 
 function main() {
   const title = new TextEncoder().encode("Hello, World!\0");
-  const mode = new sfVideoMode(800, 300, 32);
+  const mode = new sfVideoMode(800, 300, 64);
   const window = new renderWindow(mode, title, 7);
   const gui = new Gui(window.pointer);
 
-  const cont = new VerticalLayout();
-
+  const cont = new HorizontalWrap();
+  // cont.setSize(new Vector2f(200, 100));
+  gui.setRelativeView(new FloatRect(0, 0, 1, 1));
   const button = new Button();
   button.setText(encodeUTF32("Hello, World!"));
   const checkbox = new CheckBox();
@@ -39,6 +39,8 @@ function main() {
   cont.add(checkbox.pointer, encodeUTF32(""));
 
   gui.add(cont.pointer, encodeUTF32(""));
+  // cont.setRatio(button.pointer, 1 / 2);
+  // runExample(gui);
 
   while (window.isOpen()) {
     const event = new SFMLEvent();
@@ -52,7 +54,7 @@ function main() {
       gui.handleEvent(event.pointer);
     }
 
-    const clearColor = new sfColor(0, 0, 0, 255);
+    const clearColor = new sfColor(0, 100, 200, 255);
     window.clear(clearColor);
 
     gui.draw();
@@ -60,7 +62,7 @@ function main() {
     event.destroy();
   }
 
-  button.destroy();
+  // button.destroy();
   gui.destroy();
   window.destroy();
 }
