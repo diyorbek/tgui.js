@@ -88,7 +88,7 @@ FetchContent_MakeAvailable(CSFML)
 FetchContent_Declare(
     TGUI
     GIT_REPOSITORY https://github.com/texus/TGUI.git
-    GIT_TAG v1.6.0
+    GIT_TAG v1.7.0
     GIT_SHALLOW TRUE
 )
 FetchContent_MakeAvailable(TGUI)
@@ -96,7 +96,7 @@ FetchContent_MakeAvailable(TGUI)
 FetchContent_Declare(
     CTGUI
     GIT_REPOSITORY https://github.com/texus/CTGUI.git
-    GIT_TAG v1.6
+    GIT_TAG 1.x
     GIT_SHALLOW TRUE
 )
 

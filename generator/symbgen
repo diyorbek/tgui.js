@@ -8,8 +8,23 @@ function count_lines {
   echo "$1" | wc -l | xargs
 }
 
-echo "#include <CTGUI/Backend/CSFML-Graphics.h>
-#include <CTGUI/CTGUI.h>" | 
+echo "
+#include <CTGUI/Backend/CSFML-Graphics.h>
+#include <CTGUI/CTGUI.h>
+
+// Below files are not included in CTGUI.h
+#include <CTGUI/Renderers/CheckBoxRenderer.h>
+#include <CTGUI/Renderers/PanelListBoxRenderer.h>
+#include <CTGUI/Renderers/SeparatorLineRenderer.h>
+#include <CTGUI/Renderers/SplitContainerRenderer.h>
+#include <CTGUI/ScrollbarAccessor.h>
+#include <CTGUI/Widgets/GrowHorizontalLayout.h>
+#include <CTGUI/Widgets/GrowVerticalLayout.h>
+#include <CTGUI/Widgets/PanelListBox.h>
+#include <CTGUI/Widgets/RichTextLabel.h>
+#include <CTGUI/Widgets/SeparatorLine.h>
+#include <CTGUI/Widgets/SplitContainer.h>
+" | 
 clang \
   -E -DCTGUI_EXPORTS -DTGUI_DYNAMIC -DTGUI_NO_DEPRECATED_WARNINGS \
   -I../build/_deps/csfml-src/include \
@@ -34,6 +49,8 @@ extern_count=`count_lines "$(cat extern-list.txt)"`
 echo "EXTERN functions: $extern_count
 AVAILABLE functions: $available_count"
 
-# echo "Following $unavailable_count functions are not included in the CTGUI.h:\n\n$unavailable_list"
+echo "
+Following $unavailable_count functions are marked extern, but are excluded:
+$unavailable_list"
 
 rm available-list.txt extern-list.txt
