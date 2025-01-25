@@ -36,7 +36,6 @@ sfBool renderWindow_isOpen(const sfWindow* window) {
 }
 
 sfBool renderWindow_pollEvent(sfRenderWindow* window, sfEvent* event) {
-  auto e = new tguiEvent;
   return sfRenderWindow_pollEvent(window, event);
 }
 
