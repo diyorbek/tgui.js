@@ -1,5 +1,7 @@
 #include <CTGUI/CTGUI.h>
+#include <CTGUI/Types.h>
 #include <CTGUI/extend.h>
+#include <TGUI/TGUI.hpp>
 
 sfEvent* SFMLEvent_create() {
   return new sfEvent;

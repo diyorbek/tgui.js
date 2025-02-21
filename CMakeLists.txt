@@ -110,11 +110,6 @@ add_executable(${PROJECT_NAME} debug/main.c)
 target_link_libraries(ctgui PUBLIC freetype)
 target_link_libraries(${PROJECT_NAME} PRIVATE ctgui)
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    BUILD_WITH_INSTALL_RPATH TRUE
-    INSTALL_RPATH "@executable_path;@executable_path/../lib"
-)
-
 # Include directories
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${csfml_SOURCE_DIR}/include

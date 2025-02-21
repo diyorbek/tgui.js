@@ -418,6 +418,32 @@ export const C_NATIVE_TYPE_MAP: CNativeTypeMap = {
   "tguiSprite *": "pointer",
   "tguiSpriteScalingType": "i16",
   "tguiTabContainerTabAlign": "i16",
+  "tguiKeyEvent": [
+    { name: "code", type: "tguiKeyboardKey", nativeType: "i32" },
+    { name: "alt", type: "_Bool", nativeType: "i16" },
+    { name: "control", type: "_Bool", nativeType: "i16" },
+    { name: "shift", type: "_Bool", nativeType: "i16" },
+    { name: "system", type: "_Bool", nativeType: "i16" },
+  ],
+  "tguiMouseWheelEvent": [
+    { name: "delta", type: "float", nativeType: "f32" },
+    { name: "x", type: "int", nativeType: "i32" },
+    { name: "y", type: "int", nativeType: "i32" },
+  ],
+  "tguiMouseButtonEvent": [
+    { name: "button", type: "tguiMouseButton", nativeType: "i32" },
+    { name: "x", type: "int", nativeType: "i32" },
+    { name: "y", type: "int", nativeType: "i32" },
+  ],
+  "tguiMouseMoveEvent": [
+    { name: "x", type: "int", nativeType: "i32" },
+    { name: "y", type: "int", nativeType: "i32" },
+  ],
+  "tguiSizeEvent": [
+    { name: "width", type: "unsigned int", nativeType: "u32" },
+    { name: "height", type: "unsigned int", nativeType: "u32" },
+  ],
+  "tguiTextEvent": [{ name: "unicode", type: "unsigned int", nativeType: "u32" }],
   "tguiText *": "pointer",
   "tguiTexture *": "pointer",
   "tguiTheme *": "pointer",
@@ -577,3 +603,5 @@ export const C_NATIVE_TYPE_MAP: CNativeTypeMap = {
   "unsigned short int": "u16",
   "void": "void",
 } as const;
+
+var a = {};

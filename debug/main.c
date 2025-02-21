@@ -14,7 +14,6 @@ int main() {
 
   // The tguiGui object should always be the first CTGUI object to create
   tguiGui* gui = tguiGuiCSFMLGraphics_create(window);
-
   tguiWidget* button = tguiButton_create();
   tguiGui_add(gui, button, U"MyButton");
 
@@ -33,6 +32,13 @@ int main() {
 
   tguiWidget_signalConnect(button, "Pressed", func);
 
+  tguiWidget* l = tguiLabel_create();
+  tguiLabel_setText(l, U"Label with Color");
+  tguiVector2f pos = {40, 100};
+  tguiWidget_setPosition(l, pos);
+  tguiLabelRenderer_setTextColor(tguiWidget_getRenderer(l), (tguiColor){145, 255, 0, 1, 1});
+  tguiGui_add(gui, l, U"");
+
   while (sfRenderWindow_isOpen(window)) {
     sfEvent event;
     while (sfRenderWindow_pollEvent(window, &event)) {
@@ -41,7 +47,7 @@ int main() {
       tguiGuiCSFMLGraphics_handleEvent(gui, &event);
     }
 
-    sfRenderWindow_clear(window, sfBlack);
+    sfRenderWindow_clear(window, sfWhite);
     tguiGui_draw(gui);
     sfRenderWindow_display(window);
   }

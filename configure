@@ -36,4 +36,7 @@ else
     ${SRCROOT}/extend.cpp\
     ${INCROOT}/extend.h
     ' build/_deps/ctgui-src/src/CTGUI/CMakeLists.txt
+
+    # Fix function definition
+    sed -i '' 's/ getCheckedRadioButton(tguiWidget/ tguiRadioButtonGroup_getCheckedRadioButton(tguiWidget/' build/_deps/ctgui-src/src/CTGUI/Widgets/RadioButtonGroup.cpp
 fi

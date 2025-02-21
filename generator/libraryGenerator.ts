@@ -17,6 +17,7 @@ function createInheritanceGraph() {
   const { stdout } = command.outputSync();
   const output = new TextDecoder().decode(stdout);
   const inheritanceGraph: Record<string, string[]> = {};
+  const childrenGraph: Record<string, string[]> = {};
   const inheritanceRank: Record<string, number> = {};
 
   const data = output
@@ -29,9 +30,27 @@ function createInheritanceGraph() {
     }));
 
   data.forEach(({ child, parent }) => {
-    inheritanceRank[parent] ??= 0;
-    inheritanceRank[parent]++;
+    childrenGraph[parent] ??= [];
+    childrenGraph[parent].push(child);
   });
+
+  const visited = new Set<string>();
+  function dfs(parent: string) {
+    if (visited.has(parent)) return inheritanceRank[parent];
+
+    visited.add(parent);
+    inheritanceRank[parent] = childrenGraph[parent]
+      ? childrenGraph[parent].length
+      : 0;
+
+    if (inheritanceRank[parent] === 0) return 0;
+
+    for (const child of childrenGraph[parent]) {
+      inheritanceRank[parent] += dfs(child);
+    }
+
+    return inheritanceRank[parent];
+  }
 
   data.forEach(({ child, parent }) => {
     // @ts-ignore
@@ -40,11 +59,13 @@ function createInheritanceGraph() {
     inheritanceGraph[child].push(parent);
   });
 
-  return { inheritanceGraph, inheritanceRank };
+  return { dfs, inheritanceGraph, inheritanceRank };
 }
 
-const { inheritanceGraph, inheritanceRank } = createInheritanceGraph();
+const { dfs, inheritanceGraph, inheritanceRank } = createInheritanceGraph();
 // console.log(inheritanceGraph);
+// console.log(inheritanceRank);
+
 const names: Record<
   string,
   {
@@ -120,6 +141,9 @@ let code = `import { accessLib, type ResultType } from "./ctgui.ts";
 import { deserializeStruct, type NumberLikeType, serializeStruct, type StructDef } from "./utils/structToBuffer.ts";\n\n`;
 
 const CTGUI_LIB = "accessLib()";
+
+// Populate inheritanceRank via dfs
+Object.keys(names).forEach((name) => dfs(name));
 
 Object.entries(names)
   .toSorted(([declA], [declB]) => {
@@ -246,7 +270,9 @@ Object.entries(names)
         (name === "widget" && declName === "Widget") ||
         (name === "gui" && declName === "Gui") ||
         (name === "window" && declName !== "Gui") ||
-        (name.startsWith("this") && !/sprite|texture|font/i.test(name))
+        (name.startsWith("this") &&
+          !/sprite|texture|font/i.test(name) &&
+          name !== "thisScrollbarAccessor")
       );
     }
 

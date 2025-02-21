@@ -3,6 +3,7 @@ import {
   ChatBox,
   CheckBox,
   ChildWindow,
+  Color,
   ComboBox,
   EditBox,
   FloatRect,
@@ -18,6 +19,7 @@ import {
   Vector2f,
   type Gui,
 } from "../mod.ts";
+import { CTGUI_LIB } from "./index.ts";
 
 function encodeUTF32(str: string) {
   const utf32Array = new Uint32Array(str.length + 1); // +1 for null terminator
@@ -64,6 +66,12 @@ export function runExample(gui: Gui) {
   label.setText(encodeUTF32("This is a label.\nAnd these are radio buttons:"));
   label.setPosition(new Vector2f(10, 90));
   label.setTextSize(18);
+
+  CTGUI_LIB.symbols.tguiLabelRenderer_setTextColor(
+    label.getRenderer(),
+    new Uint8Array([255, 255, 0, 1, 1])
+  );
+
   gui.add(label.pointer, encodeUTF32(""));
 
   let radioButton = new RadioButton();
@@ -225,9 +233,24 @@ export function runExample(gui: Gui) {
   // chatbox.setLinesStartFromTop();
   chatbox.setLinesStartFromTop(1);
   chatbox.addLine(encodeUTF32("texus: Hey, this is TGUI!"));
-  chatbox.addLine(encodeUTF32("Me: Looks awesome! ;)"));
-  chatbox.addLine(encodeUTF32("texus: Thanks! :)"));
-  chatbox.addLine(encodeUTF32("Me: The widgets rock ^^"));
+  CTGUI_LIB.symbols.tguiChatBox_addLineWithColor(
+    chatbox.pointer,
+    encodeUTF32("sdfsfsd"),
+    new Uint8Array([255, 255, 0, 1, 1])
+  );
+  console.log(chatbox.getLineColor(BigInt(1)));
+  // chatbox.addLineWithColor(
+  //   encodeUTF32("Me: Looks awesome! ;)"),
+  //   new Color(255, 0, 0, 1, 1)
+  // );
+  chatbox.addLineWithColor(
+    encodeUTF32("texus: Thanks! :)"),
+    new Color(0, 0, 0, 1, 1)
+  );
+  chatbox.addLineWithColor(
+    encodeUTF32("Me: The widgets rock ^^"),
+    new Color(0, 0, 0, 1, 1)
+  );
   gui.add(chatbox.pointer, encodeUTF32(""));
 
   button = new Button();

@@ -16,14 +16,12 @@ echo "
 #include <CTGUI/Renderers/CheckBoxRenderer.h>
 #include <CTGUI/Renderers/PanelListBoxRenderer.h>
 #include <CTGUI/Renderers/SeparatorLineRenderer.h>
-#include <CTGUI/Renderers/SplitContainerRenderer.h>
 #include <CTGUI/ScrollbarAccessor.h>
 #include <CTGUI/Widgets/GrowHorizontalLayout.h>
 #include <CTGUI/Widgets/GrowVerticalLayout.h>
 #include <CTGUI/Widgets/PanelListBox.h>
 #include <CTGUI/Widgets/RichTextLabel.h>
 #include <CTGUI/Widgets/SeparatorLine.h>
-#include <CTGUI/Widgets/SplitContainer.h>
 " | 
 clang \
   -E -DCTGUI_EXPORTS -DTGUI_DYNAMIC -DTGUI_NO_DEPRECATED_WARNINGS \

@@ -436,7 +436,7 @@ export const CTGUI_SYMBOLS = {
    * ```
    *
    * @param gui `Gui *`
-   * @param textEvent `TextEvent`
+   * @param textEvent `TextEvent { unicode: unsigned int }`
    * @returns `Bool`
    */
   tguiGui_handleEventTextEntered: {
@@ -450,13 +450,11 @@ export const CTGUI_SYMBOLS = {
    * ```
    *
    * @param gui `Gui *`
-   * @param keyEvent `KeyEvent`
+   * @param keyEvent `KeyEvent { code: tguiKeyboardKey; alt: _Bool; control: _Bool; shift: _Bool; system: _Bool }`
    * @returns `Bool`
    */
   tguiGui_handleEventKeyPressed: {
-    parameters: ["pointer", {
-      struct: ["i32", "_Bool", "_Bool", "_Bool", "_Bool"],
-    }],
+    parameters: ["pointer", { struct: ["i32", "i16", "i16", "i16", "i16"] }],
     result: "i16",
   },
 
@@ -466,7 +464,7 @@ export const CTGUI_SYMBOLS = {
    * ```
    *
    * @param gui `Gui *`
-   * @param mouseWheelEvent `MouseWheelEvent`
+   * @param mouseWheelEvent `MouseWheelEvent { delta: float; x: int; y: int }`
    * @returns `Bool`
    */
   tguiGui_handleEventMouseWheelScrolled: {
@@ -480,7 +478,7 @@ export const CTGUI_SYMBOLS = {
    * ```
    *
    * @param gui `Gui *`
-   * @param mouseButtonEvent `MouseButtonEvent`
+   * @param mouseButtonEvent `MouseButtonEvent { button: tguiMouseButton; x: int; y: int }`
    * @returns `Bool`
    */
   tguiGui_handleEventMouseButtonPressed: {
@@ -494,7 +492,7 @@ export const CTGUI_SYMBOLS = {
    * ```
    *
    * @param gui `Gui *`
-   * @param mouseButtonEvent `MouseButtonEvent`
+   * @param mouseButtonEvent `MouseButtonEvent { button: tguiMouseButton; x: int; y: int }`
    * @returns `Bool`
    */
   tguiGui_handleEventMouseButtonReleased: {
@@ -508,7 +506,7 @@ export const CTGUI_SYMBOLS = {
    * ```
    *
    * @param gui `Gui *`
-   * @param mouseMoveEvent `MouseMoveEvent`
+   * @param mouseMoveEvent `MouseMoveEvent { x: int; y: int }`
    * @returns `Bool`
    */
   tguiGui_handleEventMouseMoved: {
@@ -542,7 +540,7 @@ export const CTGUI_SYMBOLS = {
    * ```
    *
    * @param gui `Gui *`
-   * @param sizeEvent `SizeEvent`
+   * @param sizeEvent `SizeEvent { width: unsigned int; height: unsigned int }`
    * @returns `Bool`
    */
   tguiGui_handleEventResized: {
@@ -22883,83 +22881,6 @@ export const CTGUI_SYMBOLS = {
 
   /**
    * @original ```c
-   * tguiRenderer * tguiSplitContainerRenderer_create();
-   * ```
-   *
-   * @param
-   * @returns `Renderer *`
-   */
-  tguiSplitContainerRenderer_create: { parameters: [], result: "pointer" },
-
-  /**
-   * @original ```c
-   * tguiRenderer * tguiSplitContainerRenderer_copy(const tguiRenderer * other);
-   * ```
-   *
-   * @param other `const Renderer *`
-   * @returns `Renderer *`
-   */
-  tguiSplitContainerRenderer_copy: {
-    parameters: ["pointer"],
-    result: "pointer",
-  },
-
-  /**
-   * @original ```c
-   * void tguiSplitContainerRenderer_setSplitterColor(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  tguiSplitContainerRenderer_setSplitterColor: {
-    parameters: ["pointer", { struct: ["u8", "u8", "u8", "u8", "i16"] }],
-    result: "void",
-  },
-
-  /**
-   * @original ```c
-   * tguiColor tguiSplitContainerRenderer_getSplitterColor(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  tguiSplitContainerRenderer_getSplitterColor: {
-    parameters: ["pointer"],
-    result: { struct: ["u8", "u8", "u8", "u8", "i16"] },
-  },
-
-  /**
-   * @original ```c
-   * void tguiSplitContainerRenderer_setSplitterColorHover(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  tguiSplitContainerRenderer_setSplitterColorHover: {
-    parameters: ["pointer", { struct: ["u8", "u8", "u8", "u8", "i16"] }],
-    result: "void",
-  },
-
-  /**
-   * @original ```c
-   * tguiColor tguiSplitContainerRenderer_getSplitterColorHover(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  tguiSplitContainerRenderer_getSplitterColorHover: {
-    parameters: ["pointer"],
-    result: { struct: ["u8", "u8", "u8", "u8", "i16"] },
-  },
-
-  /**
-   * @original ```c
    * tguiScrollbarAccessor * tguiScrollbarChildInterface_getScrollbar(tguiWidget * widget);
    * ```
    *
@@ -23585,173 +23506,4 @@ export const CTGUI_SYMBOLS = {
    * @returns `Widget *`
    */
   tguiSeparatorLine_create: { parameters: [], result: "pointer" },
-
-  /**
-   * @original ```c
-   * tguiWidget * tguiSplitContainer_create();
-   * ```
-   *
-   * @param
-   * @returns `Widget *`
-   */
-  tguiSplitContainer_create: { parameters: [], result: "pointer" },
-
-  /**
-   * @original ```c
-   * void tguiSplitContainer_setOrientation(tguiWidget * thisWidget, tguiOrientation value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `Orientation`
-   * @returns `void`
-   */
-  tguiSplitContainer_setOrientation: {
-    parameters: ["pointer", "i16"],
-    result: "void",
-  },
-
-  /**
-   * @original ```c
-   * tguiOrientation tguiSplitContainer_getOrientation(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `Orientation`
-   */
-  tguiSplitContainer_getOrientation: { parameters: ["pointer"], result: "i16" },
-
-  /**
-   * @original ```c
-   * void tguiSplitContainer_setSplitterWidth(tguiWidget * thisWidget, float value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `float`
-   * @returns `void`
-   */
-  tguiSplitContainer_setSplitterWidth: {
-    parameters: ["pointer", "f32"],
-    result: "void",
-  },
-
-  /**
-   * @original ```c
-   * float tguiSplitContainer_getSplitterWidth(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `float`
-   */
-  tguiSplitContainer_getSplitterWidth: {
-    parameters: ["pointer"],
-    result: "f32",
-  },
-
-  /**
-   * @original ```c
-   * void tguiSplitContainer_setMinimumGrabWidth(tguiWidget * thisWidget, float value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `float`
-   * @returns `void`
-   */
-  tguiSplitContainer_setMinimumGrabWidth: {
-    parameters: ["pointer", "f32"],
-    result: "void",
-  },
-
-  /**
-   * @original ```c
-   * float tguiSplitContainer_getMinimumGrabWidth(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `float`
-   */
-  tguiSplitContainer_getMinimumGrabWidth: {
-    parameters: ["pointer"],
-    result: "f32",
-  },
-
-  /**
-   * @original ```c
-   * void tguiSplitContainer_setMinValidSplitterOffset(tguiWidget * thisWidget, float minOffset);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param minOffset `float`
-   * @returns `void`
-   */
-  tguiSplitContainer_setMinValidSplitterOffset: {
-    parameters: ["pointer", "f32"],
-    result: "void",
-  },
-
-  /**
-   * @original ```c
-   * void tguiSplitContainer_setMaxValidSplitterOffset(tguiWidget * thisWidget, float maxOffset);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param maxOffset `float`
-   * @returns `void`
-   */
-  tguiSplitContainer_setMaxValidSplitterOffset: {
-    parameters: ["pointer", "f32"],
-    result: "void",
-  },
-
-  /**
-   * @original ```c
-   * void tguiSplitContainer_setSplitterOffset(tguiWidget * thisWidget, float offset);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param offset `float`
-   * @returns `void`
-   */
-  tguiSplitContainer_setSplitterOffset: {
-    parameters: ["pointer", "f32"],
-    result: "void",
-  },
-
-  /**
-   * @original ```c
-   * float tguiSplitContainer_getMinValidSplitterOffset(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `float`
-   */
-  tguiSplitContainer_getMinValidSplitterOffset: {
-    parameters: ["pointer"],
-    result: "f32",
-  },
-
-  /**
-   * @original ```c
-   * float tguiSplitContainer_getMaxValidSplitterOffset(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `float`
-   */
-  tguiSplitContainer_getMaxValidSplitterOffset: {
-    parameters: ["pointer"],
-    result: "f32",
-  },
-
-  /**
-   * @original ```c
-   * float tguiSplitContainer_getSplitterOffset(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `float`
-   */
-  tguiSplitContainer_getSplitterOffset: {
-    parameters: ["pointer"],
-    result: "f32",
-  },
 } as const;

@@ -1595,20 +1595,6 @@ export class Widget {
   }
 }
 
-export class ClickableWidget extends Widget {
-  /**
-   * @original ```c
-   * tguiWidget * tguiClickableWidget_create();
-   * ```
-   *
-   * @param
-   * @returns `Widget *`
-   */
-  constructor(ptr?: Deno.PointerValue<unknown>) {
-    super(ptr ? ptr : accessLib().symbols.tguiClickableWidget_create());
-  }
-}
-
 export class Container extends Widget {
   /**
    * @original ```c
@@ -1949,6 +1935,34 @@ export class Container extends Widget {
   }
 }
 
+export class ClickableWidget extends Widget {
+  /**
+   * @original ```c
+   * tguiWidget * tguiClickableWidget_create();
+   * ```
+   *
+   * @param
+   * @returns `Widget *`
+   */
+  constructor(ptr?: Deno.PointerValue<unknown>) {
+    super(ptr ? ptr : accessLib().symbols.tguiClickableWidget_create());
+  }
+}
+
+export class Group extends Container {
+  /**
+   * @original ```c
+   * tguiWidget * tguiGroup_create();
+   * ```
+   *
+   * @param
+   * @returns `Widget *`
+   */
+  constructor(ptr?: Deno.PointerValue<unknown>) {
+    super(ptr ? ptr : accessLib().symbols.tguiGroup_create());
+  }
+}
+
 export class BoxLayout extends Group {
   /**
    * @original ```c
@@ -2001,6 +2015,72 @@ export class BoxLayout extends Group {
   }
 }
 
+export class GroupRenderer {
+  protected ptr: Deno.PointerValue<unknown>;
+
+  get pointer(): Deno.PointerValue<unknown> {
+    return this.ptr;
+  }
+
+  /**
+   * @original ```c
+   * tguiRenderer * tguiGroupRenderer_create();
+   * ```
+   *
+   * @param
+   * @returns `Renderer *`
+   */
+  constructor(other?: Deno.PointerValue<unknown>) {
+    if (typeof other === "undefined") {
+      this.ptr = accessLib().symbols.tguiGroupRenderer_create();
+    } else {
+      this.ptr = this.copy(other); // to make TS happy about uninitialized field
+    }
+  }
+
+  /**
+   * @original ```c
+   * tguiRenderer * tguiGroupRenderer_copy(const tguiRenderer * other);
+   * ```
+   *
+   * @param other `const Renderer *`
+   * @returns `Renderer *`
+   */
+  copy(other: Deno.PointerValue<unknown>): Deno.PointerValue<unknown> {
+    return this.ptr = accessLib().symbols.tguiGroupRenderer_copy(other);
+  }
+
+  /**
+   * @original ```c
+   * void tguiGroupRenderer_setPadding(tguiRenderer * thisRenderer, const tguiOutline * value);
+   * ```
+   *
+   * @param thisRenderer `Renderer *`
+   * @param value `const Outline *`
+   * @returns `void`
+   */
+  setPadding(
+    value: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiGroupRenderer_setPadding"> {
+    return accessLib().symbols.tguiGroupRenderer_setPadding(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * const tguiOutline * tguiGroupRenderer_getPadding(const tguiRenderer * thisRenderer);
+   * ```
+   *
+   * @param thisRenderer `const Renderer *`
+   * @returns `const Outline *`
+   */
+  getPadding(): ResultType<"tguiGroupRenderer_getPadding"> {
+    return accessLib().symbols.tguiGroupRenderer_getPadding(this.pointer);
+  }
+}
+
 export class DualScrollbarChildInterface {
   /**
    * @original ```c
@@ -2030,6 +2110,121 @@ export class DualScrollbarChildInterface {
   ): ResultType<"tguiDualScrollbarChildInterface_getHorizontalScrollbar"> {
     return accessLib().symbols
       .tguiDualScrollbarChildInterface_getHorizontalScrollbar(widget);
+  }
+}
+
+export class ScrollbarChildInterface {
+  /**
+   * @original ```c
+   * tguiScrollbarAccessor * tguiScrollbarChildInterface_getScrollbar(tguiWidget * widget);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @returns `ScrollbarAccessor *`
+   */
+  getScrollbar(
+    widget: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiScrollbarChildInterface_getScrollbar"> {
+    return accessLib().symbols.tguiScrollbarChildInterface_getScrollbar(widget);
+  }
+}
+
+export class ButtonBase extends ClickableWidget {
+  /**
+   * @original ```c
+   * void tguiButtonBase_setText(tguiWidget * thisWidget, tguiUtf32 value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `Utf32`
+   * @returns `void`
+   */
+  setText(value: BufferSource): ResultType<"tguiButtonBase_setText"> {
+    return accessLib().symbols.tguiButtonBase_setText(this.pointer, value);
+  }
+
+  /**
+   * @original ```c
+   * tguiUtf32 tguiButtonBase_getText(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `Utf32`
+   */
+  getText(): ResultType<"tguiButtonBase_getText"> {
+    return accessLib().symbols.tguiButtonBase_getText(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiButtonBase_setIgnoreKeyEvents(tguiWidget * thisWidget, tguiBool value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `Bool`
+   * @returns `void`
+   */
+  setIgnoreKeyEvents(
+    value: number,
+  ): ResultType<"tguiButtonBase_setIgnoreKeyEvents"> {
+    return accessLib().symbols.tguiButtonBase_setIgnoreKeyEvents(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiButtonBase_getIgnoreKeyEvents(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `Bool`
+   */
+  getIgnoreKeyEvents(): ResultType<"tguiButtonBase_getIgnoreKeyEvents"> {
+    return accessLib().symbols.tguiButtonBase_getIgnoreKeyEvents(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiButtonBase_setTextPositionAbs(tguiWidget * widget, tguiVector2f position, tguiVector2f origin);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @param position `Vector2f { x: float; y: float }`
+   * @param origin `Vector2f { x: float; y: float }`
+   * @returns `void`
+   */
+  setTextPositionAbs(
+    position: Vector2f,
+    origin: Vector2f,
+  ): ResultType<"tguiButtonBase_setTextPositionAbs"> {
+    return accessLib().symbols.tguiButtonBase_setTextPositionAbs(
+      this.pointer,
+      position.buffer,
+      origin.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * void tguiButtonBase_setTextPositionRel(tguiWidget * widget, tguiVector2f position, tguiVector2f origin);
+   * ```
+   *
+   * @param widget `Widget *`
+   * @param position `Vector2f { x: float; y: float }`
+   * @param origin `Vector2f { x: float; y: float }`
+   * @returns `void`
+   */
+  setTextPositionRel(
+    position: Vector2f,
+    origin: Vector2f,
+  ): ResultType<"tguiButtonBase_setTextPositionRel"> {
+    return accessLib().symbols.tguiButtonBase_setTextPositionRel(
+      this.pointer,
+      position.buffer,
+      origin.buffer,
+    );
   }
 }
 
@@ -2383,20 +2578,6 @@ export class ChildWindow extends Container {
    */
   isPositionLocked(): ResultType<"tguiChildWindow_isPositionLocked"> {
     return accessLib().symbols.tguiChildWindow_isPositionLocked(this.pointer);
-  }
-}
-
-export class Group extends Container {
-  /**
-   * @original ```c
-   * tguiWidget * tguiGroup_create();
-   * ```
-   *
-   * @param
-   * @returns `Widget *`
-   */
-  constructor(ptr?: Deno.PointerValue<unknown>) {
-    super(ptr ? ptr : accessLib().symbols.tguiGroup_create());
   }
 }
 
@@ -2991,88 +3172,6 @@ export class ChildWindowRenderer {
   }
 }
 
-export class GroupRenderer {
-  protected ptr: Deno.PointerValue<unknown>;
-
-  get pointer(): Deno.PointerValue<unknown> {
-    return this.ptr;
-  }
-
-  /**
-   * @original ```c
-   * tguiRenderer * tguiGroupRenderer_create();
-   * ```
-   *
-   * @param
-   * @returns `Renderer *`
-   */
-  constructor(other?: Deno.PointerValue<unknown>) {
-    if (typeof other === "undefined") {
-      this.ptr = accessLib().symbols.tguiGroupRenderer_create();
-    } else {
-      this.ptr = this.copy(other); // to make TS happy about uninitialized field
-    }
-  }
-
-  /**
-   * @original ```c
-   * tguiRenderer * tguiGroupRenderer_copy(const tguiRenderer * other);
-   * ```
-   *
-   * @param other `const Renderer *`
-   * @returns `Renderer *`
-   */
-  copy(other: Deno.PointerValue<unknown>): Deno.PointerValue<unknown> {
-    return this.ptr = accessLib().symbols.tguiGroupRenderer_copy(other);
-  }
-
-  /**
-   * @original ```c
-   * void tguiGroupRenderer_setPadding(tguiRenderer * thisRenderer, const tguiOutline * value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `const Outline *`
-   * @returns `void`
-   */
-  setPadding(
-    value: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiGroupRenderer_setPadding"> {
-    return accessLib().symbols.tguiGroupRenderer_setPadding(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * const tguiOutline * tguiGroupRenderer_getPadding(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `const Outline *`
-   */
-  getPadding(): ResultType<"tguiGroupRenderer_getPadding"> {
-    return accessLib().symbols.tguiGroupRenderer_getPadding(this.pointer);
-  }
-}
-
-export class ScrollbarChildInterface {
-  /**
-   * @original ```c
-   * tguiScrollbarAccessor * tguiScrollbarChildInterface_getScrollbar(tguiWidget * widget);
-   * ```
-   *
-   * @param widget `Widget *`
-   * @returns `ScrollbarAccessor *`
-   */
-  getScrollbar(
-    widget: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiScrollbarChildInterface_getScrollbar"> {
-    return accessLib().symbols.tguiScrollbarChildInterface_getScrollbar(widget);
-  }
-}
-
 export class BoxLayoutRatios extends BoxLayout {
   override add(
     widget: Deno.PointerValue<unknown>,
@@ -3257,273 +3356,6 @@ export class BoxLayoutRatios extends BoxLayout {
   }
 }
 
-export class ButtonBase extends ClickableWidget {
-  /**
-   * @original ```c
-   * void tguiButtonBase_setText(tguiWidget * thisWidget, tguiUtf32 value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `Utf32`
-   * @returns `void`
-   */
-  setText(value: BufferSource): ResultType<"tguiButtonBase_setText"> {
-    return accessLib().symbols.tguiButtonBase_setText(this.pointer, value);
-  }
-
-  /**
-   * @original ```c
-   * tguiUtf32 tguiButtonBase_getText(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `Utf32`
-   */
-  getText(): ResultType<"tguiButtonBase_getText"> {
-    return accessLib().symbols.tguiButtonBase_getText(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiButtonBase_setIgnoreKeyEvents(tguiWidget * thisWidget, tguiBool value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `Bool`
-   * @returns `void`
-   */
-  setIgnoreKeyEvents(
-    value: number,
-  ): ResultType<"tguiButtonBase_setIgnoreKeyEvents"> {
-    return accessLib().symbols.tguiButtonBase_setIgnoreKeyEvents(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiBool tguiButtonBase_getIgnoreKeyEvents(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `Bool`
-   */
-  getIgnoreKeyEvents(): ResultType<"tguiButtonBase_getIgnoreKeyEvents"> {
-    return accessLib().symbols.tguiButtonBase_getIgnoreKeyEvents(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiButtonBase_setTextPositionAbs(tguiWidget * widget, tguiVector2f position, tguiVector2f origin);
-   * ```
-   *
-   * @param widget `Widget *`
-   * @param position `Vector2f { x: float; y: float }`
-   * @param origin `Vector2f { x: float; y: float }`
-   * @returns `void`
-   */
-  setTextPositionAbs(
-    position: Vector2f,
-    origin: Vector2f,
-  ): ResultType<"tguiButtonBase_setTextPositionAbs"> {
-    return accessLib().symbols.tguiButtonBase_setTextPositionAbs(
-      this.pointer,
-      position.buffer,
-      origin.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiButtonBase_setTextPositionRel(tguiWidget * widget, tguiVector2f position, tguiVector2f origin);
-   * ```
-   *
-   * @param widget `Widget *`
-   * @param position `Vector2f { x: float; y: float }`
-   * @param origin `Vector2f { x: float; y: float }`
-   * @returns `void`
-   */
-  setTextPositionRel(
-    position: Vector2f,
-    origin: Vector2f,
-  ): ResultType<"tguiButtonBase_setTextPositionRel"> {
-    return accessLib().symbols.tguiButtonBase_setTextPositionRel(
-      this.pointer,
-      position.buffer,
-      origin.buffer,
-    );
-  }
-}
-
-export class Button extends ButtonBase {
-  /**
-   * @original ```c
-   * tguiWidget * tguiButton_create();
-   * ```
-   *
-   * @param
-   * @returns `Widget *`
-   */
-  constructor(ptr?: Deno.PointerValue<unknown>) {
-    super(ptr ? ptr : accessLib().symbols.tguiButton_create());
-  }
-}
-
-export class Label extends ClickableWidget {
-  /**
-   * @original ```c
-   * tguiWidget * tguiLabel_create();
-   * ```
-   *
-   * @param
-   * @returns `Widget *`
-   */
-  constructor(ptr?: Deno.PointerValue<unknown>) {
-    super(ptr ? ptr : accessLib().symbols.tguiLabel_create());
-  }
-
-  /**
-   * @original ```c
-   * void tguiLabel_setText(tguiWidget * thisWidget, tguiUtf32 value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `Utf32`
-   * @returns `void`
-   */
-  setText(value: BufferSource): ResultType<"tguiLabel_setText"> {
-    return accessLib().symbols.tguiLabel_setText(this.pointer, value);
-  }
-
-  /**
-   * @original ```c
-   * tguiUtf32 tguiLabel_getText(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `Utf32`
-   */
-  getText(): ResultType<"tguiLabel_getText"> {
-    return accessLib().symbols.tguiLabel_getText(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiLabel_setHorizontalAlignment(tguiWidget * thisWidget, tguiHorizontalAlignment value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `HorizontalAlignment`
-   * @returns `void`
-   */
-  setHorizontalAlignment(
-    value: number,
-  ): ResultType<"tguiLabel_setHorizontalAlignment"> {
-    return accessLib().symbols.tguiLabel_setHorizontalAlignment(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiHorizontalAlignment tguiLabel_getHorizontalAlignment(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `HorizontalAlignment`
-   */
-  getHorizontalAlignment(): ResultType<"tguiLabel_getHorizontalAlignment"> {
-    return accessLib().symbols.tguiLabel_getHorizontalAlignment(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiLabel_setVerticalAlignment(tguiWidget * thisWidget, tguiVerticalAlignment value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `VerticalAlignment`
-   * @returns `void`
-   */
-  setVerticalAlignment(
-    value: number,
-  ): ResultType<"tguiLabel_setVerticalAlignment"> {
-    return accessLib().symbols.tguiLabel_setVerticalAlignment(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiVerticalAlignment tguiLabel_getVerticalAlignment(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `VerticalAlignment`
-   */
-  getVerticalAlignment(): ResultType<"tguiLabel_getVerticalAlignment"> {
-    return accessLib().symbols.tguiLabel_getVerticalAlignment(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiLabel_setAutoSize(tguiWidget * thisWidget, tguiBool value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `Bool`
-   * @returns `void`
-   */
-  setAutoSize(value: number): ResultType<"tguiLabel_setAutoSize"> {
-    return accessLib().symbols.tguiLabel_setAutoSize(this.pointer, value);
-  }
-
-  /**
-   * @original ```c
-   * tguiBool tguiLabel_getAutoSize(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `Bool`
-   */
-  getAutoSize(): ResultType<"tguiLabel_getAutoSize"> {
-    return accessLib().symbols.tguiLabel_getAutoSize(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiLabel_setMaximumTextWidth(tguiWidget * thisWidget, float value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `float`
-   * @returns `void`
-   */
-  setMaximumTextWidth(
-    value: number,
-  ): ResultType<"tguiLabel_setMaximumTextWidth"> {
-    return accessLib().symbols.tguiLabel_setMaximumTextWidth(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * float tguiLabel_getMaximumTextWidth(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `float`
-   */
-  getMaximumTextWidth(): ResultType<"tguiLabel_getMaximumTextWidth"> {
-    return accessLib().symbols.tguiLabel_getMaximumTextWidth(this.pointer);
-  }
-}
-
 export class Panel extends Group {
   /**
    * @original ```c
@@ -3561,158 +3393,6 @@ export class Panel extends Group {
    */
   getEventBubbling(): ResultType<"tguiPanel_getEventBubbling"> {
     return accessLib().symbols.tguiPanel_getEventBubbling();
-  }
-}
-
-export class RadioButton extends ClickableWidget {
-  /**
-   * @original ```c
-   * tguiWidget * tguiRadioButton_create();
-   * ```
-   *
-   * @param
-   * @returns `Widget *`
-   */
-  constructor(ptr?: Deno.PointerValue<unknown>) {
-    super(ptr ? ptr : accessLib().symbols.tguiRadioButton_create());
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButton_setChecked(tguiWidget * thisWidget, tguiBool value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `Bool`
-   * @returns `void`
-   */
-  setChecked(value: number): ResultType<"tguiRadioButton_setChecked"> {
-    return accessLib().symbols.tguiRadioButton_setChecked(this.pointer, value);
-  }
-
-  /**
-   * @original ```c
-   * tguiBool tguiRadioButton_isChecked(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `Bool`
-   */
-  isChecked(): ResultType<"tguiRadioButton_isChecked"> {
-    return accessLib().symbols.tguiRadioButton_isChecked(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButton_setText(tguiWidget * thisWidget, tguiUtf32 value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `Utf32`
-   * @returns `void`
-   */
-  setText(value: BufferSource): ResultType<"tguiRadioButton_setText"> {
-    return accessLib().symbols.tguiRadioButton_setText(this.pointer, value);
-  }
-
-  /**
-   * @original ```c
-   * tguiUtf32 tguiRadioButton_getText(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `Utf32`
-   */
-  getText(): ResultType<"tguiRadioButton_getText"> {
-    return accessLib().symbols.tguiRadioButton_getText(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiRadioButton_setTextClickable(tguiWidget * thisWidget, tguiBool value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `Bool`
-   * @returns `void`
-   */
-  setTextClickable(
-    value: number,
-  ): ResultType<"tguiRadioButton_setTextClickable"> {
-    return accessLib().symbols.tguiRadioButton_setTextClickable(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiBool tguiRadioButton_isTextClickable(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `Bool`
-   */
-  isTextClickable(): ResultType<"tguiRadioButton_isTextClickable"> {
-    return accessLib().symbols.tguiRadioButton_isTextClickable(this.pointer);
-  }
-}
-
-export class ScrollablePanel extends Panel {
-  /**
-   * @original ```c
-   * tguiWidget * tguiScrollablePanel_create();
-   * ```
-   *
-   * @param
-   * @returns `Widget *`
-   */
-  constructor(ptr?: Deno.PointerValue<unknown>) {
-    super(ptr ? ptr : accessLib().symbols.tguiScrollablePanel_create());
-  }
-
-  /**
-   * @original ```c
-   * void tguiScrollablePanel_setContentSize(tguiWidget * thisWidget, tguiVector2f value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `Vector2f { x: float; y: float }`
-   * @returns `void`
-   */
-  setContentSize(
-    value: Vector2f,
-  ): ResultType<"tguiScrollablePanel_setContentSize"> {
-    return accessLib().symbols.tguiScrollablePanel_setContentSize(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiVector2f tguiScrollablePanel_getContentSize(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `Vector2f { x: float; y: float }`
-   */
-  getContentSize(): ResultType<"tguiScrollablePanel_getContentSize"> {
-    return accessLib().symbols.tguiScrollablePanel_getContentSize(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * tguiVector2f tguiScrollablePanel_getContentOffset(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `Vector2f { x: float; y: float }`
-   */
-  getContentOffset(): ResultType<"tguiScrollablePanel_getContentOffset"> {
-    return accessLib().symbols.tguiScrollablePanel_getContentOffset(
-      this.pointer,
-    );
   }
 }
 
@@ -3893,6 +3573,326 @@ export class PanelRenderer extends GroupRenderer {
     "tguiPanelRenderer_getRoundedBorderRadius"
   > {
     return accessLib().symbols.tguiPanelRenderer_getRoundedBorderRadius(
+      this.pointer,
+    );
+  }
+}
+
+export class Button extends ButtonBase {
+  /**
+   * @original ```c
+   * tguiWidget * tguiButton_create();
+   * ```
+   *
+   * @param
+   * @returns `Widget *`
+   */
+  constructor(ptr?: Deno.PointerValue<unknown>) {
+    super(ptr ? ptr : accessLib().symbols.tguiButton_create());
+  }
+}
+
+export class Label extends ClickableWidget {
+  /**
+   * @original ```c
+   * tguiWidget * tguiLabel_create();
+   * ```
+   *
+   * @param
+   * @returns `Widget *`
+   */
+  constructor(ptr?: Deno.PointerValue<unknown>) {
+    super(ptr ? ptr : accessLib().symbols.tguiLabel_create());
+  }
+
+  /**
+   * @original ```c
+   * void tguiLabel_setText(tguiWidget * thisWidget, tguiUtf32 value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `Utf32`
+   * @returns `void`
+   */
+  setText(value: BufferSource): ResultType<"tguiLabel_setText"> {
+    return accessLib().symbols.tguiLabel_setText(this.pointer, value);
+  }
+
+  /**
+   * @original ```c
+   * tguiUtf32 tguiLabel_getText(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `Utf32`
+   */
+  getText(): ResultType<"tguiLabel_getText"> {
+    return accessLib().symbols.tguiLabel_getText(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiLabel_setHorizontalAlignment(tguiWidget * thisWidget, tguiHorizontalAlignment value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `HorizontalAlignment`
+   * @returns `void`
+   */
+  setHorizontalAlignment(
+    value: number,
+  ): ResultType<"tguiLabel_setHorizontalAlignment"> {
+    return accessLib().symbols.tguiLabel_setHorizontalAlignment(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiHorizontalAlignment tguiLabel_getHorizontalAlignment(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `HorizontalAlignment`
+   */
+  getHorizontalAlignment(): ResultType<"tguiLabel_getHorizontalAlignment"> {
+    return accessLib().symbols.tguiLabel_getHorizontalAlignment(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiLabel_setVerticalAlignment(tguiWidget * thisWidget, tguiVerticalAlignment value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `VerticalAlignment`
+   * @returns `void`
+   */
+  setVerticalAlignment(
+    value: number,
+  ): ResultType<"tguiLabel_setVerticalAlignment"> {
+    return accessLib().symbols.tguiLabel_setVerticalAlignment(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiVerticalAlignment tguiLabel_getVerticalAlignment(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `VerticalAlignment`
+   */
+  getVerticalAlignment(): ResultType<"tguiLabel_getVerticalAlignment"> {
+    return accessLib().symbols.tguiLabel_getVerticalAlignment(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiLabel_setAutoSize(tguiWidget * thisWidget, tguiBool value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `Bool`
+   * @returns `void`
+   */
+  setAutoSize(value: number): ResultType<"tguiLabel_setAutoSize"> {
+    return accessLib().symbols.tguiLabel_setAutoSize(this.pointer, value);
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiLabel_getAutoSize(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `Bool`
+   */
+  getAutoSize(): ResultType<"tguiLabel_getAutoSize"> {
+    return accessLib().symbols.tguiLabel_getAutoSize(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiLabel_setMaximumTextWidth(tguiWidget * thisWidget, float value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `float`
+   * @returns `void`
+   */
+  setMaximumTextWidth(
+    value: number,
+  ): ResultType<"tguiLabel_setMaximumTextWidth"> {
+    return accessLib().symbols.tguiLabel_setMaximumTextWidth(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * float tguiLabel_getMaximumTextWidth(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `float`
+   */
+  getMaximumTextWidth(): ResultType<"tguiLabel_getMaximumTextWidth"> {
+    return accessLib().symbols.tguiLabel_getMaximumTextWidth(this.pointer);
+  }
+}
+
+export class RadioButton extends ClickableWidget {
+  /**
+   * @original ```c
+   * tguiWidget * tguiRadioButton_create();
+   * ```
+   *
+   * @param
+   * @returns `Widget *`
+   */
+  constructor(ptr?: Deno.PointerValue<unknown>) {
+    super(ptr ? ptr : accessLib().symbols.tguiRadioButton_create());
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButton_setChecked(tguiWidget * thisWidget, tguiBool value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `Bool`
+   * @returns `void`
+   */
+  setChecked(value: number): ResultType<"tguiRadioButton_setChecked"> {
+    return accessLib().symbols.tguiRadioButton_setChecked(this.pointer, value);
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiRadioButton_isChecked(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `Bool`
+   */
+  isChecked(): ResultType<"tguiRadioButton_isChecked"> {
+    return accessLib().symbols.tguiRadioButton_isChecked(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButton_setText(tguiWidget * thisWidget, tguiUtf32 value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `Utf32`
+   * @returns `void`
+   */
+  setText(value: BufferSource): ResultType<"tguiRadioButton_setText"> {
+    return accessLib().symbols.tguiRadioButton_setText(this.pointer, value);
+  }
+
+  /**
+   * @original ```c
+   * tguiUtf32 tguiRadioButton_getText(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `Utf32`
+   */
+  getText(): ResultType<"tguiRadioButton_getText"> {
+    return accessLib().symbols.tguiRadioButton_getText(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * void tguiRadioButton_setTextClickable(tguiWidget * thisWidget, tguiBool value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `Bool`
+   * @returns `void`
+   */
+  setTextClickable(
+    value: number,
+  ): ResultType<"tguiRadioButton_setTextClickable"> {
+    return accessLib().symbols.tguiRadioButton_setTextClickable(
+      this.pointer,
+      value,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiBool tguiRadioButton_isTextClickable(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `Bool`
+   */
+  isTextClickable(): ResultType<"tguiRadioButton_isTextClickable"> {
+    return accessLib().symbols.tguiRadioButton_isTextClickable(this.pointer);
+  }
+}
+
+export class ScrollablePanel extends Panel {
+  /**
+   * @original ```c
+   * tguiWidget * tguiScrollablePanel_create();
+   * ```
+   *
+   * @param
+   * @returns `Widget *`
+   */
+  constructor(ptr?: Deno.PointerValue<unknown>) {
+    super(ptr ? ptr : accessLib().symbols.tguiScrollablePanel_create());
+  }
+
+  /**
+   * @original ```c
+   * void tguiScrollablePanel_setContentSize(tguiWidget * thisWidget, tguiVector2f value);
+   * ```
+   *
+   * @param thisWidget `Widget *`
+   * @param value `Vector2f { x: float; y: float }`
+   * @returns `void`
+   */
+  setContentSize(
+    value: Vector2f,
+  ): ResultType<"tguiScrollablePanel_setContentSize"> {
+    return accessLib().symbols.tguiScrollablePanel_setContentSize(
+      this.pointer,
+      value.buffer,
+    );
+  }
+
+  /**
+   * @original ```c
+   * tguiVector2f tguiScrollablePanel_getContentSize(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `Vector2f { x: float; y: float }`
+   */
+  getContentSize(): ResultType<"tguiScrollablePanel_getContentSize"> {
+    return accessLib().symbols.tguiScrollablePanel_getContentSize(this.pointer);
+  }
+
+  /**
+   * @original ```c
+   * tguiVector2f tguiScrollablePanel_getContentOffset(const tguiWidget * thisWidget);
+   * ```
+   *
+   * @param thisWidget `const Widget *`
+   * @returns `Vector2f { x: float; y: float }`
+   */
+  getContentOffset(): ResultType<"tguiScrollablePanel_getContentOffset"> {
+    return accessLib().symbols.tguiScrollablePanel_getContentOffset(
       this.pointer,
     );
   }
@@ -6631,6 +6631,228 @@ export class FontGlyph {
   }
 }
 
+export class KeyEvent {
+  static STRUCT_DEF: StructDef = ["i32", "i16", "i16", "i16", "i16"];
+
+  static deserialize(buffer: BufferSource): KeyEvent;
+  static deserialize(flatValues: NumberLikeType[]): KeyEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): KeyEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(KeyEvent.STRUCT_DEF, source);
+    }
+
+    return new KeyEvent(
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+    );
+  }
+
+  code: number;
+  alt: number;
+  control: number;
+  shift: number;
+  system: number;
+
+  constructor(
+    code: number,
+    alt: number,
+    control: number,
+    shift: number,
+    system: number,
+  ) {
+    this.code = code;
+    this.alt = alt;
+    this.control = control;
+    this.shift = shift;
+    this.system = system;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(KeyEvent.STRUCT_DEF, this);
+  }
+}
+
+export class MouseWheelEvent {
+  static STRUCT_DEF: StructDef = ["f32", "i32", "i32"];
+
+  static deserialize(buffer: BufferSource): MouseWheelEvent;
+  static deserialize(flatValues: NumberLikeType[]): MouseWheelEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): MouseWheelEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(MouseWheelEvent.STRUCT_DEF, source);
+    }
+
+    return new MouseWheelEvent(
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+    );
+  }
+
+  delta: number;
+  x: number;
+  y: number;
+
+  constructor(delta: number, x: number, y: number) {
+    this.delta = delta;
+    this.x = x;
+    this.y = y;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(MouseWheelEvent.STRUCT_DEF, this);
+  }
+}
+
+export class MouseButtonEvent {
+  static STRUCT_DEF: StructDef = ["i32", "i32", "i32"];
+
+  static deserialize(buffer: BufferSource): MouseButtonEvent;
+  static deserialize(flatValues: NumberLikeType[]): MouseButtonEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): MouseButtonEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(MouseButtonEvent.STRUCT_DEF, source);
+    }
+
+    return new MouseButtonEvent(
+      values.shift()! as number,
+      values.shift()! as number,
+      values.shift()! as number,
+    );
+  }
+
+  button: number;
+  x: number;
+  y: number;
+
+  constructor(button: number, x: number, y: number) {
+    this.button = button;
+    this.x = x;
+    this.y = y;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(MouseButtonEvent.STRUCT_DEF, this);
+  }
+}
+
+export class MouseMoveEvent {
+  static STRUCT_DEF: StructDef = ["i32", "i32"];
+
+  static deserialize(buffer: BufferSource): MouseMoveEvent;
+  static deserialize(flatValues: NumberLikeType[]): MouseMoveEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): MouseMoveEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(MouseMoveEvent.STRUCT_DEF, source);
+    }
+
+    return new MouseMoveEvent(
+      values.shift()! as number,
+      values.shift()! as number,
+    );
+  }
+
+  x: number;
+  y: number;
+
+  constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(MouseMoveEvent.STRUCT_DEF, this);
+  }
+}
+
+export class SizeEvent {
+  static STRUCT_DEF: StructDef = ["u32", "u32"];
+
+  static deserialize(buffer: BufferSource): SizeEvent;
+  static deserialize(flatValues: NumberLikeType[]): SizeEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): SizeEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(SizeEvent.STRUCT_DEF, source);
+    }
+
+    return new SizeEvent(
+      values.shift()! as number,
+      values.shift()! as number,
+    );
+  }
+
+  width: number;
+  height: number;
+
+  constructor(width: number, height: number) {
+    this.width = width;
+    this.height = height;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(SizeEvent.STRUCT_DEF, this);
+  }
+}
+
+export class TextEvent {
+  static STRUCT_DEF: StructDef = ["u32"];
+
+  static deserialize(buffer: BufferSource): TextEvent;
+  static deserialize(flatValues: NumberLikeType[]): TextEvent;
+  // deno-lint-ignore no-explicit-any
+  static deserialize(source: any): TextEvent {
+    let values;
+
+    if (source instanceof Array) {
+      values = source;
+    } else {
+      values = deserializeStruct(TextEvent.STRUCT_DEF, source);
+    }
+
+    return new TextEvent(
+      values.shift()! as number,
+    );
+  }
+
+  unicode: number;
+
+  constructor(unicode: number) {
+    this.unicode = unicode;
+  }
+
+  get buffer(): BufferSource {
+    return serializeStruct(TextEvent.STRUCT_DEF, this);
+  }
+}
+
 export class UIntRect {
   static STRUCT_DEF: StructDef = ["u16", "u16", "u16", "u16"];
 
@@ -7194,7 +7416,7 @@ export class Gui {
    * ```
    *
    * @param gui `Gui *`
-   * @param textEvent `TextEvent`
+   * @param textEvent `TextEvent { unicode: unsigned int }`
    * @returns `Bool`
    */
   handleEventTextEntered(
@@ -7212,7 +7434,7 @@ export class Gui {
    * ```
    *
    * @param gui `Gui *`
-   * @param keyEvent `KeyEvent`
+   * @param keyEvent `KeyEvent { code: tguiKeyboardKey; alt: _Bool; control: _Bool; shift: _Bool; system: _Bool }`
    * @returns `Bool`
    */
   handleEventKeyPressed(
@@ -7230,7 +7452,7 @@ export class Gui {
    * ```
    *
    * @param gui `Gui *`
-   * @param mouseWheelEvent `MouseWheelEvent`
+   * @param mouseWheelEvent `MouseWheelEvent { delta: float; x: int; y: int }`
    * @returns `Bool`
    */
   handleEventMouseWheelScrolled(
@@ -7248,7 +7470,7 @@ export class Gui {
    * ```
    *
    * @param gui `Gui *`
-   * @param mouseButtonEvent `MouseButtonEvent`
+   * @param mouseButtonEvent `MouseButtonEvent { button: tguiMouseButton; x: int; y: int }`
    * @returns `Bool`
    */
   handleEventMouseButtonPressed(
@@ -7266,7 +7488,7 @@ export class Gui {
    * ```
    *
    * @param gui `Gui *`
-   * @param mouseButtonEvent `MouseButtonEvent`
+   * @param mouseButtonEvent `MouseButtonEvent { button: tguiMouseButton; x: int; y: int }`
    * @returns `Bool`
    */
   handleEventMouseButtonReleased(
@@ -7284,7 +7506,7 @@ export class Gui {
    * ```
    *
    * @param gui `Gui *`
-   * @param mouseMoveEvent `MouseMoveEvent`
+   * @param mouseMoveEvent `MouseMoveEvent { x: int; y: int }`
    * @returns `Bool`
    */
   handleEventMouseMoved(
@@ -7326,7 +7548,7 @@ export class Gui {
    * ```
    *
    * @param gui `Gui *`
-   * @param sizeEvent `SizeEvent`
+   * @param sizeEvent `SizeEvent { width: unsigned int; height: unsigned int }`
    * @returns `Bool`
    */
   handleEventResized(
@@ -29295,102 +29517,6 @@ export class SeparatorLineRenderer {
   }
 }
 
-export class SplitContainerRenderer extends GroupRenderer {
-  /**
-   * @original ```c
-   * tguiRenderer * tguiSplitContainerRenderer_create();
-   * ```
-   *
-   * @param
-   * @returns `Renderer *`
-   */
-  constructor() {
-    super(accessLib().symbols.tguiSplitContainerRenderer_create());
-  }
-
-  /**
-   * @original ```c
-   * tguiRenderer * tguiSplitContainerRenderer_copy(const tguiRenderer * other);
-   * ```
-   *
-   * @param other `const Renderer *`
-   * @returns `Renderer *`
-   */
-  override copy(other: Deno.PointerValue<unknown>): Deno.PointerValue<unknown> {
-    return this.ptr = accessLib().symbols.tguiSplitContainerRenderer_copy(
-      other,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiSplitContainerRenderer_setSplitterColor(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setSplitterColor(
-    value: Color,
-  ): ResultType<"tguiSplitContainerRenderer_setSplitterColor"> {
-    return accessLib().symbols.tguiSplitContainerRenderer_setSplitterColor(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiSplitContainerRenderer_getSplitterColor(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getSplitterColor(): ResultType<
-    "tguiSplitContainerRenderer_getSplitterColor"
-  > {
-    return accessLib().symbols.tguiSplitContainerRenderer_getSplitterColor(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiSplitContainerRenderer_setSplitterColorHover(tguiRenderer * thisRenderer, tguiColor value);
-   * ```
-   *
-   * @param thisRenderer `Renderer *`
-   * @param value `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   * @returns `void`
-   */
-  setSplitterColorHover(
-    value: Color,
-  ): ResultType<"tguiSplitContainerRenderer_setSplitterColorHover"> {
-    return accessLib().symbols.tguiSplitContainerRenderer_setSplitterColorHover(
-      this.pointer,
-      value.buffer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiColor tguiSplitContainerRenderer_getSplitterColorHover(const tguiRenderer * thisRenderer);
-   * ```
-   *
-   * @param thisRenderer `const Renderer *`
-   * @returns `Color { r: unsigned char; g: unsigned char; b: unsigned char; a: unsigned char; isSet: int }`
-   */
-  getSplitterColorHover(): ResultType<
-    "tguiSplitContainerRenderer_getSplitterColorHover"
-  > {
-    return accessLib().symbols.tguiSplitContainerRenderer_getSplitterColorHover(
-      this.pointer,
-    );
-  }
-}
-
 export class ScrollbarAccessor {
   /**
    * @original ```c
@@ -29415,9 +29541,12 @@ export class ScrollbarAccessor {
    * @param value `unsigned int`
    * @returns `void`
    */
-  setValue(value: number): ResultType<"tguiScrollbarAccessor_setValue"> {
+  setValue(
+    thisScrollbarAccessor: Deno.PointerValue<unknown>,
+    value: number,
+  ): ResultType<"tguiScrollbarAccessor_setValue"> {
     return accessLib().symbols.tguiScrollbarAccessor_setValue(
-      this.pointer,
+      thisScrollbarAccessor,
       value,
     );
   }
@@ -29430,8 +29559,12 @@ export class ScrollbarAccessor {
    * @param thisScrollbarAccessor `const ScrollbarAccessor *`
    * @returns `unsigned int`
    */
-  getValue(): ResultType<"tguiScrollbarAccessor_getValue"> {
-    return accessLib().symbols.tguiScrollbarAccessor_getValue(this.pointer);
+  getValue(
+    thisScrollbarAccessor: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiScrollbarAccessor_getValue"> {
+    return accessLib().symbols.tguiScrollbarAccessor_getValue(
+      thisScrollbarAccessor,
+    );
   }
 
   /**
@@ -29444,10 +29577,11 @@ export class ScrollbarAccessor {
    * @returns `void`
    */
   setScrollAmount(
+    thisScrollbarAccessor: Deno.PointerValue<unknown>,
     value: number,
   ): ResultType<"tguiScrollbarAccessor_setScrollAmount"> {
     return accessLib().symbols.tguiScrollbarAccessor_setScrollAmount(
-      this.pointer,
+      thisScrollbarAccessor,
       value,
     );
   }
@@ -29460,9 +29594,11 @@ export class ScrollbarAccessor {
    * @param thisScrollbarAccessor `const ScrollbarAccessor *`
    * @returns `unsigned int`
    */
-  getScrollAmount(): ResultType<"tguiScrollbarAccessor_getScrollAmount"> {
+  getScrollAmount(
+    thisScrollbarAccessor: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiScrollbarAccessor_getScrollAmount"> {
     return accessLib().symbols.tguiScrollbarAccessor_getScrollAmount(
-      this.pointer,
+      thisScrollbarAccessor,
     );
   }
 
@@ -29475,9 +29611,12 @@ export class ScrollbarAccessor {
    * @param value `ScrollbarPolicy`
    * @returns `void`
    */
-  setPolicy(value: number): ResultType<"tguiScrollbarAccessor_setPolicy"> {
+  setPolicy(
+    thisScrollbarAccessor: Deno.PointerValue<unknown>,
+    value: number,
+  ): ResultType<"tguiScrollbarAccessor_setPolicy"> {
     return accessLib().symbols.tguiScrollbarAccessor_setPolicy(
-      this.pointer,
+      thisScrollbarAccessor,
       value,
     );
   }
@@ -29490,8 +29629,12 @@ export class ScrollbarAccessor {
    * @param thisScrollbarAccessor `const ScrollbarAccessor *`
    * @returns `ScrollbarPolicy`
    */
-  getPolicy(): ResultType<"tguiScrollbarAccessor_getPolicy"> {
-    return accessLib().symbols.tguiScrollbarAccessor_getPolicy(this.pointer);
+  getPolicy(
+    thisScrollbarAccessor: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiScrollbarAccessor_getPolicy"> {
+    return accessLib().symbols.tguiScrollbarAccessor_getPolicy(
+      thisScrollbarAccessor,
+    );
   }
 
   /**
@@ -29502,8 +29645,12 @@ export class ScrollbarAccessor {
    * @param thisScrollbarAccessor `const ScrollbarAccessor *`
    * @returns `unsigned int`
    */
-  getMaximum(): ResultType<"tguiScrollbarAccessor_getMaximum"> {
-    return accessLib().symbols.tguiScrollbarAccessor_getMaximum(this.pointer);
+  getMaximum(
+    thisScrollbarAccessor: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiScrollbarAccessor_getMaximum"> {
+    return accessLib().symbols.tguiScrollbarAccessor_getMaximum(
+      thisScrollbarAccessor,
+    );
   }
 
   /**
@@ -29514,9 +29661,11 @@ export class ScrollbarAccessor {
    * @param thisScrollbarAccessor `const ScrollbarAccessor *`
    * @returns `unsigned int`
    */
-  getViewportSize(): ResultType<"tguiScrollbarAccessor_getViewportSize"> {
+  getViewportSize(
+    thisScrollbarAccessor: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiScrollbarAccessor_getViewportSize"> {
     return accessLib().symbols.tguiScrollbarAccessor_getViewportSize(
-      this.pointer,
+      thisScrollbarAccessor,
     );
   }
 
@@ -29528,8 +29677,12 @@ export class ScrollbarAccessor {
    * @param thisScrollbarAccessor `const ScrollbarAccessor *`
    * @returns `unsigned int`
    */
-  getMaxValue(): ResultType<"tguiScrollbarAccessor_getMaxValue"> {
-    return accessLib().symbols.tguiScrollbarAccessor_getMaxValue(this.pointer);
+  getMaxValue(
+    thisScrollbarAccessor: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiScrollbarAccessor_getMaxValue"> {
+    return accessLib().symbols.tguiScrollbarAccessor_getMaxValue(
+      thisScrollbarAccessor,
+    );
   }
 
   /**
@@ -29540,8 +29693,12 @@ export class ScrollbarAccessor {
    * @param thisScrollbarAccessor `const ScrollbarAccessor *`
    * @returns `Bool`
    */
-  isShown(): ResultType<"tguiScrollbarAccessor_isShown"> {
-    return accessLib().symbols.tguiScrollbarAccessor_isShown(this.pointer);
+  isShown(
+    thisScrollbarAccessor: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiScrollbarAccessor_isShown"> {
+    return accessLib().symbols.tguiScrollbarAccessor_isShown(
+      thisScrollbarAccessor,
+    );
   }
 
   /**
@@ -29552,8 +29709,12 @@ export class ScrollbarAccessor {
    * @param thisScrollbarAccessor `const ScrollbarAccessor *`
    * @returns `float`
    */
-  getWidth(): ResultType<"tguiScrollbarAccessor_getWidth"> {
-    return accessLib().symbols.tguiScrollbarAccessor_getWidth(this.pointer);
+  getWidth(
+    thisScrollbarAccessor: Deno.PointerValue<unknown>,
+  ): ResultType<"tguiScrollbarAccessor_getWidth"> {
+    return accessLib().symbols.tguiScrollbarAccessor_getWidth(
+      thisScrollbarAccessor,
+    );
   }
 }
 
@@ -30091,213 +30252,5 @@ export class SeparatorLine extends ClickableWidget {
    */
   constructor() {
     super(accessLib().symbols.tguiSeparatorLine_create());
-  }
-}
-
-export class SplitContainer extends Group {
-  /**
-   * @original ```c
-   * tguiWidget * tguiSplitContainer_create();
-   * ```
-   *
-   * @param
-   * @returns `Widget *`
-   */
-  constructor() {
-    super(accessLib().symbols.tguiSplitContainer_create());
-  }
-
-  /**
-   * @original ```c
-   * void tguiSplitContainer_setOrientation(tguiWidget * thisWidget, tguiOrientation value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `Orientation`
-   * @returns `void`
-   */
-  setOrientation(
-    value: number,
-  ): ResultType<"tguiSplitContainer_setOrientation"> {
-    return accessLib().symbols.tguiSplitContainer_setOrientation(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * tguiOrientation tguiSplitContainer_getOrientation(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `Orientation`
-   */
-  getOrientation(): ResultType<"tguiSplitContainer_getOrientation"> {
-    return accessLib().symbols.tguiSplitContainer_getOrientation(this.pointer);
-  }
-
-  /**
-   * @original ```c
-   * void tguiSplitContainer_setSplitterWidth(tguiWidget * thisWidget, float value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `float`
-   * @returns `void`
-   */
-  setSplitterWidth(
-    value: number,
-  ): ResultType<"tguiSplitContainer_setSplitterWidth"> {
-    return accessLib().symbols.tguiSplitContainer_setSplitterWidth(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * float tguiSplitContainer_getSplitterWidth(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `float`
-   */
-  getSplitterWidth(): ResultType<"tguiSplitContainer_getSplitterWidth"> {
-    return accessLib().symbols.tguiSplitContainer_getSplitterWidth(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiSplitContainer_setMinimumGrabWidth(tguiWidget * thisWidget, float value);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param value `float`
-   * @returns `void`
-   */
-  setMinimumGrabWidth(
-    value: number,
-  ): ResultType<"tguiSplitContainer_setMinimumGrabWidth"> {
-    return accessLib().symbols.tguiSplitContainer_setMinimumGrabWidth(
-      this.pointer,
-      value,
-    );
-  }
-
-  /**
-   * @original ```c
-   * float tguiSplitContainer_getMinimumGrabWidth(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `float`
-   */
-  getMinimumGrabWidth(): ResultType<"tguiSplitContainer_getMinimumGrabWidth"> {
-    return accessLib().symbols.tguiSplitContainer_getMinimumGrabWidth(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiSplitContainer_setMinValidSplitterOffset(tguiWidget * thisWidget, float minOffset);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param minOffset `float`
-   * @returns `void`
-   */
-  setMinValidSplitterOffset(
-    minOffset: number,
-  ): ResultType<"tguiSplitContainer_setMinValidSplitterOffset"> {
-    return accessLib().symbols.tguiSplitContainer_setMinValidSplitterOffset(
-      this.pointer,
-      minOffset,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiSplitContainer_setMaxValidSplitterOffset(tguiWidget * thisWidget, float maxOffset);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param maxOffset `float`
-   * @returns `void`
-   */
-  setMaxValidSplitterOffset(
-    maxOffset: number,
-  ): ResultType<"tguiSplitContainer_setMaxValidSplitterOffset"> {
-    return accessLib().symbols.tguiSplitContainer_setMaxValidSplitterOffset(
-      this.pointer,
-      maxOffset,
-    );
-  }
-
-  /**
-   * @original ```c
-   * void tguiSplitContainer_setSplitterOffset(tguiWidget * thisWidget, float offset);
-   * ```
-   *
-   * @param thisWidget `Widget *`
-   * @param offset `float`
-   * @returns `void`
-   */
-  setSplitterOffset(
-    offset: number,
-  ): ResultType<"tguiSplitContainer_setSplitterOffset"> {
-    return accessLib().symbols.tguiSplitContainer_setSplitterOffset(
-      this.pointer,
-      offset,
-    );
-  }
-
-  /**
-   * @original ```c
-   * float tguiSplitContainer_getMinValidSplitterOffset(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `float`
-   */
-  getMinValidSplitterOffset(): ResultType<
-    "tguiSplitContainer_getMinValidSplitterOffset"
-  > {
-    return accessLib().symbols.tguiSplitContainer_getMinValidSplitterOffset(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * float tguiSplitContainer_getMaxValidSplitterOffset(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `float`
-   */
-  getMaxValidSplitterOffset(): ResultType<
-    "tguiSplitContainer_getMaxValidSplitterOffset"
-  > {
-    return accessLib().symbols.tguiSplitContainer_getMaxValidSplitterOffset(
-      this.pointer,
-    );
-  }
-
-  /**
-   * @original ```c
-   * float tguiSplitContainer_getSplitterOffset(const tguiWidget * thisWidget);
-   * ```
-   *
-   * @param thisWidget `const Widget *`
-   * @returns `float`
-   */
-  getSplitterOffset(): ResultType<"tguiSplitContainer_getSplitterOffset"> {
-    return accessLib().symbols.tguiSplitContainer_getSplitterOffset(
-      this.pointer,
-    );
   }
 }
