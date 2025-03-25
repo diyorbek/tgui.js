@@ -14,9 +14,9 @@ if [[ "$OS" == *Windows* ]]; then
     cp build/_deps/ctgui-build/src/CTGUI/$libname build/ctgui-ext.dll
 else
     if [[ "$mode" == "Debug" ]]; then
-        libname="libctgui-d.1.7.0.dylib"
+        libname="libctgui-d.1.8.0.dylib"
     else
-        libname="libctgui.1.7.0.dylib"
+        libname="libctgui.1.8.0.dylib"
     fi
 
     cmake --build build --config $mode
