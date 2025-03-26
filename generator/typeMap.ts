@@ -8,6 +8,7 @@ export type StructMeta = {
 
 // prettier-ignore
 export const C_NATIVE_TYPE_MAP: CNativeTypeMap = {
+  "_Bool": "i16",
   "char": "i8",
   "const char *": "buffer",
   "const sfEvent *": "pointer",

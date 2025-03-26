@@ -2,6 +2,8 @@ import { FUNCTION_DECLARATIONS } from "./declarations.ts";
 import { type StructMeta, C_NATIVE_TYPE_MAP } from "./typeMap.ts";
 import { createComment, createNativeType } from "./utils.ts";
 
+type CTGUI_FUNCTION = (typeof FUNCTION_DECLARATIONS)[number];
+
 const encoder = new TextEncoder();
 
 function createInheritanceGraph() {
@@ -16,8 +18,9 @@ function createInheritanceGraph() {
   });
   const { stdout } = command.outputSync();
   const output = new TextDecoder().decode(stdout);
-  const inheritanceGraph: Record<string, string[]> = {};
+  const inheritanceTable: Record<string, string[]> = {};
   const inheritanceRank: Record<string, number> = {};
+  const allParents = new Set<string>();
 
   const data = output
     .split("\n")
@@ -28,57 +31,82 @@ function createInheritanceGraph() {
       parent: cls.trim(),
     }));
 
-  data.forEach(({ child, parent }) => {
-    inheritanceRank[parent] ??= 0;
-    inheritanceRank[parent]++;
-  });
+  // rankInheritance(data);
+
+  // data.forEach(({ child, parent }) => {
+  //   inheritanceRank[parent] ??= 0;
+  //   inheritanceRank[parent]++;
+  // });
 
   data.forEach(({ child, parent }) => {
+    allParents.add(parent);
     // @ts-ignore
-    inheritanceGraph[child] ??= [];
+    inheritanceTable[child] ??= [];
     // @ts-ignore
-    inheritanceGraph[child].push(parent);
+    inheritanceTable[child].push(parent);
   });
 
-  return { inheritanceGraph, inheritanceRank };
+  function dfs(child: string): number {
+    if (child in inheritanceRank) return inheritanceRank[child];
+
+    if (child in inheritanceTable)
+      return (inheritanceRank[child] = 1 + dfs(inheritanceTable[child][0]));
+
+    return (inheritanceRank[child] = 0);
+  }
+
+  for (const child in inheritanceTable) dfs(child);
+
+  return { inheritanceTable, inheritanceRank, allParents };
 }
 
-const { inheritanceGraph, inheritanceRank } = createInheritanceGraph();
-// console.log(inheritanceGraph);
-const names: Record<
-  string,
-  {
-    methods?: Array<(typeof FUNCTION_DECLARATIONS)[number]>;
-    fields?: StructMeta[];
-  }
-> = {};
+const { inheritanceTable, inheritanceRank, allParents } =
+  createInheritanceGraph();
 
-Object.keys(C_NATIVE_TYPE_MAP).forEach((struct) => {
-  const declName = struct !== "tgui" ? struct.replace("tgui", "") : struct;
+// console.dir(inheritanceTable);
+// console.dir(inheritanceRank);
 
-  if (typeof C_NATIVE_TYPE_MAP[struct] !== "string") {
-    names[declName] ??= { methods: [] };
-    names[declName].fields = C_NATIVE_TYPE_MAP[struct] as StructMeta[];
-  }
-});
+//#region PREPARE DECLARATIONS
+interface LibObject {
+  methods?: Array<CTGUI_FUNCTION>;
+  fields?: StructMeta[];
+}
 
-FUNCTION_DECLARATIONS.forEach((func) => {
-  const [struct, method] = func.name.split("_");
+const libraryEntries: Record<string, LibObject> = {};
 
-  if (!method) return;
+const addStructsToEntries = (
+  entries: typeof libraryEntries,
+  typeMap: typeof C_NATIVE_TYPE_MAP
+) =>
+  Object.keys(typeMap).forEach((struct) => {
+    const declName = struct !== "tgui" ? struct.replace("tgui", "") : struct;
 
-  const declName =
-    struct !== "tgui"
-      ? struct.replace("tgui", "").replace("CSFMLGraphics", "")
-      : struct;
+    if (typeof typeMap[struct] !== "string") {
+      entries[declName] ??= { methods: [] };
+      entries[declName].fields = typeMap[struct] as StructMeta[];
+    }
+  });
+addStructsToEntries(libraryEntries, C_NATIVE_TYPE_MAP);
 
-  names[declName] ??= { methods: [] };
-  names[declName].methods!.push(func);
+const addFunctionsToEntries = (entries: typeof libraryEntries) =>
+  FUNCTION_DECLARATIONS.forEach((func) => {
+    const [struct, method] = func.name.split("_");
 
-  if (typeof C_NATIVE_TYPE_MAP[struct] !== "string") {
-    names[declName].fields = C_NATIVE_TYPE_MAP[struct] as StructMeta[];
-  }
-});
+    if (!method) return;
+
+    const declName =
+      struct !== "tgui"
+        ? struct.replace("tgui", "").replace("CSFMLGraphics", "")
+        : struct;
+
+    entries[declName] ??= { methods: [] };
+    entries[declName].methods!.push(func);
+
+    if (typeof C_NATIVE_TYPE_MAP[struct] !== "string") {
+      entries[declName].fields = C_NATIVE_TYPE_MAP[struct] as StructMeta[];
+    }
+  });
+addFunctionsToEntries(libraryEntries);
 
 // Deno.writeFileSync("ui.json", encoder.encode(JSON.stringify(names)));
 
@@ -102,6 +130,8 @@ const DENO_TYPE_MAP = {
   function: "Deno.PointerValue<unknown>",
 };
 
+//#endregion
+
 function getNativeTypeDecl(nativeType: Deno.NativeType | StructMeta[]) {
   // if (typeof nativeType === "object") return "Uint32Array";
   if (typeof nativeType === "object") return "BufferSource";
@@ -116,41 +146,49 @@ function getJSTypeDecl(
   return DENO_TYPE_MAP[nativeType];
 }
 
-let code = `import { accessLib, type ResultType } from "./ctgui.ts";
+const adhocStructs: typeof C_NATIVE_TYPE_MAP = {};
+
+const libHeader = `import { accessLib, type ResultType } from "./ctgui.ts";
 import { deserializeStruct, type NumberLikeType, serializeStruct, type StructDef } from "./utils/structToBuffer.ts";\n\n`;
 
 const CTGUI_LIB = "accessLib()";
 
-Object.entries(names)
-  .toSorted(([declA], [declB]) => {
-    const a = inheritanceRank[declA] || 0;
-    const b = inheritanceRank[declB] || 0;
+const processNames = (declNames: typeof libraryEntries) => {
+  let code = "";
 
-    return b - a;
-  })
-  .forEach(([declName, body]) => {
-    const parent = inheritanceGraph[declName]?.[0];
-    const inheritance = parent && parent in names ? `extends ${parent}` : "";
-    const hasChild = !!inheritanceRank[declName];
-    const isIntercessor = !!parent && hasChild;
+  Object.entries(declNames)
+    .toSorted(([declA], [declB]) => {
+      const a = inheritanceRank[declA] || 0;
+      const b = inheritanceRank[declB] || 0;
 
-    /** Creates fields with constructor.
-     *
-     * The generated constructor may conflict with classes with _create/_copy method.
-     *
-     * Also, structdefs are duplicated in the generated code:
-     * - in CTGUI_SYMBOLS
-     * - in Class struct definitions
-     * */
-    function createFields() {
-      if (!body.fields) return "";
+      // if (inheritanceGraph[declB]?.includes(declA)) return 0;
 
-      const structDef = createNativeType(body.fields);
-      const structDefString = JSON.stringify(
-        typeof structDef === "object" ? structDef.struct : structDef
-      );
+      return a - b;
+    })
+    .forEach(([declName, body]) => {
+      const parent = inheritanceTable[declName]?.[0];
+      const inheritance =
+        parent && parent in declNames ? `extends ${parent}` : "";
+      const hasChild = allParents.has(declName);
+      const isIntercessor = !!parent && hasChild;
 
-      const deserializeFunc = `
+      /** Creates fields with constructor.
+       *
+       * The generated constructor may conflict with classes with _create/_copy method.
+       *
+       * Also, structdefs are duplicated in the generated code:
+       * - in CTGUI_SYMBOLS
+       * - in Class struct definitions
+       * */
+      function createFields() {
+        if (!body.fields) return "";
+
+        const structDef = createNativeType(body.fields);
+        const structDefString = JSON.stringify(
+          typeof structDef === "object" ? structDef.struct : structDef
+        );
+
+        const deserializeFunc = `
         static deserialize(buffer: BufferSource): ${declName};
         static deserialize(flatValues: NumberLikeType[]): ${declName};
         // deno-lint-ignore no-explicit-any
@@ -180,19 +218,22 @@ Object.entries(names)
           );
       }`;
 
-      const fields = body.fields.map((field) => {
-        if (!(field.type in C_NATIVE_TYPE_MAP)) {
-          // console.log(field.type);
-        }
+        const fields = body.fields.map((field) => {
+          if (!(field.type in C_NATIVE_TYPE_MAP)) {
+            // console.log(field.type);
+          }
 
-        return `${field.name}: ${getJSTypeDecl(field.nativeType, field.type)}`;
-      });
+          return `${field.name}: ${getJSTypeDecl(
+            field.nativeType,
+            field.type
+          )}`;
+        });
 
-      const constructorFunc = `constructor(${fields.join(",")}) { 
+        const constructorFunc = `constructor(${fields.join(",")}) { 
           ${body.fields.map((f) => `this.${f.name} = ${f.name}`).join(";")} 
         }`;
 
-      return `static STRUCT_DEF: StructDef = ${structDefString}\n
+        return `static STRUCT_DEF: StructDef = ${structDefString}\n
         ${deserializeFunc}\n
         ${fields.join("\n")}\n
         ${constructorFunc}
@@ -200,164 +241,158 @@ Object.entries(names)
         get buffer(): BufferSource {
           return serializeStruct(${declName}.STRUCT_DEF, this);
         }`;
-    }
+      }
 
-    function checkConstructors() {
-      let hasDefaultConstructor = false;
-      let hasCopyConstructor = false;
+      function checkConstructors() {
+        let hasDefaultConstructor = false;
+        let hasCopyConstructor = false;
 
-      body.methods?.forEach((method) => {
-        if (method.name.endsWith("create")) {
-          hasDefaultConstructor = true;
-        }
-
-        if (method.name.endsWith("copy")) {
-          hasCopyConstructor = true;
-        }
-      });
-
-      return { hasDefaultConstructor, hasCopyConstructor };
-    }
-
-    function correctNaming(name: string) {
-      if (name === "function") return "callback";
-      if (isLocalPointerName(name)) return "this.pointer";
-      return name;
-    }
-
-    function getMethodName(declName: string, funcName: string) {
-      return funcName
-        .replace("tgui", "")
-        .replace("CSFMLGraphics", "")
-        .replace(declName, "")
-        .replace("_", "");
-    }
-
-    function isLocalPointerName(name: string) {
-      return (
-        name === "SFMLEvent" ||
-        (name === "widget" && declName === "ButtonBase") ||
-        (name === "widget" && declName === "CustomWidget") ||
-        (name === "widget" && declName === "FileDialog") ||
-        (name === "widget" && declName === "ListView") ||
-        (name === "widget" && declName === "MenuBar") ||
-        (name === "widget" && declName === "TabContainer") ||
-        (name === "widget" && declName === "TreeView") ||
-        (name === "widget" && declName === "Widget") ||
-        (name === "gui" && declName === "Gui") ||
-        (name === "window" && declName !== "Gui") ||
-        (name.startsWith("this") && !/sprite|texture|font/i.test(name))
-      );
-    }
-
-    function createParams(
-      parameters: Array<
-        (typeof FUNCTION_DECLARATIONS)[number]
-      >[number]["parameters"]
-    ) {
-      return parameters
-        .filter((p) => !isLocalPointerName(p.name))
-        .map((p) => {
-          if (!(p.type in C_NATIVE_TYPE_MAP)) {
-            // console.log(p.type);
+        body.methods?.forEach((method) => {
+          if (method.name.endsWith("create")) {
+            hasDefaultConstructor = true;
           }
 
-          return (
-            correctNaming(p.name) +
-            ": " +
-            getJSTypeDecl(p.nativeType as Deno.NativeType, p.type)
-          );
-        })
-        .join(",");
-    }
+          if (method.name.endsWith("copy")) {
+            hasCopyConstructor = true;
+          }
+        });
 
-    function createArgs(
-      parameters: Array<
-        (typeof FUNCTION_DECLARATIONS)[number]
-      >[number]["parameters"]
-    ) {
-      return parameters
-        .map((p) => {
-          const argName = correctNaming(p.name);
-          if (p.nativeType instanceof Array) return argName + ".buffer";
-          return argName;
-        })
-        .join(",");
-    }
+        return { hasDefaultConstructor, hasCopyConstructor };
+      }
 
-    function checkOverride(declName: string, methodName: string) {
-      const parent = inheritanceGraph[declName]?.[0];
+      function correctNaming(name: string) {
+        if (name === "function") return "callback";
+        if (isLocalPointerName(name)) return "this.pointer";
+        return name;
+      }
 
-      if (!parent || !(parent in names)) return;
+      function getMethodName(declName: string, funcName: string) {
+        return funcName
+          .replace("tgui", "")
+          .replace("CSFMLGraphics", "")
+          .replace(declName, "")
+          .replace("_", "");
+      }
 
-      const parentMethod = names[parent].methods?.find(
-        ({ name }) => getMethodName(parent, name) === methodName
-      );
+      function isLocalPointerName(name: string) {
+        return (
+          name === "SFMLEvent" ||
+          (name === "widget" && declName === "ButtonBase") ||
+          (name === "widget" && declName === "CustomWidget") ||
+          (name === "widget" && declName === "FileDialog") ||
+          (name === "widget" && declName === "ListView") ||
+          (name === "widget" && declName === "MenuBar") ||
+          (name === "widget" && declName === "TabContainer") ||
+          (name === "widget" && declName === "TreeView") ||
+          (name === "widget" && declName === "Widget") ||
+          (name === "gui" && declName === "Gui") ||
+          (name === "window" && declName !== "Gui") ||
+          (name.startsWith("this") &&
+            !/sprite|texture|font|scrollbar/i.test(name))
+        );
+      }
 
-      if (!parentMethod) return checkOverride(parent, methodName);
+      function createParams(parameters: CTGUI_FUNCTION["parameters"]) {
+        return parameters
+          .filter((p) => !isLocalPointerName(p.name))
+          .map((p) => {
+            if (!(p.type in C_NATIVE_TYPE_MAP) && /^\w+$/.test(p.type)) {
+              adhocStructs[p.type] = p.nativeType as StructMeta[];
+            }
 
-      return parentMethod;
-    }
+            return (
+              correctNaming(p.name) +
+              ": " +
+              getJSTypeDecl(p.nativeType as Deno.NativeType, p.type)
+            );
+          })
+          .join(",");
+      }
 
-    // For the BoxLayout and BoxLayoutRatios classes' "add" and "insert" method errors
-    function createMethodOverload(
-      declName: string,
-      methodName: string,
-      method: Array<(typeof FUNCTION_DECLARATIONS)[number]>[number]
-    ) {
-      const overload = checkOverride(declName, methodName);
+      function createArgs(parameters: CTGUI_FUNCTION["parameters"]) {
+        return parameters
+          .map((p) => {
+            const argName = correctNaming(p.name);
+            if (p.nativeType instanceof Array) return argName + ".buffer";
+            return argName;
+          })
+          .join(",");
+      }
 
-      if (!overload) return "";
+      function checkOverride(declName: string, methodName: string) {
+        const parent = inheritanceTable[declName]?.[0];
 
-      const a = method.parameters
-        .map((p) => getNativeTypeDecl(p.nativeType as Deno.NativeType))
-        .join(",");
-      const b = overload.parameters
-        .map((p) => getNativeTypeDecl(p.nativeType as Deno.NativeType))
-        .join(",");
+        if (!parent || !(parent in declNames)) return;
 
-      if (a === b) return "override ";
+        const parentMethod = declNames[parent].methods?.find(
+          ({ name }) => getMethodName(parent, name) === methodName
+        );
 
-      const params = createParams(overload.parameters);
+        if (!parentMethod) return checkOverride(parent, methodName);
 
-      return `override ${methodName}(${params}); override `;
-    }
+        return parentMethod;
+      }
 
-    function createMethods() {
-      const { hasDefaultConstructor, hasCopyConstructor } = checkConstructors();
+      // For the BoxLayout and BoxLayoutRatios classes' "add" and "insert" method errors
+      function createMethodOverload(
+        declName: string,
+        methodName: string,
+        method: CTGUI_FUNCTION
+      ) {
+        const overload = checkOverride(declName, methodName);
 
-      return (
-        body.methods
-          ?.map((method) => {
-            const params = createParams(method.parameters);
-            const args = createArgs(method.parameters);
-            const name = getMethodName(declName, method.name);
-            const comment = createComment(method);
-            const isConstructor = name === "create";
-            const isCopyConstructor = name === "copy";
-            let jsOverload, nativeOverload;
+        if (!overload) return "";
 
-            const pointerDecl = `
+        const a = method.parameters
+          .map((p) => getNativeTypeDecl(p.nativeType as Deno.NativeType))
+          .join(",");
+        const b = overload.parameters
+          .map((p) => getNativeTypeDecl(p.nativeType as Deno.NativeType))
+          .join(",");
+
+        if (a === b) return "override ";
+
+        const params = createParams(overload.parameters);
+
+        return `override ${methodName}(${params}); override `;
+      }
+
+      function createMethods() {
+        const { hasDefaultConstructor, hasCopyConstructor } =
+          checkConstructors();
+
+        return (
+          body.methods
+            ?.map((method) => {
+              const params = createParams(method.parameters);
+              const args = createArgs(method.parameters);
+              const name = getMethodName(declName, method.name);
+              const comment = createComment(method);
+              const isConstructor = name === "create";
+              const isCopyConstructor = name === "copy";
+              let jsOverload, nativeOverload;
+
+              const pointerDecl = `
               protected ptr: Deno.PointerValue<unknown>;\n
               get pointer(): Deno.PointerValue<unknown> { return this.ptr }
             `;
 
-            if (
-              isConstructor ||
-              (isCopyConstructor && !hasDefaultConstructor)
-            ) {
-              if (isIntercessor && !params) {
-                return `${comment}\nconstructor(ptr?: Deno.PointerValue<unknown>) {
+              if (
+                isConstructor ||
+                (isCopyConstructor && !hasDefaultConstructor)
+              ) {
+                if (isIntercessor && !params) {
+                  return `${comment}\nconstructor(ptr?: Deno.PointerValue<unknown>) {
                   super(ptr ? ptr : ${CTGUI_LIB}.symbols.${method.name}());
                 }`;
-              }
+                }
 
-              if (inheritance) {
-                return `${comment}\nconstructor(${params}) { super(${CTGUI_LIB}.symbols.${method.name}(${args})); }`;
-              }
+                if (inheritance) {
+                  return `${comment}\nconstructor(${params}) { super(${CTGUI_LIB}.symbols.${method.name}(${args})); }`;
+                }
 
-              if (hasCopyConstructor && !params) {
-                return `${pointerDecl}\n
+                if (hasCopyConstructor && !params) {
+                  return `${pointerDecl}\n
                 ${comment}
                 constructor(other?: Deno.PointerValue<unknown>) { 
                   if (typeof other === 'undefined') { 
@@ -366,21 +401,21 @@ Object.entries(names)
                     this.ptr = this.copy(other); // to make TS happy about uninitialized field
                   }
                 }`;
-              }
+                }
 
-              return `${pointerDecl}\n
+                return `${pointerDecl}\n
                 ${comment}
                 constructor(${params}) { this.ptr = ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
-            }
+              }
 
-            if (isCopyConstructor) {
-              const override = inheritance ? "override" : "";
-              return `${comment}\n${override} ${name}(${params}): Deno.PointerValue<unknown> { return this.ptr = ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
-            }
+              if (isCopyConstructor) {
+                const override = inheritance ? "override" : "";
+                return `${comment}\n${override} ${name}(${params}): Deno.PointerValue<unknown> { return this.ptr = ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
+              }
 
-            // custom exceptional cases
-            if (declName === "BoxLayoutRatios" && name === "add") {
-              return `override add(
+              // custom exceptional cases
+              if (declName === "BoxLayoutRatios" && name === "add") {
+                return `override add(
                   widget: Deno.PointerValue<unknown>,
                   widgetName: BufferSource,
                 ): void;
@@ -410,9 +445,9 @@ Object.entries(names)
                     arg1,
                   );
                 }`;
-            }
-            if (declName === "BoxLayoutRatios" && name === "insert") {
-              return `override insert(
+              }
+              if (declName === "BoxLayoutRatios" && name === "insert") {
+                return `override insert(
                   index: bigint,
                   widget: Deno.PointerValue<unknown>,
                   widgetName: BufferSource
@@ -447,21 +482,29 @@ Object.entries(names)
                     arg1
                   );
                 }`;
-            }
+              }
 
-            // const overload = createMethodOverload(declName, name, method);
+              // const overload = createMethodOverload(declName, name, method);
 
-            return `${comment}\n${name}(${params}): ResultType<'${method.name}'> { return ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
-          })
-          .join("\n\n") || ""
-      );
-    }
+              return `${comment}\n${name}(${params}): ResultType<'${method.name}'> { return ${CTGUI_LIB}.symbols.${method.name}(${args}); }`;
+            })
+            .join("\n\n") || ""
+        );
+      }
 
-    code += `export class ${declName} ${inheritance} {
+      code += `export class ${declName} ${inheritance} {
       ${createFields()}
       
       ${createMethods()}
     }\n\n`;
-  });
+    });
 
-Deno.stdout.writeSync(encoder.encode(code)) as Deno.FromNativeResultType;
+  return code;
+};
+
+void processNames(libraryEntries);
+addStructsToEntries(libraryEntries, adhocStructs);
+
+const sourceCode = libHeader + processNames(libraryEntries);
+
+Deno.stdout.writeSync(encoder.encode(sourceCode)) as Deno.FromNativeResultType;
