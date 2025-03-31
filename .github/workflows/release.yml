@@ -62,38 +62,37 @@ jobs:
         run: |
           mkdir -p lib/windows/x86_64
           mkdir -p lib/macos/aarch64
+          mkdir -p lib/macos/x86_64
 
       - name: Download windows build
         uses: actions/download-artifact@v4
         with:
           pattern: windows-build
-          path: lib/windows/x86_64
+          path: artifacts
 
       - name: Download macos build
         uses: actions/download-artifact@v4
         with:
           pattern: macos-build
-          path: lib/macos/aarch64
+          path: artifacts
 
       - name: Download macos intel build
         uses: actions/download-artifact@v4
         with:
           pattern: macos-intel-build
-          path: lib/macos/x86_64
+          path: artifacts
 
       - name: Check files
         run: |
-          ls -la lib/windows/x86_64/windows-build
-          ls -la lib/macos/aarch64/macos-build
-          ls -la lib/macos/x86_64/macos-intel-build
+          ls -la artifacts/windows-build
+          ls -la artifacts/macos-build
+          ls -la artifacts/macos-intel-build
 
-      - name: Make names consistent
+      - name: Move and rename binary files
         run: |
-          mv lib/windows/x86_64/windows-build/ctgui-ext.dll lib/windows/x86_64/libctguiext.dll
-          mv lib/macos/aarch64/macos-build/libctgui-ext.dylib lib/macos/aarch64/libctguiext.dylib
-          mv lib/macos/x86_64/macos-intel-build/libctgui-ext-x86_64.dylib lib/macos/x86_64/libctguiext.dylib
+          mv artifacts/windows-build/ctgui-ext.dll lib/windows/x86_64/libctguiext.dll
+          mv artifacts/macos-build/libctgui-ext.dylib lib/macos/aarch64/libctguiext.dylib
+          mv artifacts/macos-intel-build/libctgui-ext-x86_64.dylib lib/macos/x86_64/libctguiext.dylib
 
       - name: Publish to Deno registry
-        run: deno publish
-        env:
-          DENO_AUTH_TOKEN: ${{ secrets.DENO_AUTH_TOKEN }}
+        run: deno publish --token ${{ secrets.DENO_AUTH_TOKEN }}
