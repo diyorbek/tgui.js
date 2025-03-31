@@ -30,6 +30,12 @@ jobs:
           pattern: macos-build
           path: artifacts
 
+      - name: Download macos intel build
+        uses: actions/download-artifact@v4
+        with:
+          pattern: macos-intel-build
+          path: artifacts
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
@@ -39,3 +45,49 @@ jobs:
             Release ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+
+      - name: Create lib directories
+        run: |
+          mkdir -p lib/windows/x86_64
+          mkdir -p lib/macos/aarch64
+
+      - name: Download windows build
+        uses: actions/download-artifact@v4
+        with:
+          pattern: windows-build
+          path: lib/windows/x86_64
+
+      - name: Download macos build
+        uses: actions/download-artifact@v4
+        with:
+          pattern: macos-build
+          path: lib/macos/aarch64
+
+      - name: Download macos intel build
+        uses: actions/download-artifact@v4
+        with:
+          pattern: macos-intel-build
+          path: lib/macos/x86_64
+
+      - name: Make names consistent
+        run: |
+          mv lib/windows/x86_64/ctgui-ext.dll lib/windows/x86_64/libctguiext.dll
+          mv lib/macos/aarch64/libctgui-ext.dylib lib/macos/aarch64/libctguiext.dylib
+          mv lib/macos/x86_64/libctgui-ext-x86_64.dylib lib/macos/x86_64/libctguiext.dylib
+
+      - name: Publish to Deno registry
+        run: deno publish
+        env:
+          DENO_AUTH_TOKEN: ${{ secrets.DENO_AUTH_TOKEN }}

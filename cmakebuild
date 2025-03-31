@@ -1,6 +1,7 @@
 #!/bin/bash
 
 mode=$1 # Debug | Release
+arch=${2:-"arm64"} # arm64 | x86_64
 
 if [[ "$OS" == *Windows* ]]; then
     if [[ "$mode" == "Debug" ]]; then
@@ -19,7 +20,13 @@ else
         libname="libctgui.1.8.0.dylib"
     fi
 
+    outname="libctgui-ext.dylib"
+
+    if [[ "$arch" == "x86_64" ]]; then
+        outname="libctgui-ext-x86_64.dylib"
+    fi
+
     cmake --build build --config $mode
 
-    cp build/_deps/ctgui-build/src/CTGUI/$libname build/libctgui-ext.dylib
+    cp build/_deps/ctgui-build/src/CTGUI/$libname build/$outname
 fi

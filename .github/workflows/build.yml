@@ -55,3 +55,24 @@ jobs:
         with:
           name: macos-build
           path: ${{github.workspace}}/build/libctgui-ext.dylib
+
+  macos-intel-build:
+    runs-on: macos-latest
+
+    outputs:
+      artifact_name: macos-intel-build
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: ./configure ${{env.BUILD_TYPE}} x86_64
+
+      - name: Build
+        run: ./cmakebuild ${{env.BUILD_TYPE}} x86_64
+
+      - name: Upload macOS intel build
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-intel-build
+          path: ${{github.workspace}}/build/libctgui-ext-x86_64.dylib
