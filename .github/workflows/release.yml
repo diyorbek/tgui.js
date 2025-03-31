@@ -95,4 +95,4 @@ jobs:
           mv artifacts/macos-intel-build/libctgui-ext-x86_64.dylib lib/macos/x86_64/libctguiext.dylib
 
       - name: Publish to Deno registry
-        run: deno publish --token ${{ secrets.DENO_AUTH_TOKEN }}
+        run: deno publish --allow-dirty --token ${{ secrets.DENO_AUTH_TOKEN }}
