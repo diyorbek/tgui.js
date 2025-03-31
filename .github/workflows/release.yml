@@ -81,6 +81,12 @@ jobs:
           pattern: macos-intel-build
           path: lib/macos/x86_64
 
+      - name: Check files
+        run: |
+          ls -la lib/windows/x86_64/
+          ls -la lib/macos/aarch64/
+          ls -la lib/macos/x86_64/
+
       - name: Make names consistent
         run: |
           mv lib/windows/x86_64/ctgui-ext.dll lib/windows/x86_64/libctguiext.dll
