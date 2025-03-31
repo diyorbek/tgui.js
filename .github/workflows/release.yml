@@ -83,15 +83,15 @@ jobs:
 
       - name: Check files
         run: |
-          ls -la lib/windows/x86_64/
-          ls -la lib/macos/aarch64/
-          ls -la lib/macos/x86_64/
+          ls -la lib/windows/x86_64/windows-build
+          ls -la lib/macos/aarch64/macos-build
+          ls -la lib/macos/x86_64/macos-intel-build
 
       - name: Make names consistent
         run: |
-          mv lib/windows/x86_64/ctgui-ext.dll lib/windows/x86_64/libctguiext.dll
-          mv lib/macos/aarch64/libctgui-ext.dylib lib/macos/aarch64/libctguiext.dylib
-          mv lib/macos/x86_64/libctgui-ext-x86_64.dylib lib/macos/x86_64/libctguiext.dylib
+          mv lib/windows/x86_64/windows-build/ctgui-ext.dll lib/windows/x86_64/libctguiext.dll
+          mv lib/macos/aarch64/macos-build/libctgui-ext.dylib lib/macos/aarch64/libctguiext.dylib
+          mv lib/macos/x86_64/macos-intel-build/libctgui-ext-x86_64.dylib lib/macos/x86_64/libctguiext.dylib
 
       - name: Publish to Deno registry
         run: deno publish
