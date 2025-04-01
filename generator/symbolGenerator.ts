@@ -13,6 +13,10 @@ const functionDeclarations: any[] = [];
 // const structDeclarations: Record<string, any> = {};
 // const enumDeclarations: Record<string, any> = {};
 
+const BLACKLIST = new Set([
+  "tguiRadioButtonGroup_getCheckedRadioButton", // it has declaration but doesn't have implementation
+]);
+
 function getNativeType(resultType: string): any {
   if (C_NATIVE_TYPE_MAP[resultType]) {
     return C_NATIVE_TYPE_MAP[resultType];
@@ -67,6 +71,8 @@ async function processAst() {
       (node.loc.includedFrom.file.includes("/ctgui-src/include/") ||
         node.loc.includedFrom.file === "<stdin>") // because source is passed via stdin
     ) {
+      if (BLACKLIST.has(node.name)) return;
+
       if (node.kind === "FunctionDecl") {
         functions.push(node.name);
 

@@ -10415,19 +10415,6 @@ export const CTGUI_SYMBOLS = {
 
   /**
    * @original ```c
-   * tguiWidget * tguiRadioButtonGroup_getCheckedRadioButton(tguiWidget * widget);
-   * ```
-   *
-   * @param widget `Widget *`
-   * @returns `Widget *`
-   */
-  tguiRadioButtonGroup_getCheckedRadioButton: {
-    parameters: ["pointer"],
-    result: "pointer",
-  },
-
-  /**
-   * @original ```c
    * tguiWidget * tguiRangeSlider_create();
    * ```
    *

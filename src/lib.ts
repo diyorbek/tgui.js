@@ -27399,22 +27399,6 @@ export class RadioButtonGroup extends Container {
       this.pointer,
     );
   }
-
-  /**
-   * @original ```c
-   * tguiWidget * tguiRadioButtonGroup_getCheckedRadioButton(tguiWidget * widget);
-   * ```
-   *
-   * @param widget `Widget *`
-   * @returns `Widget *`
-   */
-  getCheckedRadioButton(
-    widget: Deno.PointerValue<unknown>,
-  ): ResultType<"tguiRadioButtonGroup_getCheckedRadioButton"> {
-    return accessLib().symbols.tguiRadioButtonGroup_getCheckedRadioButton(
-      widget,
-    );
-  }
 }
 
 export class SpinButton extends ClickableWidget {
