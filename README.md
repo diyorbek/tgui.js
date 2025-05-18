@@ -57,9 +57,18 @@ To run the "various widgets" example which demonstrates different UI components:
    ```
 
 4. Alternatively, you can compile the example to a native executable:
+
    ```bash
    deno task compile
    ```
+
+5. This will create a native executable in the current directory. You can run it directly:
+
+   ```bash
+   ./various-widgets
+   ```
+
+![Various Widgets Example](/examples/various-widgets/screenshot.png)
 
 ## Supported Platforms
 
