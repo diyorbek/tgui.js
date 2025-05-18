@@ -10,7 +10,7 @@ import {
 } from "@denative/ctgui";
 import { runVariousWidgets } from "./variousWidgets.ts";
 
-initDynamicLibrary(import.meta.dirname + "/libctgui");
+initDynamicLibrary();
 
 function main() {
   const title = new TextEncoder().encode("Hello, World!\0");

@@ -1,9 +1,10 @@
 {
   "tasks": {
-    "setup": "deno --allow-net --allow-write https://jsr.io/@denative/ctgui/0.0.11/setup.ts",
-    "start": "deno --allow-ffi main.ts"
+    "setup": "deno --allow-net --allow-write https://jsr.io/@denative/ctgui/0.0.15/setup.ts",
+    "start": "deno --allow-ffi --allow-write --allow-read main.ts",
+    "compile": "deno compile --include libctgui --allow-ffi --allow-write --allow-read main.ts"
   },
   "imports": {
-    "@denative/ctgui": "jsr:@denative/ctgui@^0.0.11"
+    "@denative/ctgui": "jsr:@denative/ctgui@^0.0.15"
   }
 }
