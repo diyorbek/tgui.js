@@ -9,9 +9,19 @@ export type ResultType<T extends keyof Library["symbols"]> = ReturnType<
 let CTGUI_LIB: Library | null = null;
 
 export function initDynamicLibrary(): void {
+  const libPath = getLibraryPath();
+  const lib = Deno.readFileSync(libPath);
+  const tempPath = Deno.makeTempFileSync();
+  Deno.writeFileSync(tempPath, lib);
+
+  addEventListener("unload", () => {
+    console.log("Cleaning up temp files before exit...");
+    Deno.removeSync(tempPath);
+  });
+
   if (CTGUI_LIB) return;
 
-  CTGUI_LIB = Deno.dlopen(getLibraryPath(), CTGUI_SYMBOLS);
+  CTGUI_LIB = Deno.dlopen(tempPath, CTGUI_SYMBOLS);
 }
 
 export function accessLib(): Library {

@@ -1,4 +1,4 @@
-const VERSION = [0, 0, 14];
+const VERSION = [0, 0, 15];
 
 function getBinaryName() {
   switch (Deno.build.os) {
