@@ -32,5 +32,5 @@ function getLibraryPath(): string {
   const mainModulePath = Deno.mainModule.replace("file://", "").split("/");
   mainModulePath.pop();
 
-  return mainModulePath + "/libctgui";
+  return mainModulePath.join("/") + "/libctgui";
 }
