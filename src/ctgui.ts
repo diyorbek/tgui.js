@@ -8,12 +8,10 @@ export type ResultType<T extends keyof Library["symbols"]> = ReturnType<
 
 let CTGUI_LIB: Library | null = null;
 
-export function initDynamicLibrary(path?: string): void {
+export function initDynamicLibrary(): void {
   if (CTGUI_LIB) return;
 
-  if (!path) path = getLibraryPath();
-
-  CTGUI_LIB = Deno.dlopen(path, CTGUI_SYMBOLS);
+  CTGUI_LIB = Deno.dlopen(getLibraryPath(), CTGUI_SYMBOLS);
 }
 
 export function accessLib(): Library {
@@ -30,9 +28,9 @@ export function closeDynamicLibrary(): void {
   CTGUI_LIB = null;
 }
 
-export function getLibraryPath(): string {
-  const mainModulePath = Deno.mainModule.replace("file://", "");
-  mainModulePath.split("/").pop();
+function getLibraryPath(): string {
+  const mainModulePath = Deno.mainModule.replace("file://", "").split("/");
+  mainModulePath.pop();
 
   return mainModulePath + "/libctgui";
 }
